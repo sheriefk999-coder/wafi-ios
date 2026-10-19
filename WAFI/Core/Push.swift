@@ -57,7 +57,10 @@ final class Push: NSObject, MessagingDelegate, UNUserNotificationCenterDelegate 
     }
 
     func unregister() async {
-        guard configured, let t = fcmToken ?? (try? await Messaging.messaging().token()) else { return }
+        guard configured else { return }
+        var token = fcmToken
+        if token == nil { token = try? await Messaging.messaging().token() }
+        guard let t = token else { return }
         try? await AppState.shared.api.removeDevice(token: t)
     }
 
