@@ -41,6 +41,7 @@ targets:
         product: FirebaseMessaging
       - package: GoogleMobileAds
       - package: UserMessagingPlatform
+        product: GoogleUserMessagingPlatform
       - sdk: StoreKit.framework
       - sdk: AuthenticationServices.framework
     entitlements:
