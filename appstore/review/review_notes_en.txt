@@ -1,0 +1,25 @@
+Thank you for reviewing WAFI.
+
+WHAT IT DOES
+WAFI compares the full price (product + shipping + fees) of products across online stores in the user's country, tracks gold and currency reference rates, and lets users keep a private wallet of their gold and savings (stored on the device only). WAFI is not a store; "Visit store" opens the store's own website in Safari.
+
+DEMO ACCOUNT (has WAFI Pro, so every feature is visible)
+Email: review@YOUR-DOMAIN
+Password: <set in the admin console → Users, then grant Pro>
+You can also browse everything as a guest without signing in.
+
+SIGN-IN
+Sign in with Apple and email + password are offered. No other third-party sign-in exists on iOS.
+Account deletion: Account → Security & account → Delete account (also on the web at /account/delete).
+
+SUBSCRIPTIONS (WAFI Pro, auto-renewable, group "WAFI Pro")
+pro_monthly and pro_yearly. The Pro screen shows the price and period from StoreKit, a free-vs-Pro comparison, Restore Purchases, and links to the Terms (Apple standard EULA) and Privacy Policy. Purchases are verified by our server with Apple's signed transactions; App Store Server Notifications v2 keep the state current.
+
+FREE PLAN LIMITS
+The free plan includes a number of searches per window (e.g. 15 per 8 hours), assistant messages and advisor picks; the app shows what's left and a countdown, and Pro removes the limits. The demo account is Pro, so you won't hit them.
+
+GOLD ANALYSIS
+The gold screen describes past price movement (position in the 30-day range, trend, volatility) and shows a disclaimer that it is not investment advice. It never tells users to buy or sell.
+
+PERMISSIONS
+Notifications are requested only when the user watches a product or creates a rate alert. Camera is used only for the optional barcode scanner. We do not request tracking (no ATT); ads (AdMob, free plan only) are shown without cross-app tracking.
