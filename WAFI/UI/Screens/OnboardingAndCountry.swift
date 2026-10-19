@@ -319,8 +319,12 @@ struct PcBuilderScreen: View {
         if let cpu = m["cpu"], m["motherboard"] != nil { out.append(t("السوكت متوافق", "Socket matches") + " · " + (cpu.specs.str("socket") ?? "?")) }
         if let ram = m["ram"], m["motherboard"] != nil { out.append(t("نوع الرامات متوافق", "Memory type matches") + " · " + (ram.specs.str("ram_type") ?? "?")) }
         if let psu = m["psu"] {
-            let need = ((m["cpu"]?.specs.int("tdp") ?? 65) + (m["gpu"]?.specs.int("tdp") ?? 0)) * 3 / 2 + 100
-            out.append(t("الباور كفاية", "PSU has headroom") + " · \(psu.specs.int("watts") ?? 0)W ≥ \(need)W")
+            let cpuTdp: Int = m["cpu"]?.specs.int("tdp") ?? 65
+            let gpuTdp: Int = m["gpu"]?.specs.int("tdp") ?? 0
+            let need: Int = (cpuTdp + gpuTdp) * 3 / 2 + 100
+            let watts: Int = psu.specs.int("watts") ?? 0
+            let label: String = t("الباور كفاية", "PSU has headroom")
+            out.append(label + " · \(watts)W ≥ \(need)W")
         }
         return out
     }

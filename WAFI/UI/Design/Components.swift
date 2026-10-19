@@ -37,13 +37,15 @@ struct RadarScope: View {
                                                      center: c, angle: lead - .degrees(70)))
                 var edge = Path()
                 edge.move(to: c)
-                edge.addLine(to: CGPoint(x: c.x + r * cos(lead.radians), y: c.y + r * sin(lead.radians)))
+                let lr: Double = lead.radians
+                edge.addLine(to: CGPoint(x: c.x + r * CGFloat(Foundation.cos(lr)), y: c.y + r * CGFloat(Foundation.sin(lr))))
                 ctx.stroke(edge, with: .color(beam.opacity(0.9)), lineWidth: 2)
                 for b in blips {
                     let since = ((sweep - b.angle).truncatingRemainder(dividingBy: 360) + 360).truncatingRemainder(dividingBy: 360)
                     let glow = max(0.15, min(1, 1 - since / 300))
-                    let a = (b.angle - 90) * .pi / 180
-                    let p = CGPoint(x: c.x + r * b.distance * cos(a), y: c.y + r * b.distance * sin(a))
+                    let a: Double = (b.angle - 90) * Double.pi / 180
+                    let rd: CGFloat = r * CGFloat(b.distance)
+                    let p = CGPoint(x: c.x + rd * CGFloat(Foundation.cos(a)), y: c.y + rd * CGFloat(Foundation.sin(a)))
                     let dot: CGFloat = b.big ? 6 : 4
                     let halo = dot * 3 * (0.6 + glow)
                     ctx.fill(Path(ellipseIn: CGRect(x: p.x - halo, y: p.y - halo, width: halo * 2, height: halo * 2)), with: .color(b.color.opacity(0.18 * glow)))
@@ -568,7 +570,7 @@ struct RangeGauge: View {
                     .stroke(LinearGradient(colors: [PR.signal, PR.amber, PR.danger], startPoint: .leading, endPoint: .trailing),
                             style: StrokeStyle(lineWidth: 12, lineCap: .round))
                 let a = Angle(degrees: 180 + 180 * min(max(value, 0), 1))
-                Path { p in p.move(to: c); p.addLine(to: CGPoint(x: c.x + (r - 14) * cos(a.radians), y: c.y + (r - 14) * sin(a.radians))) }
+                Path { p in let ar: Double = a.radians; let rr: CGFloat = r - 14; p.move(to: c); p.addLine(to: CGPoint(x: c.x + rr * CGFloat(Foundation.cos(ar)), y: c.y + rr * CGFloat(Foundation.sin(ar)))) }
                     .stroke(PR.ink, style: StrokeStyle(lineWidth: 3, lineCap: .round))
                 Circle().fill(PR.ink).frame(width: 12, height: 12).position(c)
             }
