@@ -207,7 +207,17 @@ private func specLabel(_ k: String) -> String {
     case "level": return t("المستوى", "Level")
     case "strings": return t("الأوتار", "Strings")
     case "keys": return t("المفاتيح", "Keys")
-    default: return k
+    case "camera_mp": return t("الكاميرا (ميجابكسل)", "Camera (MP)")
+    case "battery_mah": return t("البطارية (مللي أمبير)", "Battery (mAh)")
+    case "chip_score": return t("الأداء /١٠٠", "Performance /100")
+    case "screen_in": return t("الشاشة (بوصة)", "Screen (in)")
+    case "seats": return t("الكراسي", "Seats")
+    case "fuel_l_100km": return t("الاستهلاك (لتر/١٠٠ كم)", "Fuel (L/100 km)")
+    case "warmth": return t("الدفا", "Warmth")
+    case "material": return t("الخامة", "Material")
+    case "sizes": return t("المقاسات", "Sizes")
+    case "electric": return t("كهربا", "Electric")
+    default: return k.replacingOccurrences(of: "_", with: " ")
     }
 }
 

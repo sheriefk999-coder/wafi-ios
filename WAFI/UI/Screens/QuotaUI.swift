@@ -107,23 +107,25 @@ struct FreeVsPro: View {
             (t("الإعلانات", "Ads"), t("فيه", "Yes"), t("مفيش", "None")),
         ]
         VStack(spacing: 0) {
-            HStack {
-                Text(t("الميزة", "Feature")).frame(maxWidth: .infinity, alignment: .leading).layoutPriority(1.3)
-                Text(t("مجاني", "Free")).frame(maxWidth: .infinity, alignment: .leading)
-                Text("Pro").foregroundStyle(PR.signalDeep).frame(width: 96, alignment: .leading)
+            HStack(spacing: 8) {
+                Text(t("الميزة", "Feature")).frame(maxWidth: .infinity, alignment: .leading)
+                Text(t("مجاني", "Free")).frame(width: 104, alignment: .leading)
+                Text("Pro").foregroundStyle(PR.signalDeep).frame(width: 92, alignment: .leading)
             }
             .font(.labelM).foregroundStyle(PR.inkSoft)
             .padding(.horizontal, 14).padding(.vertical, 10).background(PR.paper)
             ForEach(Array(rows.enumerated()), id: \.offset) { i, r in
-                HStack {
-                    Text(r.0).font(.titleS).foregroundStyle(PR.ink).frame(maxWidth: .infinity, alignment: .leading).layoutPriority(1.3)
-                    Text(r.1).font(.bodyS).foregroundStyle(PR.inkSoft).frame(maxWidth: .infinity, alignment: .leading)
+                HStack(spacing: 8) {
+                    Text(r.0).font(.titleS).foregroundStyle(PR.ink).lineLimit(2).frame(maxWidth: .infinity, alignment: .leading)
+                    Text(r.1).font(.bodyS).foregroundStyle(PR.inkSoft).lineLimit(2).minimumScaleFactor(0.8)
+                        .frame(width: 104, alignment: .leading)
                     HStack(spacing: 4) {
                         Image(systemName: Ic.check).font(.system(size: 11, weight: .bold)).foregroundStyle(PR.signal)
-                        Text(r.2).font(.labelL).foregroundStyle(PR.ink).lineLimit(1).minimumScaleFactor(0.8)
+                        Text(r.2).font(.labelL).foregroundStyle(PR.ink).lineLimit(1).minimumScaleFactor(0.7)
                     }
-                    .frame(width: 96, alignment: .leading)
+                    .frame(width: 92, alignment: .leading)
                 }
+                .fixedSize(horizontal: false, vertical: true)
                 .padding(.horizontal, 14).padding(.vertical, 10)
                 if i < rows.count - 1 { Divider().overlay(PR.line).padding(.horizontal, 14) }
             }
