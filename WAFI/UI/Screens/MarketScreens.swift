@@ -504,7 +504,7 @@ struct WalletScreen: View {
                     Text(t("الأسعار مش متاحة دلوقتي، القيم هتظهر أول ما ترجع.", "Rates are unavailable; values will show when they're back."))
                         .font(.bodyS).foregroundStyle(PR.amberDeep).padding(.horizontal, 20)
                 }
-                if !app.isPro {
+                if !app.isPro && app.wallet.count <= limit {
                     Text(t("مسجّل \(Fmt.number(app.wallet.count)) من \(Fmt.number(limit)) في المجاني", "\(app.wallet.count) of \(limit) on the free plan"))
                         .font(.labelM).foregroundStyle(PR.inkFaint).padding(.horizontal, 20).padding(.top, 10)
                 }
