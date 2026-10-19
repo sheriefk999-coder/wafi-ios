@@ -1,0 +1,162 @@
+name: iOS
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      upload:
+        description: "Upload to TestFlight (needs the App Store Connect secrets)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ios-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-test:
+    runs-on: macos-15
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Tools
+        run: |
+          brew install xcodegen xcbeautify
+          sudo xcode-select -s "$(ls -d /Applications/Xcode_16*.app | sort -V | tail -1)"
+          xcodebuild -version
+
+      - name: Generate the Xcode project
+        run: xcodegen generate
+
+      - name: Cache Swift packages
+        uses: actions/cache@v4
+        with:
+          path: build/SourcePackages
+          key: spm-${{ hashFiles('project.yml') }}
+
+      - name: Pick a simulator
+        id: sim
+        run: |
+          NAME=$(xcrun simctl list devices available -j | python3 -c "import json,sys; d=json.load(sys.stdin)['devices']; n=[x['name'] for k,v in d.items() if 'iOS' in k for x in v]; print(next((p for p in ['iPhone 16 Pro Max','iPhone 16 Plus','iPhone 15 Pro Max'] if p in n), [x for x in n if x.startswith('iPhone')][-1]))")
+          echo "name=$NAME" >> "$GITHUB_OUTPUT"
+          echo "Simulator: $NAME"
+
+      - name: Build for testing
+        run: |
+          mkdir -p ci/out
+          set -o pipefail
+          xcodebuild build-for-testing -project WAFI.xcodeproj -scheme WAFI \
+            -destination "platform=iOS Simulator,name=${{ steps.sim.outputs.name }}" \
+            -derivedDataPath build -clonedSourcePackagesDirPath build/SourcePackages \
+            CODE_SIGNING_ALLOWED=NO 2>&1 | tee ci/out/build-raw.log | xcbeautify --quiet | tee ci/out/build.log
+
+      - name: Unit tests and screenshots (against the mock API)
+        run: |
+          python3 ci/mock_api.py 8000 > ci/out/mock.log 2>&1 &
+          sleep 2
+          mkdir -p ci/out/shots
+          set -o pipefail
+          TEST_RUNNER_WAFI_SHOTS="$PWD/ci/out/shots" TEST_RUNNER_WAFI_SEED="$PWD/ci/fixtures/seed.json" \
+          xcodebuild test-without-building -project WAFI.xcodeproj -scheme WAFI \
+            -destination "platform=iOS Simulator,name=${{ steps.sim.outputs.name }}" \
+            -derivedDataPath build -resultBundlePath ci/out/Tests.xcresult \
+            2>&1 | tee ci/out/test-raw.log | xcbeautify | tee ci/out/test.log
+
+      - name: Summarise
+        if: always()
+        run: |
+          {
+            echo "# iOS CI $(date -u +%FT%TZ) — ${{ github.sha }}"
+            echo; echo "## Build errors"; grep -E "error:|❌" ci/out/build-raw.log ci/out/build.log 2>/dev/null | sort -u | head -150 || true
+            echo; echo "## Test results"; grep -E "Executed|passed|failed|✖|❌|error:" ci/out/test.log 2>/dev/null | tail -120 || true
+            echo; echo "## Mock API misses"; grep MISS ci/out/mock.log 2>/dev/null | sort | uniq -c | head -60 || true
+            echo; echo "## Screenshots"; ls ci/out/shots 2>/dev/null || true
+          } > ci/out/SUMMARY.md
+          rm -rf ci/out/Tests.xcresult
+          tail -c 3000000 ci/out/build-raw.log > ci/out/build-raw.tail.log 2>/dev/null || true
+          rm -f ci/out/build-raw.log
+          cat ci/out/SUMMARY.md
+
+      - name: Publish results to the ci-out branch
+        if: always()
+        env:
+          TOKEN: ${{ github.token }}
+        run: |
+          cp -r ci/out /tmp/ci-out
+          cd /tmp/ci-out
+          git init -q -b ci-out
+          git config user.name "WAFI CI"
+          git config user.email "ci@users.noreply.github.com"
+          git add -A
+          git commit -qm "CI results for ${{ github.sha }}"
+          git push -qf "https://x-access-token:${TOKEN}@github.com/${{ github.repository }}.git" ci-out
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: screenshots
+          path: /tmp/ci-out/shots
+
+  testflight:
+    needs: build-test
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.upload }}
+    runs-on: macos-15
+    timeout-minutes: 60
+    env:
+      ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+      ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+      ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
+      APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+      WAFI_API_URL: ${{ secrets.WAFI_API_URL }}
+      ADMOB_APP_ID: ${{ secrets.ADMOB_IOS_APP_ID }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check secrets
+        run: |
+          for v in ASC_KEY_ID ASC_ISSUER_ID ASC_KEY_P8 APPLE_TEAM_ID WAFI_API_URL; do
+            if [ -z "${!v}" ]; then echo "::error::Missing secret $v (see the iOS guide, TestFlight section)"; exit 1; fi
+          done
+      - name: Tools
+        run: |
+          brew install xcodegen
+          sudo xcode-select -s "$(ls -d /Applications/Xcode_16*.app | sort -V | tail -1)"
+          xcodegen generate
+      - name: App Store Connect key
+        run: |
+          mkdir -p ~/private_keys
+          echo "$ASC_KEY_P8" | (base64 --decode 2>/dev/null || cat) > ~/private_keys/AuthKey_$ASC_KEY_ID.p8
+          head -c 27 ~/private_keys/AuthKey_$ASC_KEY_ID.p8 | grep -q "BEGIN PRIVATE KEY" || { echo "$ASC_KEY_P8" > ~/private_keys/AuthKey_$ASC_KEY_ID.p8; }
+      - name: Archive (signed automatically with the API key)
+        run: |
+          set -o pipefail
+          xcodebuild archive -project WAFI.xcodeproj -scheme WAFI -configuration Release \
+            -destination "generic/platform=iOS" -archivePath build/WAFI.xcarchive \
+            -allowProvisioningUpdates \
+            -authenticationKeyID "$ASC_KEY_ID" -authenticationKeyIssuerID "$ASC_ISSUER_ID" \
+            -authenticationKeyPath ~/private_keys/AuthKey_$ASC_KEY_ID.p8 \
+            WAFI_TEAM_ID="$APPLE_TEAM_ID" WAFI_API_BASE_URL="$WAFI_API_URL" \
+            ${ADMOB_APP_ID:+ADMOB_APP_ID="$ADMOB_APP_ID"} \
+            CURRENT_PROJECT_VERSION="${{ github.run_number }}" | tail -40
+      - name: Upload to TestFlight
+        run: |
+          cat > build/ExportOptions.plist <<PLIST
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0"><dict>
+            <key>method</key><string>app-store-connect</string>
+            <key>destination</key><string>upload</string>
+            <key>teamID</key><string>$APPLE_TEAM_ID</string>
+            <key>signingStyle</key><string>automatic</string>
+            <key>uploadSymbols</key><true/>
+          </dict></plist>
+          PLIST
+          xcodebuild -exportArchive -archivePath build/WAFI.xcarchive -exportPath build/export \
+            -exportOptionsPlist build/ExportOptions.plist -allowProvisioningUpdates \
+            -authenticationKeyID "$ASC_KEY_ID" -authenticationKeyIssuerID "$ASC_ISSUER_ID" \
+            -authenticationKeyPath ~/private_keys/AuthKey_$ASC_KEY_ID.p8 | tail -30
+          echo "Uploaded build ${{ github.run_number }}. It appears in App Store Connect → TestFlight after processing (~10–30 min)."
