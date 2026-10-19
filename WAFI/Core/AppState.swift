@@ -59,8 +59,9 @@ final class AppState {
         let args = UserDefaults.standard
         let fromBundle = Bundle.main.object(forInfoDictionaryKey: "WAFIAPIBaseURL") as? String
         let raw = args.string(forKey: "WAFI_API") ?? env["WAFI_API"] ?? UserDefaults.standard.string(forKey: "wafi.server") ?? fromBundle ?? "https://api.example.com"
-        serverURL = URL(string: raw) ?? URL(string: "https://api.example.com")!
-        UserDefaults.standard.set(serverURL.absoluteString, forKey: "wafi.server.effective")
+        let url = URL(string: raw) ?? URL(string: "https://api.example.com")!
+        serverURL = url
+        UserDefaults.standard.set(url.absoluteString, forKey: "wafi.server.effective")
         if args.bool(forKey: "WAFI_RESET") {      // UI tests: every launch starts clean
             Keychain.set("token", nil)
             for k in ["wafi.user", "wafi.basket", "wafi.wallet", "wafi.recent", "wafi.country", "wafi.onboarded", "wafi.config", "wafi.server", "wafi.push.asked"] {
