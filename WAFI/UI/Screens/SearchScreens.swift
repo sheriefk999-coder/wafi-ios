@@ -35,6 +35,7 @@ final class SearchModel {
         job = Task {
             if debounce { try? await Task.sleep(for: .milliseconds(350)) }
             if Task.isCancelled { return }
+            if mustSignIn(f) { analysis = nil; results = .err(.http(status: 401, code: "sign_in_required")); return }
             if results.value == nil { results = .loading }
             let api = AppState.shared.api
             async let a = try? api.analysis(f)
@@ -45,10 +46,16 @@ final class SearchModel {
         }
     }
 
+    /// A typed search while signed out, when the console requires an account: show the sign-in wall, don't call.
+    private func mustSignIn(_ f: ProductFilter) -> Bool {
+        let app = AppState.shared
+        return !f.query.trimmingCharacters(in: .whitespaces).isEmpty && !app.isSignedIn && app.config.searchRequiresAccount
+    }
+
     private func loadSuggestions() {
         suggestJob?.cancel()
         let q = filter.query.trimmingCharacters(in: .whitespaces)
-        guard q.count >= 2 else { suggest = SuggestResponse(); return }
+        guard q.count >= 2, !mustSignIn(filter) else { suggest = SuggestResponse(); return }
         suggestJob = Task {
             try? await Task.sleep(for: .milliseconds(200))
             if Task.isCancelled { return }
@@ -86,7 +93,9 @@ struct Results<Row: View>: View {
         switch res {
         case .loading: LoadingList(rows: 5).padding(.horizontal, 20).padding(.top, 8)
         case .err(let e):
-            if e.isQuota {
+            if e.needsSignIn {
+                SignInWall()
+            } else if e.isQuota {
                 QuotaWall(error: e, onReady: retry)
             } else {
                 EmptyState(icon: Ic.server, title: t("البحث وقف", "Search stopped"), bodyText: e.message, action: t("حاول تاني", "Try again"), onAction: retry)
@@ -162,6 +171,10 @@ struct SearchScreen: View {
         .background(PR.white)
         .task {
             if model.results.value == nil { model.reload() }
+        }
+        .onChange(of: app.isSignedIn) { _, signedIn in
+            // back from signing in: run the search that was waiting
+            if signedIn, case .err(let e) = model.results, e.needsSignIn { model.reload() }
         }
         .onAppear {
             if let seed = SearchSeed.shared.next { SearchSeed.shared.next = nil; model.update { $0 = seed } }

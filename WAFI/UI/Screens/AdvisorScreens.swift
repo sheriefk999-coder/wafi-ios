@@ -612,6 +612,8 @@ private struct PicksBody: View {
                         .font(.bodyS).foregroundStyle(PR.amberDeep).padding(12).frame(maxWidth: .infinity, alignment: .leading)
                         .background(PR.amberSoft).clipShape(RoundedRectangle(cornerRadius: 14)).padding(.horizontal, 20).padding(.vertical, 6)
                 }
+                if let ua = r.usedAdvice { UsedLeadCard(ua: ua) }
+                if let rs = r.running { RunningSummaryCard(rs: rs) }
                 ForEach(Array(r.picks.enumerated()), id: \.element.id) { i, p in
                     pickCard(p, rank: i + 1).reveal(i)
                 }
@@ -645,6 +647,7 @@ private struct PicksBody: View {
                         Text(reason).font(.bodyS).foregroundStyle(PR.ink)
                     }
                 }
+                PickValueLines(p: p)
             }
         }
         .padding(.horizontal, 20).padding(.vertical, 6)

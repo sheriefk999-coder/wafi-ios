@@ -57,7 +57,7 @@ final class ScreenshotTests: XCTestCase {
     func test01_onboarding() { let a = launch(onboarded: false, country: false); wait(a, "رادار واحد"); snap(a, "01_onboarding") }
     func test02_country() { let a = launch(country: false); wait(a, "بتشتري منين"); snap(a, "02_country") }
     func test03_home() { let a = launch(); wait(a, "الرادار شغّال"); snap(a, "03_home"); a.swipeUp(); snap(a, "04_home_more") }
-    func test05_searchAnalysis() { let a = launch(route: "search:آيفون"); wait(a, "تحليل الأسعار"); snap(a, "05_search_analysis") }
+    func test05_searchAnalysis() { let a = launch(route: "search:آيفون", token: member); wait(a, "تحليل الأسعار"); snap(a, "05_search_analysis") }
     func test06_category() { let a = launch(route: "category:phones"); wait(a, "تحليل الأسعار"); snap(a, "06_phones") }
     func test07_music() { let a = launch(route: "category:music"); wait(a, "تحليل الأسعار"); snap(a, "07_music") }
     func test08_product() { let a = launch(route: "product:" + pid("a55")); wait(a, "أرخص سعر"); snap(a, "08_product"); a.swipeUp(); snap(a, "09_product_offers") }
@@ -75,6 +75,44 @@ final class ScreenshotTests: XCTestCase {
         let a = launch(route: "pcAdvisor"); wait(a, "هتستخدمه في إيه")
         a.buttons.matching(NSPredicate(format: "label CONTAINS %@", "حلّل")).firstMatch.tap()
         wait(a, "ركّزنا"); snap(a, "17_pc_advice")
+    }
+    // used vs new, value tools, sign in to search
+    private func tapText(_ a: XCUIApplication, _ text: String) {
+        a.descendants(matching: .any).matching(NSPredicate(format: "label CONTAINS %@", text)).firstMatch.tap()
+    }
+    private func scrollTo(_ a: XCUIApplication, _ text: String) {
+        let el = a.descendants(matching: .any).matching(NSPredicate(format: "label CONTAINS %@", text)).firstMatch
+        var n = 0
+        while (!el.exists || !el.isHittable) && n < 6 { a.swipeUp(velocity: .slow); n += 1 }
+    }
+    func test60_searchNeedsAccount() { let a = launch(route: "search:آيفون"); wait(a, "سجّل حسابك عشان تبحث"); snap(a, "60_search_sign_in_wall") }
+    func test61_productUsedAndLens() {
+        let a = launch(route: "product:" + pid("a55"), token: member); wait(a, "أرخص سعر")
+        scrollTo(a, "متوفر مستعمل"); snap(a, "61_product_used_option")
+        scrollTo(a, "السعر بعين الدولار"); snap(a, "62_product_dollar_gold_lens")
+    }
+    func test63_usedVsNew() {
+        let a = launch(route: "product:" + pid("ip15_used"), token: member); wait(a, "أرخص سعر")
+        scrollTo(a, "أرخص من الجديد"); snap(a, "63_used_vs_new")
+    }
+    func test64_tradeIn() {
+        let a = launch(route: "product:" + pid("ip15"), token: member); wait(a, "أرخص سعر")
+        scrollTo(a, "هتبيع القديم"); tapText(a, "هتبيع القديم"); wait(a, "فرق التغيير")
+        let f = a.textFields.firstMatch; _ = f.waitForExistence(timeout: 5); f.tap(); f.typeText("iPhone 13")
+        wait(a, "(مستعمل)"); tapText(a, "(مستعمل)")
+        wait(a, "الفرق اللي هتدفعه"); snap(a, "64_trade_in")
+    }
+    func test65_phoneStepUp() {
+        let a = launch(route: "picks:phones"); wait(a, "أهم حاجة عندك")
+        tapText(a, "الكاميرا")
+        a.buttons.matching(NSPredicate(format: "label CONTAINS %@", "رشّحلي")).firstMatch.tap()
+        wait(a, "بنفس ميزانيتك"); snap(a, "65_phone_used_step_up")
+    }
+    func test66_carRunning() {
+        let a = launch(route: "picks:cars"); wait(a, "مين هيركب")
+        a.buttons.matching(NSPredicate(format: "label CONTAINS %@", "رشّحلي")).firstMatch.tap()
+        wait(a, "تكلفة التشغيل"); snap(a, "66_car_running_cost")
+        scrollTo(a, "أرخص من الجديد"); snap(a, "67_car_used_vs_new")
     }
     func test18_deals() { let a = launch(route: "deals"); wait(a, "نزلت أسعارها"); snap(a, "18_deals") }
     func test19_compare() { let a = launch(route: "compare:" + [pid("a55"), pid("ip15"), pid("rn13")].joined(separator: ","), token: pro); wait(a, "الأرخص"); snap(a, "19_compare") }
@@ -103,7 +141,7 @@ final class ScreenshotTests: XCTestCase {
     func test41_darkProduct() { let a = launch(route: "product:" + pid("ip15"), dark: true); wait(a, "أرخص سعر"); snap(a, "41_dark_product") }
     func test42_darkMarket() { let a = launch(route: "tab:market", dark: true); wait(a, "سعر جرام الدهب"); snap(a, "42_dark_market") }
     func test50_enHome() { let a = launch(lang: "en"); wait(a, "Radar live"); snap(a, "50_en_home") }
-    func test51_enSearch() { let a = launch(route: "search:iPhone", lang: "en"); wait(a, "Price analysis"); snap(a, "51_en_search") }
+    func test51_enSearch() { let a = launch(route: "search:iPhone", token: member, lang: "en"); wait(a, "Price analysis"); snap(a, "51_en_search") }
     func test52_enProduct() { let a = launch(route: "product:" + pid("a55"), lang: "en"); wait(a, "Lowest full price"); snap(a, "52_en_product") }
     func test53_enMarket() { let a = launch(route: "tab:market", lang: "en"); wait(a, "Gold per gram"); snap(a, "53_en_market") }
     func test54_enWallet() { let a = launch(route: "wallet", lang: "en", extra: ["-WAFI_DEMO_WALLET", "YES"]); wait(a, "Currency savings"); snap(a, "54_en_wallet") }

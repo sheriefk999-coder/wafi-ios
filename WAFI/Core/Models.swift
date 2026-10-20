@@ -330,9 +330,11 @@ struct ProductDetail: Decodable {
     var insight: Insight
     var freshHours: Int
     var historyLimitDays: Int?
+    var usedNew: UsedNew?
+    var lens: PriceLens?
     enum CodingKeys: String, CodingKey {
-        case product, offers, best, insight
-        case dailyLows = "daily_lows", freshHours = "fresh_hours", historyLimitDays = "history_limit_days"
+        case product, offers, best, insight, lens
+        case dailyLows = "daily_lows", freshHours = "fresh_hours", historyLimitDays = "history_limit_days", usedNew = "used_new"
     }
     init(from d: Decoder) throws {
         let c = try d.container(keyedBy: CodingKeys.self)
@@ -343,6 +345,8 @@ struct ProductDetail: Decodable {
         insight = try c.decode(Insight.self, forKey: .insight)
         freshHours = try c.decodeIfPresent(Int.self, forKey: .freshHours) ?? 48
         historyLimitDays = try c.decodeIfPresent(Int.self, forKey: .historyLimitDays)
+        usedNew = try c.decodeIfPresent(UsedNew.self, forKey: .usedNew)
+        lens = try c.decodeIfPresent(PriceLens.self, forKey: .lens)
     }
 }
 
@@ -547,7 +551,8 @@ struct UsedListing: Decodable, Hashable {
     var titleAr: String
     var titleEn: String
     var condition: String
-    enum CodingKeys: String, CodingKey { case price, saving, condition; case productId = "product_id", titleAr = "title_ar", titleEn = "title_en" }
+    var savingPct: Int = 0
+    enum CodingKeys: String, CodingKey { case price, saving, condition; case productId = "product_id", titleAr = "title_ar", titleEn = "title_en", savingPct = "saving_pct" }
     init(from d: Decoder) throws {
         let c = try d.container(keyedBy: CodingKeys.self)
         productId = try c.decode(String.self, forKey: .productId)
@@ -556,6 +561,7 @@ struct UsedListing: Decodable, Hashable {
         titleAr = try c.decodeIfPresent(String.self, forKey: .titleAr) ?? ""
         titleEn = try c.decodeIfPresent(String.self, forKey: .titleEn) ?? ""
         condition = try c.decodeIfPresent(String.self, forKey: .condition) ?? "used"
+        savingPct = try c.decodeIfPresent(Int.self, forKey: .savingPct) ?? 0
     }
 }
 
@@ -806,10 +812,14 @@ struct Pick: Decodable, Identifiable, Hashable {
     var score: Int
     var reasonsAr: [String]
     var reasonsEn: [String]
+    var condition: String = "new"
+    var used: UsedListing?
+    var vsNew: VsNew?
+    var running: CarRunning?
     enum CodingKeys: String, CodingKey {
-        case id, brand, model, category, offers, specs, score
+        case id, brand, model, category, offers, specs, score, condition, used, running
         case titleAr = "title_ar", titleEn = "title_en", minPrice = "min_price", bestTotal = "best_total", imageUrl = "image_url"
-        case reasonsAr = "reasons_ar", reasonsEn = "reasons_en"
+        case reasonsAr = "reasons_ar", reasonsEn = "reasons_en", vsNew = "vs_new"
     }
     init(from d: Decoder) throws {
         let c = try d.container(keyedBy: CodingKeys.self)
@@ -827,6 +837,10 @@ struct Pick: Decodable, Identifiable, Hashable {
         score = try c.decodeIfPresent(Int.self, forKey: .score) ?? 0
         reasonsAr = try c.decodeIfPresent([String].self, forKey: .reasonsAr) ?? []
         reasonsEn = try c.decodeIfPresent([String].self, forKey: .reasonsEn) ?? []
+        condition = try c.decodeIfPresent(String.self, forKey: .condition) ?? "new"
+        used = try c.decodeIfPresent(UsedListing.self, forKey: .used)
+        vsNew = try c.decodeIfPresent(VsNew.self, forKey: .vsNew)
+        running = try c.decodeIfPresent(CarRunning.self, forKey: .running)
     }
     var price: Money? { bestTotal ?? minPrice }
     var summary: ProductSummary {
@@ -839,12 +853,16 @@ struct AdviceResponse: Decodable {
     var picks: [Pick]
     var considered: Int
     var notes: [String]
-    enum CodingKeys: String, CodingKey { case picks, considered, notes }
+    var usedAdvice: PickUsedAdvice?
+    var running: RunningSummary?
+    enum CodingKeys: String, CodingKey { case picks, considered, notes, running; case usedAdvice = "used_advice" }
     init(from d: Decoder) throws {
         let c = try d.container(keyedBy: CodingKeys.self)
         picks = try c.decodeIfPresent([Pick].self, forKey: .picks) ?? []
         considered = try c.decodeIfPresent(Int.self, forKey: .considered) ?? 0
         notes = try c.decodeIfPresent([String].self, forKey: .notes) ?? []
+        usedAdvice = try c.decodeIfPresent(PickUsedAdvice.self, forKey: .usedAdvice)
+        running = try c.decodeIfPresent(RunningSummary.self, forKey: .running)
     }
 }
 
@@ -1008,7 +1026,9 @@ struct AppConfig: Codable, Equatable {
     var latestVersionCode = 1
     var storeUrl: String?
     var supportEmail: String?
+    var searchRequiresAccount = true
     enum CodingKeys: String, CodingKey {
+        case searchRequiresAccount = "search_requires_account"
         case firebase, ads, pro, features, announcement, maintenance
         case freeWatchLimit = "free_watch_limit", freeHistoryDays = "free_history_days", freeWalletItems = "free_wallet_items"
         case quotas
@@ -1033,6 +1053,7 @@ struct AppConfig: Codable, Equatable {
         latestVersionCode = try c.decodeIfPresent(Int.self, forKey: .latestVersionCode) ?? 1
         storeUrl = try c.decodeIfPresent(String.self, forKey: .storeUrl)
         supportEmail = try c.decodeIfPresent(String.self, forKey: .supportEmail)
+        searchRequiresAccount = try c.decodeIfPresent(Bool.self, forKey: .searchRequiresAccount) ?? true
     }
 }
 
@@ -1193,5 +1214,180 @@ struct SearchAnalysis: Decodable {
         avgChange30d = try c.decodeIfPresent(Decimal.self, forKey: .avgChange30d)
         biggestDrop = try c.decodeIfPresent(Drop.self, forKey: .biggestDrop)
         focus = try c.decodeIfPresent(Focus.self, forKey: .focus)
+    }
+}
+
+
+// MARK: - Used vs new, price lens, trade-in, running cost
+
+/// For a used item: the same product new, and how much the used one saves.
+struct VsNew: Decodable, Hashable {
+    var productId: String
+    var price: Money
+    var saving: Money
+    var savingPct: Int
+    var titleAr: String
+    var titleEn: String
+    enum CodingKeys: String, CodingKey { case price, saving; case productId = "product_id", savingPct = "saving_pct", titleAr = "title_ar", titleEn = "title_en" }
+    init(from d: Decoder) throws {
+        let c = try d.container(keyedBy: CodingKeys.self)
+        productId = try c.decode(String.self, forKey: .productId)
+        price = try c.decode(Decimal.self, forKey: .price)
+        saving = try c.decode(Decimal.self, forKey: .saving)
+        savingPct = try c.decodeIfPresent(Int.self, forKey: .savingPct) ?? 0
+        titleAr = try c.decodeIfPresent(String.self, forKey: .titleAr) ?? ""
+        titleEn = try c.decodeIfPresent(String.self, forKey: .titleEn) ?? ""
+    }
+}
+
+/// Product page: the same product in the other condition (never for clothing).
+struct UsedNew: Decodable, Hashable {
+    var used: UsedListing?
+    var new: VsNew?
+    var usedListings: Int
+    enum CodingKeys: String, CodingKey { case used, new; case usedListings = "used_listings" }
+    init(from d: Decoder) throws {
+        let c = try d.container(keyedBy: CodingKeys.self)
+        used = try c.decodeIfPresent(UsedListing.self, forKey: .used)
+        new = try c.decodeIfPresent(VsNew.self, forKey: .new)
+        usedListings = try c.decodeIfPresent(Int.self, forKey: .usedListings) ?? 0
+    }
+}
+
+/// The price through the dollar and 21k gold, and its ~30-day move in pounds vs dollars.
+struct PriceLens: Decodable, Hashable {
+    var usd: Money
+    var gold21Grams: Money?
+    var egpChangePct: Money?
+    var usdChangePct: Money?
+    enum CodingKeys: String, CodingKey { case usd; case gold21Grams = "gold21_grams", egpChangePct = "egp_change_pct", usdChangePct = "usd_change_pct" }
+    init(from d: Decoder) throws {
+        let c = try d.container(keyedBy: CodingKeys.self)
+        usd = try c.decode(Decimal.self, forKey: .usd)
+        gold21Grams = try c.decodeIfPresent(Decimal.self, forKey: .gold21Grams)
+        egpChangePct = try c.decodeIfPresent(Decimal.self, forKey: .egpChangePct)
+        usdChangePct = try c.decodeIfPresent(Decimal.self, forKey: .usdChangePct)
+    }
+}
+
+/// Upgrade cost: resale of what you own (used listings of the same model) and the net price of the new one.
+struct TradeIn: Decodable {
+    struct Ref: Decodable { var id: String; var titleAr: String; var titleEn: String; var price: Money?
+        enum CodingKeys: String, CodingKey { case id, price; case titleAr = "title_ar", titleEn = "title_en" }
+        init(from d: Decoder) throws {
+            let c = try d.container(keyedBy: CodingKeys.self)
+            id = try c.decode(String.self, forKey: .id)
+            titleAr = try c.decodeIfPresent(String.self, forKey: .titleAr) ?? ""
+            titleEn = try c.decodeIfPresent(String.self, forKey: .titleEn) ?? ""
+            price = try c.decodeIfPresent(Decimal.self, forKey: .price)
+        }
+    }
+    struct Range: Decodable { var low: Money; var median: Money; var high: Money
+        enum CodingKeys: String, CodingKey { case low, median, high }
+        init(from d: Decoder) throws {
+            let c = try d.container(keyedBy: CodingKeys.self)
+            low = try c.decode(Decimal.self, forKey: .low); median = try c.decode(Decimal.self, forKey: .median); high = try c.decode(Decimal.self, forKey: .high)
+        }
+    }
+    var from: Ref
+    var to: Ref
+    var status: String
+    var listings: Int
+    var resale: Range?
+    var netCost: Money?
+    var noteAr: String
+    var noteEn: String
+    enum CodingKeys: String, CodingKey { case from, to, status, listings, resale; case netCost = "net_cost", noteAr = "note_ar", noteEn = "note_en" }
+    init(from d: Decoder) throws {
+        let c = try d.container(keyedBy: CodingKeys.self)
+        from = try c.decode(Ref.self, forKey: .from)
+        to = try c.decode(Ref.self, forKey: .to)
+        status = try c.decode(String.self, forKey: .status)
+        listings = try c.decodeIfPresent(Int.self, forKey: .listings) ?? 0
+        resale = try c.decodeIfPresent(Range.self, forKey: .resale)
+        netCost = try c.decodeIfPresent(Decimal.self, forKey: .netCost)
+        noteAr = try c.decodeIfPresent(String.self, forKey: .noteAr) ?? ""
+        noteEn = try c.decodeIfPresent(String.self, forKey: .noteEn) ?? ""
+    }
+}
+
+/// Cars: estimated fuel cost for a typical month of the chosen usage.
+struct CarRunning: Decodable, Hashable {
+    var kmMonth: Int
+    var electric: Bool
+    var monthly: Money?
+    enum CodingKeys: String, CodingKey { case electric, monthly; case kmMonth = "km_month" }
+    init(from d: Decoder) throws {
+        let c = try d.container(keyedBy: CodingKeys.self)
+        kmMonth = try c.decodeIfPresent(Int.self, forKey: .kmMonth) ?? 0
+        electric = try c.decodeIfPresent(Bool.self, forKey: .electric) ?? false
+        monthly = try c.decodeIfPresent(Decimal.self, forKey: .monthly)
+    }
+}
+
+struct RunningSummary: Decodable {
+    var kmMonth: Int
+    var fuelPrice: Money?
+    var yearlyGap: Money?
+    var cheapestTitleAr: String
+    var cheapestTitleEn: String
+    var dearestTitleAr: String
+    var dearestTitleEn: String
+    enum CodingKeys: String, CodingKey {
+        case kmMonth = "km_month", fuelPrice = "fuel_price", yearlyGap = "yearly_gap"
+        case cheapestTitleAr = "cheapest_title_ar", cheapestTitleEn = "cheapest_title_en", dearestTitleAr = "dearest_title_ar", dearestTitleEn = "dearest_title_en"
+    }
+    init(from d: Decoder) throws {
+        let c = try d.container(keyedBy: CodingKeys.self)
+        kmMonth = try c.decodeIfPresent(Int.self, forKey: .kmMonth) ?? 0
+        fuelPrice = try c.decodeIfPresent(Decimal.self, forKey: .fuelPrice)
+        yearlyGap = try c.decodeIfPresent(Decimal.self, forKey: .yearlyGap)
+        cheapestTitleAr = try c.decodeIfPresent(String.self, forKey: .cheapestTitleAr) ?? ""
+        cheapestTitleEn = try c.decodeIfPresent(String.self, forKey: .cheapestTitleEn) ?? ""
+        dearestTitleAr = try c.decodeIfPresent(String.self, forKey: .dearestTitleAr) ?? ""
+        dearestTitleEn = try c.decodeIfPresent(String.self, forKey: .dearestTitleEn) ?? ""
+    }
+}
+
+/// The advisor's used-vs-new lead: a better model that fits the budget used, or the top pick cheaper used.
+struct PickUsedAdvice: Decodable {
+    struct StepUp: Decodable { var productId: String; var titleAr: String; var titleEn: String; var newPrice: Money; var used: UsedListing
+        var reasonsAr: [String]; var reasonsEn: [String]
+        enum CodingKeys: String, CodingKey { case used; case productId = "product_id", titleAr = "title_ar", titleEn = "title_en", newPrice = "new_price", reasonsAr = "reasons_ar", reasonsEn = "reasons_en" }
+        init(from d: Decoder) throws {
+            let c = try d.container(keyedBy: CodingKeys.self)
+            productId = try c.decode(String.self, forKey: .productId)
+            titleAr = try c.decodeIfPresent(String.self, forKey: .titleAr) ?? ""
+            titleEn = try c.decodeIfPresent(String.self, forKey: .titleEn) ?? ""
+            newPrice = try c.decode(Decimal.self, forKey: .newPrice)
+            used = try c.decode(UsedListing.self, forKey: .used)
+            reasonsAr = try c.decodeIfPresent([String].self, forKey: .reasonsAr) ?? []
+            reasonsEn = try c.decodeIfPresent([String].self, forKey: .reasonsEn) ?? []
+        }
+    }
+    struct Save: Decodable { var productId: String; var titleAr: String; var titleEn: String; var newPrice: Money; var used: UsedListing
+        enum CodingKeys: String, CodingKey { case used; case productId = "product_id", titleAr = "title_ar", titleEn = "title_en", newPrice = "new_price" }
+        init(from d: Decoder) throws {
+            let c = try d.container(keyedBy: CodingKeys.self)
+            productId = try c.decode(String.self, forKey: .productId)
+            titleAr = try c.decodeIfPresent(String.self, forKey: .titleAr) ?? ""
+            titleEn = try c.decodeIfPresent(String.self, forKey: .titleEn) ?? ""
+            newPrice = try c.decode(Decimal.self, forKey: .newPrice)
+            used = try c.decode(UsedListing.self, forKey: .used)
+        }
+    }
+    var kind: String
+    var stepUp: StepUp?
+    var save: Save?
+    var noteAr: String
+    var noteEn: String
+    enum CodingKeys: String, CodingKey { case kind, save; case stepUp = "step_up", noteAr = "note_ar", noteEn = "note_en" }
+    init(from d: Decoder) throws {
+        let c = try d.container(keyedBy: CodingKeys.self)
+        kind = try c.decode(String.self, forKey: .kind)
+        stepUp = try c.decodeIfPresent(StepUp.self, forKey: .stepUp)
+        save = try c.decodeIfPresent(Save.self, forKey: .save)
+        noteAr = try c.decodeIfPresent(String.self, forKey: .noteAr) ?? ""
+        noteEn = try c.decodeIfPresent(String.self, forKey: .noteEn) ?? ""
     }
 }

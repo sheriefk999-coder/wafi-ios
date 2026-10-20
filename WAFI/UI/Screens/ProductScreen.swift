@@ -123,7 +123,10 @@ private struct ProductBody: View {
                 }
                 .padding(.horizontal, 20)
                 BestPrice(d: d)
+                if let u = d.usedNew { UsedNewCard(u: u) }
                 InsightCard(i: d.insight)
+                if let l = d.lens { PriceLensCard(l: l) }
+                if !["fashion", "other"].contains(p.category) { TradeInCard(toId: p.id, category: p.category) }
                 HistoryCard(lows: d.dailyLows, limitDays: d.historyLimitDays)
                 SpecsCard(s: p.specs)
                 SectionHeader(title: t("كل العروض", "All offers") + " (\(Fmt.number(d.offers.count)))")

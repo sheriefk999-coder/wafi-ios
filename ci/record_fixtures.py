@@ -76,9 +76,10 @@ for cat in ("phones", "laptops", "audio", "tablets", "cars", "pc_parts", "fashio
     rec("GET", "/products/analysis", {"category": cat, **IN})
 rec("GET", "/products", {"category": "cars", **IN, "limit": 50, "sort": "price_asc"})
 for q in ("آيفون", "سامسونج", "Yamaha", "iPhone"):
-    rec("GET", "/products", {"q": q, **IN, "limit": 50})
-    rec("GET", "/products/analysis", {"q": q, **IN})
-for key in ("a55", "ip15", "rn13", "mba", "corolla", "strat", "4060", "xm5"):
+    for who in ("anon", "member"):                       # a guest gets sign_in_required when the console says so
+        rec("GET", "/products", {"q": q, **IN, "limit": 50}, who=who)
+        rec("GET", "/products/analysis", {"q": q, **IN}, who=who)
+for key in ("a55", "ip15", "rn13", "mba", "corolla", "strat", "4060", "xm5", "ip15_used", "a55_used"):
     for who in ("anon", "member", "pro"):
         rec("GET", f"/products/{P[key]}", who=who)
 rec("GET", "/compare", {"ids": ",".join([P["a55"], P["ip15"], P["rn13"]])}, who="pro", also_anon=True)
@@ -90,7 +91,11 @@ rec("POST", "/advisor/fashion", body={"need": "both", "occasion": "casual", "gen
 rec("POST", "/pc-builder", body={"budget": 45000, "use": "gaming"})
 for msg in ("عايز موبايل في حدود ٢٠ ألف", "الدهب عيار ٢١ بكام", "جمّعلي PC بـ ٦٠ ألف للألعاب", "A phone around EGP 20K"):
     rec("POST", "/assistant", body={"message": msg, "lang": "en" if msg[0].isascii() else "ar"})
-rec("GET", "/suggest", {"q": "سام"})
+rec("GET", "/suggest", {"q": "سام"}, who="member")
+for q in ("iPhone 13", "iPhone 1", "iPhone"):
+    rec("GET", "/suggest", {"q": q}, who="member")
+rec("GET", "/tools/trade-in", {"from_id": P["ip13_used"], "to_id": P["ip15"]}, who="member")
+rec("POST", "/advisor/phones", body={"priority": "camera", "category": "phones", "budget": 15000})
 # Saudi Arabia, for the country screenshots
 rec("GET", "/products", {**IN, "limit": 40}, country="SA")
 

@@ -12,6 +12,8 @@ enum APIError: Error, Equatable {
     var quota: QuotaInfo? { if case .http(_, _, let q) = self { return q }; return nil }
     /// The free plan ran out of something (searches, assistant messages, advisor picks).
     var isQuota: Bool { code == "quota_exceeded" }
+    /// Search needs a signed-in account (set in the console).
+    var needsSignIn: Bool { code == "sign_in_required" }
 }
 
 /// For quota_exceeded / pro_required: which quota, its size, and seconds until a unit frees up.
@@ -192,6 +194,9 @@ final class API: @unchecked Sendable {
         try await send("GET", "compare", query: [.init(name: "ids", value: ids.joined(separator: ","))])
     }
     func suggest(_ q: String) async throws -> SuggestResponse { try await send("GET", "suggest", query: [.init(name: "q", value: q)]) }
+    func tradeIn(from: String, to: String) async throws -> TradeIn {
+        try await send("GET", "tools/trade-in", query: [.init(name: "from_id", value: from), .init(name: "to_id", value: to)])
+    }
     func basket(_ lines: [BasketLineIn]) async throws -> BasketResponse {
         try await send("POST", "basket", json: ["items": lines.map { ["product_id": $0.productId, "qty": $0.qty] }])
     }
