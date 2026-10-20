@@ -272,6 +272,7 @@ struct PcBuilderScreen: View {
             }
         }
         .padding(.horizontal, 20).padding(.vertical, 8)
+        if let ua = b.usedAdvice { PcUsedAdviceCard(ua: ua) }
         ForEach(b.parts, id: \.part) { p in
             Panel(padding: 12, action: { router.push(.product(p.productId)) }) {
                 HStack(spacing: 12) {
@@ -281,6 +282,7 @@ struct PcBuilderScreen: View {
                         Text(Lang.isArabic ? p.titleAr : p.titleEn).font(.titleS).foregroundStyle(PR.ink).lineLimit(1)
                         let line = partLine(p.specs)
                         if !line.isEmpty { Text(line).font(.bodyS).foregroundStyle(PR.inkSoft).lineLimit(1) }
+                        if let u = p.used { UsedTagLine(u: u) }
                     }
                     Spacer(minLength: 4)
                     PriceText(value: p.price, font: .titleS)
@@ -327,5 +329,42 @@ struct PcBuilderScreen: View {
             out.append(label + " · \(watts)W ≥ \(need)W")
         }
         return out
+    }
+}
+
+/// "متوفر مستعمل بـ X · وفّر Y" under a chosen part.
+struct UsedTagLine: View {
+    var u: UsedListing
+    var body: some View {
+        HStack(spacing: 4) {
+            Image(systemName: Ic.tag).font(.system(size: 11, weight: .semibold)).foregroundStyle(PR.signalDeep)
+            Text(t("متوفر مستعمل بـ ", "Used from ") + Fmt.money(u.price) + t(" · وفّر ", " · save ") + Fmt.money(u.saving))
+                .font(.labelS).foregroundStyle(PR.signalDeep).lineLimit(1)
+        }
+    }
+}
+
+/// "اشتري X مستعمل وتوفّر Y — تكفّي تطلّع Z لأعلى." Facts only; buying used stays the user's call.
+struct PcUsedAdviceCard: View {
+    var ua: UsedAdvice
+    @Environment(Router.self) private var router
+    var body: some View {
+        let usedPart = partLabel(ua.usedPart)
+        let head = t("لو جبت ال\(usedPart) مستعمل، هتوفّر ", "Buy the \(usedPart) used and you save ") + Fmt.money(ua.usedSaving)
+        let body = ua.upgradePart != nil
+            ? head + t("، تكفّي تطلّع ال\(partLabel(ua.upgradePart!)) لـ ", ", enough to move the \(partLabel(ua.upgradePart!)) up to ") + ua.toTitle + "."
+            : head + "."
+        Panel(radius: 22, background: PR.signalSoft, border: PR.signal) {
+            HStack(alignment: .top, spacing: 12) {
+                IconTile(icon: Ic.bolt, bg: PR.white, fg: PR.signalDeep, size: 34, iconSize: 17)
+                VStack(alignment: .leading, spacing: 3) {
+                    Text(t("فكرة توفير", "A way to save")).font(.titleS).foregroundStyle(PR.signalDeep)
+                    Text(body).font(.bodyM).foregroundStyle(PR.ink)
+                    Text(t("قرار المستعمل قرارك — دي بس أرقام نوضّحلك الفرق.", "Buying used is your call — these are just the numbers."))
+                        .font(.labelS).foregroundStyle(PR.inkSoft)
+                }
+            }
+        }
+        .padding(.horizontal, 20).padding(.vertical, 8)
     }
 }

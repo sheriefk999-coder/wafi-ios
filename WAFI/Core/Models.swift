@@ -539,6 +539,61 @@ struct MarketDay: Decodable, Hashable {
 
 // MARK: - PC builder
 
+/// The same part offered used/refurbished, when it's cheaper than the chosen new one.
+struct UsedListing: Decodable, Hashable {
+    var productId: String
+    var price: Money
+    var saving: Money
+    var titleAr: String
+    var titleEn: String
+    var condition: String
+    enum CodingKeys: String, CodingKey { case price, saving, condition; case productId = "product_id", titleAr = "title_ar", titleEn = "title_en" }
+    init(from d: Decoder) throws {
+        let c = try d.container(keyedBy: CodingKeys.self)
+        productId = try c.decode(String.self, forKey: .productId)
+        price = try c.decode(Decimal.self, forKey: .price)
+        saving = try c.decode(Decimal.self, forKey: .saving)
+        titleAr = try c.decodeIfPresent(String.self, forKey: .titleAr) ?? ""
+        titleEn = try c.decodeIfPresent(String.self, forKey: .titleEn) ?? ""
+        condition = try c.decodeIfPresent(String.self, forKey: .condition) ?? "used"
+    }
+}
+
+/// Facts only: buying one part used frees up money that could move another part up a tier.
+struct UsedAdvice: Decodable, Hashable {
+    var usedPart: String
+    var usedSaving: Money
+    var usedPrice: Money
+    var usedProductId: String
+    var usedTitleAr: String
+    var usedTitleEn: String
+    var upgradePart: String?
+    var toTitleAr: String
+    var toTitleEn: String
+    var toProductId: String?
+    var extraCost: Money?
+    enum CodingKeys: String, CodingKey {
+        case usedPart = "used_part", usedSaving = "used_saving", usedPrice = "used_price", usedProductId = "used_product_id"
+        case usedTitleAr = "used_title_ar", usedTitleEn = "used_title_en", upgradePart = "upgrade_part"
+        case toTitleAr = "to_title_ar", toTitleEn = "to_title_en", toProductId = "to_product_id", extraCost = "extra_cost"
+    }
+    init(from d: Decoder) throws {
+        let c = try d.container(keyedBy: CodingKeys.self)
+        usedPart = try c.decode(String.self, forKey: .usedPart)
+        usedSaving = try c.decode(Decimal.self, forKey: .usedSaving)
+        usedPrice = try c.decodeIfPresent(Decimal.self, forKey: .usedPrice) ?? 0
+        usedProductId = try c.decodeIfPresent(String.self, forKey: .usedProductId) ?? ""
+        usedTitleAr = try c.decodeIfPresent(String.self, forKey: .usedTitleAr) ?? ""
+        usedTitleEn = try c.decodeIfPresent(String.self, forKey: .usedTitleEn) ?? ""
+        upgradePart = try c.decodeIfPresent(String.self, forKey: .upgradePart)
+        toTitleAr = try c.decodeIfPresent(String.self, forKey: .toTitleAr) ?? ""
+        toTitleEn = try c.decodeIfPresent(String.self, forKey: .toTitleEn) ?? ""
+        toProductId = try c.decodeIfPresent(String.self, forKey: .toProductId)
+        extraCost = try c.decodeIfPresent(Decimal.self, forKey: .extraCost)
+    }
+    var toTitle: String { Lang.isArabic ? toTitleAr : toTitleEn }
+}
+
 struct PcPart: Decodable, Hashable {
     var part: String
     var productId: String
@@ -548,8 +603,9 @@ struct PcPart: Decodable, Hashable {
     var specs: Specs
     var reasonAr: String
     var reasonEn: String
+    var used: UsedListing?
     enum CodingKeys: String, CodingKey {
-        case part, price, specs
+        case part, price, specs, used
         case productId = "product_id", titleAr = "title_ar", titleEn = "title_en", reasonAr = "reason_ar", reasonEn = "reason_en"
     }
     init(from d: Decoder) throws {
@@ -562,6 +618,7 @@ struct PcPart: Decodable, Hashable {
         specs = try c.decodeIfPresent(Specs.self, forKey: .specs) ?? [:]
         reasonAr = try c.decodeIfPresent(String.self, forKey: .reasonAr) ?? ""
         reasonEn = try c.decodeIfPresent(String.self, forKey: .reasonEn) ?? ""
+        used = try c.decodeIfPresent(UsedListing.self, forKey: .used)
     }
 }
 
@@ -587,9 +644,10 @@ struct PcBuild: Decodable, Hashable {
     var split: [BudgetSlice]
     /// The advisor's focus part ("gpu" / "cpu").
     var focus: String?
+    var usedAdvice: UsedAdvice?
     enum CodingKeys: String, CodingKey {
         case use, budget, total, remaining, complete, parts, missing, notes, resolution, split, focus
-        case withinBudget = "within_budget"
+        case withinBudget = "within_budget", usedAdvice = "used_advice"
     }
     init(from d: Decoder) throws {
         let c = try d.container(keyedBy: CodingKeys.self)
@@ -605,6 +663,7 @@ struct PcBuild: Decodable, Hashable {
         resolution = try c.decodeIfPresent(String.self, forKey: .resolution)
         split = try c.decodeIfPresent([BudgetSlice].self, forKey: .split) ?? []
         focus = try c.decodeIfPresent(String.self, forKey: .focus)
+        usedAdvice = try c.decodeIfPresent(UsedAdvice.self, forKey: .usedAdvice)
     }
 }
 

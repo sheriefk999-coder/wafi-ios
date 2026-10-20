@@ -423,6 +423,7 @@ private struct PcAdviceBody: View {
                 Spacer(minLength: 0)
             }
             .padding(14).background(PR.signalSoft).clipShape(RoundedRectangle(cornerRadius: 16)).padding(.horizontal, 20).padding(.vertical, 6)
+            if let ua = a.usedAdvice { PcUsedAdviceCard(ua: ua) }
             ForEach(Array(a.parts.enumerated()), id: \.element.productId) { i, p in
                 Panel(radius: 20, action: { router.push(.product(p.productId)) }) {
                     HStack(alignment: .top, spacing: 12) {
@@ -432,6 +433,7 @@ private struct PcAdviceBody: View {
                             Text(partLabel(p.part)).font(.labelM).foregroundStyle(PR.inkSoft)
                             Text(Lang.isArabic ? p.titleAr : p.titleEn).font(.titleS).foregroundStyle(PR.ink).lineLimit(2)
                             Text(Lang.isArabic ? p.reasonAr : p.reasonEn).font(.bodyS).foregroundStyle(PR.signalDeep)
+                            if let u = p.used { UsedTagLine(u: u) }
                         }
                         Spacer(minLength: 4)
                         PriceText(value: p.price, font: .titleS)
