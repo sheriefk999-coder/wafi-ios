@@ -431,7 +431,7 @@ private struct PcAdviceBody: View {
                         Image(systemName: partIcon(p.part)).font(.system(size: 20)).foregroundStyle(partColor(p.part))
                             .frame(width: 44, height: 44).background(partColor(p.part).opacity(0.14)).clipShape(RoundedRectangle(cornerRadius: 14))
                         VStack(alignment: .leading, spacing: 3) {
-                            Text(partLabel(p.part)).font(.labelM).foregroundStyle(PR.inkSoft)
+                            Text(partLabel(p.part).uppercased()).font(.labelM.weight(.bold)).foregroundStyle(partColor(p.part))
                             Text(Lang.isArabic ? p.titleAr : p.titleEn).font(.titleS).foregroundStyle(PR.ink).lineLimit(2)
                             Text(Lang.isArabic ? p.reasonAr : p.reasonEn).font(.bodyS).foregroundStyle(PR.signalDeep)
                             if let u = p.used { UsedTagLine(u: u) }
