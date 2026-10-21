@@ -110,7 +110,7 @@ final class ScreenshotTests: XCTestCase {
             a.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.7)).press(forDuration: 0.05,
                 thenDragTo: a.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.4)))
         }
-        f.tap(); f.typeText("iPhone 13")
+        f.tap(); f.typeText("iPhone 13\n")            // return hides the keyboard so the suggestion is tappable
         wait(a, "(مستعمل)")
         let hit = a.buttons.matching(NSPredicate(format: "label CONTAINS %@", "(مستعمل)")).firstMatch
         if !hit.isHittable {
@@ -118,7 +118,9 @@ final class ScreenshotTests: XCTestCase {
                 thenDragTo: a.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.4)))
         }
         hit.tap()
-        XCTAssertTrue(wait(a, "بيتباع مستعمل حوالي"), "no trade-in result")
+        let ok = wait(a, "بيتباع مستعمل حوالي")
+        if !ok { snap(a, "64_debug_trade_in_result") }
+        XCTAssertTrue(ok, "no trade-in result")
         scrollTo(a, "سعر الجديد"); snap(a, "64_trade_in")
     }
     func test65_phoneStepUp() {
