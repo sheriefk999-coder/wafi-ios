@@ -79,7 +79,7 @@ for q in ("آيفون", "سامسونج", "Yamaha", "iPhone"):
     for who in ("anon", "member"):                       # a guest gets sign_in_required when the console says so
         rec("GET", "/products", {"q": q, **IN, "limit": 50}, who=who)
         rec("GET", "/products/analysis", {"q": q, **IN}, who=who)
-for key in ("a55", "ip15", "rn13", "mba", "corolla", "strat", "4060", "xm5", "ip15_used", "a55_used"):
+for key in ("a55", "ip15", "rn13", "mba", "corolla", "strat", "4060", "xm5", "ip15_used", "a55_used", "ipad", "ref_tab_s10fe", "ref_a57"):
     for who in ("anon", "member", "pro"):
         rec("GET", f"/products/{P[key]}", who=who)
 rec("GET", "/compare", {"ids": ",".join([P["a55"], P["ip15"], P["rn13"]])}, who="pro", also_anon=True)

@@ -2160,7 +2160,7 @@
 "egp_per_gram_999": "97.40",
 "usd_per_ounce": "56.99"
 },
-"fetched_at": "2026-10-21T04:29:25.286312+00:00",
+"fetched_at": "2026-10-21T04:51:44.077800+00:00",
 "stale": false
 }
 },
@@ -2269,7 +2269,7 @@
 "egp_per_gram_999": "97.40",
 "usd_per_ounce": "56.99"
 },
-"fetched_at": "2026-10-21T04:29:25.286312+00:00",
+"fetched_at": "2026-10-21T04:51:44.077800+00:00",
 "stale": false
 }
 },
@@ -2378,7 +2378,7 @@
 "egp_per_gram_999": "97.40",
 "usd_per_ounce": "56.99"
 },
-"fetched_at": "2026-10-21T04:29:25.286312+00:00",
+"fetched_at": "2026-10-21T04:51:44.077800+00:00",
 "stale": false
 }
 },
@@ -7134,7 +7134,7 @@
 "egp_per_gram_999": "97.40",
 "usd_per_ounce": "56.99"
 },
-"fetched_at": "2026-10-21T04:29:25.286312+00:00",
+"fetched_at": "2026-10-21T04:51:44.077800+00:00",
 "stale": false
 }
 },
@@ -7243,7 +7243,7 @@
 "egp_per_gram_999": "97.40",
 "usd_per_ounce": "56.99"
 },
-"fetched_at": "2026-10-21T04:29:25.286312+00:00",
+"fetched_at": "2026-10-21T04:51:44.077800+00:00",
 "stale": false
 }
 },
@@ -7352,7 +7352,7 @@
 "egp_per_gram_999": "97.40",
 "usd_per_ounce": "56.99"
 },
-"fetched_at": "2026-10-21T04:29:25.286312+00:00",
+"fetched_at": "2026-10-21T04:51:44.077800+00:00",
 "stale": false
 }
 },
@@ -12108,7 +12108,7 @@
 "egp_per_gram_999": "97.40",
 "usd_per_ounce": "56.99"
 },
-"fetched_at": "2026-10-21T04:29:25.286312+00:00",
+"fetched_at": "2026-10-21T04:51:44.077800+00:00",
 "stale": false
 }
 },
@@ -12217,7 +12217,7 @@
 "egp_per_gram_999": "97.40",
 "usd_per_ounce": "56.99"
 },
-"fetched_at": "2026-10-21T04:29:25.286312+00:00",
+"fetched_at": "2026-10-21T04:51:44.077800+00:00",
 "stale": false
 }
 },
@@ -12326,7 +12326,7 @@
 "egp_per_gram_999": "97.40",
 "usd_per_ounce": "56.99"
 },
-"fetched_at": "2026-10-21T04:29:25.286312+00:00",
+"fetched_at": "2026-10-21T04:51:44.077800+00:00",
 "stale": false
 }
 },
@@ -38957,6 +38957,1725 @@
 "usd_change_pct": null
 },
 "reference": null
+}
+},
+"GET /products/12abd7cc-2baa-43e1-8458-a749807fea9f?#@anon": {
+"status": 200,
+"body": {
+"product": {
+"id": "12abd7cc-2baa-43e1-8458-a749807fea9f",
+"brand": "Apple",
+"model": "iPad 10th gen",
+"category": "tablets",
+"gtin": null,
+"title_ar": "آيباد الجيل العاشر",
+"title_en": "iPad 10th gen",
+"storage": "64GB",
+"ram": "",
+"color": "",
+"condition": "new",
+"aliases": [],
+"specs": {},
+"image_url": null,
+"active": true
+},
+"offers": [
+{
+"id": 18,
+"product_id": "12abd7cc-2baa-43e1-8458-a749807fea9f",
+"store_id": "radar-store.test",
+"store_name": "رادار ستور",
+"price": "21999.00",
+"currency": "EGP",
+"shipping": "0.00",
+"fees": "0.00",
+"availability": "in_stock",
+"url": "https://radar-store.test/p/ipad",
+"warranty": "",
+"sponsored": false,
+"affiliate": false,
+"source_method": "manual",
+"match_confidence": "1.00",
+"observed_at": "2026-10-21T07:28:15.661892+03:00",
+"source_id": null,
+"source_name": null,
+"retrieved_at": null,
+"total": "21999.00",
+"fresh": true,
+"shipping_known": true,
+"fees_known": true,
+"total_status": "confirmed",
+"shipping_free": true
+}
+],
+"best": {
+"offer_id": 18,
+"store_id": "radar-store.test",
+"total": "21999.00",
+"total_status": "confirmed",
+"eligible_count": 1
+},
+"history": [
+{
+"offer_id": 18,
+"price": "21999.00",
+"observed_at": "2026-10-21T07:28:15.661892+03:00",
+"source_method": "manual"
+}
+],
+"daily_lows": [
+{
+"day": "2026-10-21",
+"price": "21999.00"
+}
+],
+"insight": {
+"status": "insufficient_history",
+"days": 0,
+"points": 1,
+"required_days": 14
+},
+"fresh_hours": 48,
+"history_limit_days": null,
+"used_new": null,
+"lens": {
+"usd": "414",
+"usd_rate": "53.1606",
+"gold21_grams": "3.5",
+"then_day": null,
+"egp_change_pct": null,
+"usd_change_pct": null
+},
+"reference": null
+}
+},
+"GET /products/12abd7cc-2baa-43e1-8458-a749807fea9f?@anon": {
+"status": 200,
+"body": {
+"product": {
+"id": "12abd7cc-2baa-43e1-8458-a749807fea9f",
+"brand": "Apple",
+"model": "iPad 10th gen",
+"category": "tablets",
+"gtin": null,
+"title_ar": "آيباد الجيل العاشر",
+"title_en": "iPad 10th gen",
+"storage": "64GB",
+"ram": "",
+"color": "",
+"condition": "new",
+"aliases": [],
+"specs": {},
+"image_url": null,
+"active": true
+},
+"offers": [
+{
+"id": 18,
+"product_id": "12abd7cc-2baa-43e1-8458-a749807fea9f",
+"store_id": "radar-store.test",
+"store_name": "رادار ستور",
+"price": "21999.00",
+"currency": "EGP",
+"shipping": "0.00",
+"fees": "0.00",
+"availability": "in_stock",
+"url": "https://radar-store.test/p/ipad",
+"warranty": "",
+"sponsored": false,
+"affiliate": false,
+"source_method": "manual",
+"match_confidence": "1.00",
+"observed_at": "2026-10-21T07:28:15.661892+03:00",
+"source_id": null,
+"source_name": null,
+"retrieved_at": null,
+"total": "21999.00",
+"fresh": true,
+"shipping_known": true,
+"fees_known": true,
+"total_status": "confirmed",
+"shipping_free": true
+}
+],
+"best": {
+"offer_id": 18,
+"store_id": "radar-store.test",
+"total": "21999.00",
+"total_status": "confirmed",
+"eligible_count": 1
+},
+"history": [
+{
+"offer_id": 18,
+"price": "21999.00",
+"observed_at": "2026-10-21T07:28:15.661892+03:00",
+"source_method": "manual"
+}
+],
+"daily_lows": [
+{
+"day": "2026-10-21",
+"price": "21999.00"
+}
+],
+"insight": {
+"status": "insufficient_history",
+"days": 0,
+"points": 1,
+"required_days": 14
+},
+"fresh_hours": 48,
+"history_limit_days": null,
+"used_new": null,
+"lens": {
+"usd": "414",
+"usd_rate": "53.1606",
+"gold21_grams": "3.5",
+"then_day": null,
+"egp_change_pct": null,
+"usd_change_pct": null
+},
+"reference": null
+}
+},
+"GET /products/12abd7cc-2baa-43e1-8458-a749807fea9f@anon": {
+"status": 200,
+"body": {
+"product": {
+"id": "12abd7cc-2baa-43e1-8458-a749807fea9f",
+"brand": "Apple",
+"model": "iPad 10th gen",
+"category": "tablets",
+"gtin": null,
+"title_ar": "آيباد الجيل العاشر",
+"title_en": "iPad 10th gen",
+"storage": "64GB",
+"ram": "",
+"color": "",
+"condition": "new",
+"aliases": [],
+"specs": {},
+"image_url": null,
+"active": true
+},
+"offers": [
+{
+"id": 18,
+"product_id": "12abd7cc-2baa-43e1-8458-a749807fea9f",
+"store_id": "radar-store.test",
+"store_name": "رادار ستور",
+"price": "21999.00",
+"currency": "EGP",
+"shipping": "0.00",
+"fees": "0.00",
+"availability": "in_stock",
+"url": "https://radar-store.test/p/ipad",
+"warranty": "",
+"sponsored": false,
+"affiliate": false,
+"source_method": "manual",
+"match_confidence": "1.00",
+"observed_at": "2026-10-21T07:28:15.661892+03:00",
+"source_id": null,
+"source_name": null,
+"retrieved_at": null,
+"total": "21999.00",
+"fresh": true,
+"shipping_known": true,
+"fees_known": true,
+"total_status": "confirmed",
+"shipping_free": true
+}
+],
+"best": {
+"offer_id": 18,
+"store_id": "radar-store.test",
+"total": "21999.00",
+"total_status": "confirmed",
+"eligible_count": 1
+},
+"history": [
+{
+"offer_id": 18,
+"price": "21999.00",
+"observed_at": "2026-10-21T07:28:15.661892+03:00",
+"source_method": "manual"
+}
+],
+"daily_lows": [
+{
+"day": "2026-10-21",
+"price": "21999.00"
+}
+],
+"insight": {
+"status": "insufficient_history",
+"days": 0,
+"points": 1,
+"required_days": 14
+},
+"fresh_hours": 48,
+"history_limit_days": null,
+"used_new": null,
+"lens": {
+"usd": "414",
+"usd_rate": "53.1606",
+"gold21_grams": "3.5",
+"then_day": null,
+"egp_change_pct": null,
+"usd_change_pct": null
+},
+"reference": null
+}
+},
+"GET /products/12abd7cc-2baa-43e1-8458-a749807fea9f?#@member": {
+"status": 200,
+"body": {
+"product": {
+"id": "12abd7cc-2baa-43e1-8458-a749807fea9f",
+"brand": "Apple",
+"model": "iPad 10th gen",
+"category": "tablets",
+"gtin": null,
+"title_ar": "آيباد الجيل العاشر",
+"title_en": "iPad 10th gen",
+"storage": "64GB",
+"ram": "",
+"color": "",
+"condition": "new",
+"aliases": [],
+"specs": {},
+"image_url": null,
+"active": true
+},
+"offers": [
+{
+"id": 18,
+"product_id": "12abd7cc-2baa-43e1-8458-a749807fea9f",
+"store_id": "radar-store.test",
+"store_name": "رادار ستور",
+"price": "21999.00",
+"currency": "EGP",
+"shipping": "0.00",
+"fees": "0.00",
+"availability": "in_stock",
+"url": "https://radar-store.test/p/ipad",
+"warranty": "",
+"sponsored": false,
+"affiliate": false,
+"source_method": "manual",
+"match_confidence": "1.00",
+"observed_at": "2026-10-21T07:28:15.661892+03:00",
+"source_id": null,
+"source_name": null,
+"retrieved_at": null,
+"total": "21999.00",
+"fresh": true,
+"shipping_known": true,
+"fees_known": true,
+"total_status": "confirmed",
+"shipping_free": true
+}
+],
+"best": {
+"offer_id": 18,
+"store_id": "radar-store.test",
+"total": "21999.00",
+"total_status": "confirmed",
+"eligible_count": 1
+},
+"history": [
+{
+"offer_id": 18,
+"price": "21999.00",
+"observed_at": "2026-10-21T07:28:15.661892+03:00",
+"source_method": "manual"
+}
+],
+"daily_lows": [
+{
+"day": "2026-10-21",
+"price": "21999.00"
+}
+],
+"insight": {
+"status": "insufficient_history",
+"days": 0,
+"points": 1,
+"required_days": 14
+},
+"fresh_hours": 48,
+"history_limit_days": null,
+"used_new": null,
+"lens": {
+"usd": "414",
+"usd_rate": "53.1606",
+"gold21_grams": "3.5",
+"then_day": null,
+"egp_change_pct": null,
+"usd_change_pct": null
+},
+"reference": null
+}
+},
+"GET /products/12abd7cc-2baa-43e1-8458-a749807fea9f?@member": {
+"status": 200,
+"body": {
+"product": {
+"id": "12abd7cc-2baa-43e1-8458-a749807fea9f",
+"brand": "Apple",
+"model": "iPad 10th gen",
+"category": "tablets",
+"gtin": null,
+"title_ar": "آيباد الجيل العاشر",
+"title_en": "iPad 10th gen",
+"storage": "64GB",
+"ram": "",
+"color": "",
+"condition": "new",
+"aliases": [],
+"specs": {},
+"image_url": null,
+"active": true
+},
+"offers": [
+{
+"id": 18,
+"product_id": "12abd7cc-2baa-43e1-8458-a749807fea9f",
+"store_id": "radar-store.test",
+"store_name": "رادار ستور",
+"price": "21999.00",
+"currency": "EGP",
+"shipping": "0.00",
+"fees": "0.00",
+"availability": "in_stock",
+"url": "https://radar-store.test/p/ipad",
+"warranty": "",
+"sponsored": false,
+"affiliate": false,
+"source_method": "manual",
+"match_confidence": "1.00",
+"observed_at": "2026-10-21T07:28:15.661892+03:00",
+"source_id": null,
+"source_name": null,
+"retrieved_at": null,
+"total": "21999.00",
+"fresh": true,
+"shipping_known": true,
+"fees_known": true,
+"total_status": "confirmed",
+"shipping_free": true
+}
+],
+"best": {
+"offer_id": 18,
+"store_id": "radar-store.test",
+"total": "21999.00",
+"total_status": "confirmed",
+"eligible_count": 1
+},
+"history": [
+{
+"offer_id": 18,
+"price": "21999.00",
+"observed_at": "2026-10-21T07:28:15.661892+03:00",
+"source_method": "manual"
+}
+],
+"daily_lows": [
+{
+"day": "2026-10-21",
+"price": "21999.00"
+}
+],
+"insight": {
+"status": "insufficient_history",
+"days": 0,
+"points": 1,
+"required_days": 14
+},
+"fresh_hours": 48,
+"history_limit_days": null,
+"used_new": null,
+"lens": {
+"usd": "414",
+"usd_rate": "53.1606",
+"gold21_grams": "3.5",
+"then_day": null,
+"egp_change_pct": null,
+"usd_change_pct": null
+},
+"reference": null
+}
+},
+"GET /products/12abd7cc-2baa-43e1-8458-a749807fea9f@member": {
+"status": 200,
+"body": {
+"product": {
+"id": "12abd7cc-2baa-43e1-8458-a749807fea9f",
+"brand": "Apple",
+"model": "iPad 10th gen",
+"category": "tablets",
+"gtin": null,
+"title_ar": "آيباد الجيل العاشر",
+"title_en": "iPad 10th gen",
+"storage": "64GB",
+"ram": "",
+"color": "",
+"condition": "new",
+"aliases": [],
+"specs": {},
+"image_url": null,
+"active": true
+},
+"offers": [
+{
+"id": 18,
+"product_id": "12abd7cc-2baa-43e1-8458-a749807fea9f",
+"store_id": "radar-store.test",
+"store_name": "رادار ستور",
+"price": "21999.00",
+"currency": "EGP",
+"shipping": "0.00",
+"fees": "0.00",
+"availability": "in_stock",
+"url": "https://radar-store.test/p/ipad",
+"warranty": "",
+"sponsored": false,
+"affiliate": false,
+"source_method": "manual",
+"match_confidence": "1.00",
+"observed_at": "2026-10-21T07:28:15.661892+03:00",
+"source_id": null,
+"source_name": null,
+"retrieved_at": null,
+"total": "21999.00",
+"fresh": true,
+"shipping_known": true,
+"fees_known": true,
+"total_status": "confirmed",
+"shipping_free": true
+}
+],
+"best": {
+"offer_id": 18,
+"store_id": "radar-store.test",
+"total": "21999.00",
+"total_status": "confirmed",
+"eligible_count": 1
+},
+"history": [
+{
+"offer_id": 18,
+"price": "21999.00",
+"observed_at": "2026-10-21T07:28:15.661892+03:00",
+"source_method": "manual"
+}
+],
+"daily_lows": [
+{
+"day": "2026-10-21",
+"price": "21999.00"
+}
+],
+"insight": {
+"status": "insufficient_history",
+"days": 0,
+"points": 1,
+"required_days": 14
+},
+"fresh_hours": 48,
+"history_limit_days": null,
+"used_new": null,
+"lens": {
+"usd": "414",
+"usd_rate": "53.1606",
+"gold21_grams": "3.5",
+"then_day": null,
+"egp_change_pct": null,
+"usd_change_pct": null
+},
+"reference": null
+}
+},
+"GET /products/12abd7cc-2baa-43e1-8458-a749807fea9f?#@pro": {
+"status": 200,
+"body": {
+"product": {
+"id": "12abd7cc-2baa-43e1-8458-a749807fea9f",
+"brand": "Apple",
+"model": "iPad 10th gen",
+"category": "tablets",
+"gtin": null,
+"title_ar": "آيباد الجيل العاشر",
+"title_en": "iPad 10th gen",
+"storage": "64GB",
+"ram": "",
+"color": "",
+"condition": "new",
+"aliases": [],
+"specs": {},
+"image_url": null,
+"active": true
+},
+"offers": [
+{
+"id": 18,
+"product_id": "12abd7cc-2baa-43e1-8458-a749807fea9f",
+"store_id": "radar-store.test",
+"store_name": "رادار ستور",
+"price": "21999.00",
+"currency": "EGP",
+"shipping": "0.00",
+"fees": "0.00",
+"availability": "in_stock",
+"url": "https://radar-store.test/p/ipad",
+"warranty": "",
+"sponsored": false,
+"affiliate": false,
+"source_method": "manual",
+"match_confidence": "1.00",
+"observed_at": "2026-10-21T07:28:15.661892+03:00",
+"source_id": null,
+"source_name": null,
+"retrieved_at": null,
+"total": "21999.00",
+"fresh": true,
+"shipping_known": true,
+"fees_known": true,
+"total_status": "confirmed",
+"shipping_free": true
+}
+],
+"best": {
+"offer_id": 18,
+"store_id": "radar-store.test",
+"total": "21999.00",
+"total_status": "confirmed",
+"eligible_count": 1
+},
+"history": [
+{
+"offer_id": 18,
+"price": "21999.00",
+"observed_at": "2026-10-21T07:28:15.661892+03:00",
+"source_method": "manual"
+}
+],
+"daily_lows": [
+{
+"day": "2026-10-21",
+"price": "21999.00"
+}
+],
+"insight": {
+"status": "insufficient_history",
+"days": 0,
+"points": 1,
+"required_days": 14
+},
+"fresh_hours": 48,
+"history_limit_days": null,
+"used_new": null,
+"lens": {
+"usd": "414",
+"usd_rate": "53.1606",
+"gold21_grams": "3.5",
+"then_day": null,
+"egp_change_pct": null,
+"usd_change_pct": null
+},
+"reference": null
+}
+},
+"GET /products/12abd7cc-2baa-43e1-8458-a749807fea9f?@pro": {
+"status": 200,
+"body": {
+"product": {
+"id": "12abd7cc-2baa-43e1-8458-a749807fea9f",
+"brand": "Apple",
+"model": "iPad 10th gen",
+"category": "tablets",
+"gtin": null,
+"title_ar": "آيباد الجيل العاشر",
+"title_en": "iPad 10th gen",
+"storage": "64GB",
+"ram": "",
+"color": "",
+"condition": "new",
+"aliases": [],
+"specs": {},
+"image_url": null,
+"active": true
+},
+"offers": [
+{
+"id": 18,
+"product_id": "12abd7cc-2baa-43e1-8458-a749807fea9f",
+"store_id": "radar-store.test",
+"store_name": "رادار ستور",
+"price": "21999.00",
+"currency": "EGP",
+"shipping": "0.00",
+"fees": "0.00",
+"availability": "in_stock",
+"url": "https://radar-store.test/p/ipad",
+"warranty": "",
+"sponsored": false,
+"affiliate": false,
+"source_method": "manual",
+"match_confidence": "1.00",
+"observed_at": "2026-10-21T07:28:15.661892+03:00",
+"source_id": null,
+"source_name": null,
+"retrieved_at": null,
+"total": "21999.00",
+"fresh": true,
+"shipping_known": true,
+"fees_known": true,
+"total_status": "confirmed",
+"shipping_free": true
+}
+],
+"best": {
+"offer_id": 18,
+"store_id": "radar-store.test",
+"total": "21999.00",
+"total_status": "confirmed",
+"eligible_count": 1
+},
+"history": [
+{
+"offer_id": 18,
+"price": "21999.00",
+"observed_at": "2026-10-21T07:28:15.661892+03:00",
+"source_method": "manual"
+}
+],
+"daily_lows": [
+{
+"day": "2026-10-21",
+"price": "21999.00"
+}
+],
+"insight": {
+"status": "insufficient_history",
+"days": 0,
+"points": 1,
+"required_days": 14
+},
+"fresh_hours": 48,
+"history_limit_days": null,
+"used_new": null,
+"lens": {
+"usd": "414",
+"usd_rate": "53.1606",
+"gold21_grams": "3.5",
+"then_day": null,
+"egp_change_pct": null,
+"usd_change_pct": null
+},
+"reference": null
+}
+},
+"GET /products/12abd7cc-2baa-43e1-8458-a749807fea9f@pro": {
+"status": 200,
+"body": {
+"product": {
+"id": "12abd7cc-2baa-43e1-8458-a749807fea9f",
+"brand": "Apple",
+"model": "iPad 10th gen",
+"category": "tablets",
+"gtin": null,
+"title_ar": "آيباد الجيل العاشر",
+"title_en": "iPad 10th gen",
+"storage": "64GB",
+"ram": "",
+"color": "",
+"condition": "new",
+"aliases": [],
+"specs": {},
+"image_url": null,
+"active": true
+},
+"offers": [
+{
+"id": 18,
+"product_id": "12abd7cc-2baa-43e1-8458-a749807fea9f",
+"store_id": "radar-store.test",
+"store_name": "رادار ستور",
+"price": "21999.00",
+"currency": "EGP",
+"shipping": "0.00",
+"fees": "0.00",
+"availability": "in_stock",
+"url": "https://radar-store.test/p/ipad",
+"warranty": "",
+"sponsored": false,
+"affiliate": false,
+"source_method": "manual",
+"match_confidence": "1.00",
+"observed_at": "2026-10-21T07:28:15.661892+03:00",
+"source_id": null,
+"source_name": null,
+"retrieved_at": null,
+"total": "21999.00",
+"fresh": true,
+"shipping_known": true,
+"fees_known": true,
+"total_status": "confirmed",
+"shipping_free": true
+}
+],
+"best": {
+"offer_id": 18,
+"store_id": "radar-store.test",
+"total": "21999.00",
+"total_status": "confirmed",
+"eligible_count": 1
+},
+"history": [
+{
+"offer_id": 18,
+"price": "21999.00",
+"observed_at": "2026-10-21T07:28:15.661892+03:00",
+"source_method": "manual"
+}
+],
+"daily_lows": [
+{
+"day": "2026-10-21",
+"price": "21999.00"
+}
+],
+"insight": {
+"status": "insufficient_history",
+"days": 0,
+"points": 1,
+"required_days": 14
+},
+"fresh_hours": 48,
+"history_limit_days": null,
+"used_new": null,
+"lens": {
+"usd": "414",
+"usd_rate": "53.1606",
+"gold21_grams": "3.5",
+"then_day": null,
+"egp_change_pct": null,
+"usd_change_pct": null
+},
+"reference": null
+}
+},
+"GET /products/145ad41d-6871-465f-85f5-6077b0d72dea?#@anon": {
+"status": 200,
+"body": {
+"product": {
+"id": "145ad41d-6871-465f-85f5-6077b0d72dea",
+"brand": "Samsung",
+"model": "Galaxy Tab S10 FE",
+"category": "tablets",
+"gtin": null,
+"title_ar": "سامسونج جالاكسي تاب S10 FE",
+"title_en": "Samsung Galaxy Tab S10 FE",
+"storage": "128GB",
+"ram": "",
+"color": "",
+"condition": "new",
+"aliases": [],
+"specs": {
+"ref_as_of": "2026-10-15",
+"ref_price": 29831,
+"screen_in": 10.9,
+"chip_score": 48,
+"ref_source": "https://connect4techs.com/best-tablet-egypt-2026/"
+},
+"image_url": null,
+"active": true
+},
+"offers": [],
+"best": null,
+"history": [],
+"daily_lows": [],
+"insight": {
+"status": "no_current_price"
+},
+"fresh_hours": 48,
+"history_limit_days": null,
+"used_new": null,
+"lens": null,
+"reference": {
+"price": 29831,
+"price_max": null,
+"as_of": "2026-10-15",
+"source": "https://connect4techs.com/best-tablet-egypt-2026/",
+"kind": "list",
+"count": null,
+"avg": null
+}
+}
+},
+"GET /products/145ad41d-6871-465f-85f5-6077b0d72dea?@anon": {
+"status": 200,
+"body": {
+"product": {
+"id": "145ad41d-6871-465f-85f5-6077b0d72dea",
+"brand": "Samsung",
+"model": "Galaxy Tab S10 FE",
+"category": "tablets",
+"gtin": null,
+"title_ar": "سامسونج جالاكسي تاب S10 FE",
+"title_en": "Samsung Galaxy Tab S10 FE",
+"storage": "128GB",
+"ram": "",
+"color": "",
+"condition": "new",
+"aliases": [],
+"specs": {
+"ref_as_of": "2026-10-15",
+"ref_price": 29831,
+"screen_in": 10.9,
+"chip_score": 48,
+"ref_source": "https://connect4techs.com/best-tablet-egypt-2026/"
+},
+"image_url": null,
+"active": true
+},
+"offers": [],
+"best": null,
+"history": [],
+"daily_lows": [],
+"insight": {
+"status": "no_current_price"
+},
+"fresh_hours": 48,
+"history_limit_days": null,
+"used_new": null,
+"lens": null,
+"reference": {
+"price": 29831,
+"price_max": null,
+"as_of": "2026-10-15",
+"source": "https://connect4techs.com/best-tablet-egypt-2026/",
+"kind": "list",
+"count": null,
+"avg": null
+}
+}
+},
+"GET /products/145ad41d-6871-465f-85f5-6077b0d72dea@anon": {
+"status": 200,
+"body": {
+"product": {
+"id": "145ad41d-6871-465f-85f5-6077b0d72dea",
+"brand": "Samsung",
+"model": "Galaxy Tab S10 FE",
+"category": "tablets",
+"gtin": null,
+"title_ar": "سامسونج جالاكسي تاب S10 FE",
+"title_en": "Samsung Galaxy Tab S10 FE",
+"storage": "128GB",
+"ram": "",
+"color": "",
+"condition": "new",
+"aliases": [],
+"specs": {
+"ref_as_of": "2026-10-15",
+"ref_price": 29831,
+"screen_in": 10.9,
+"chip_score": 48,
+"ref_source": "https://connect4techs.com/best-tablet-egypt-2026/"
+},
+"image_url": null,
+"active": true
+},
+"offers": [],
+"best": null,
+"history": [],
+"daily_lows": [],
+"insight": {
+"status": "no_current_price"
+},
+"fresh_hours": 48,
+"history_limit_days": null,
+"used_new": null,
+"lens": null,
+"reference": {
+"price": 29831,
+"price_max": null,
+"as_of": "2026-10-15",
+"source": "https://connect4techs.com/best-tablet-egypt-2026/",
+"kind": "list",
+"count": null,
+"avg": null
+}
+}
+},
+"GET /products/145ad41d-6871-465f-85f5-6077b0d72dea?#@member": {
+"status": 200,
+"body": {
+"product": {
+"id": "145ad41d-6871-465f-85f5-6077b0d72dea",
+"brand": "Samsung",
+"model": "Galaxy Tab S10 FE",
+"category": "tablets",
+"gtin": null,
+"title_ar": "سامسونج جالاكسي تاب S10 FE",
+"title_en": "Samsung Galaxy Tab S10 FE",
+"storage": "128GB",
+"ram": "",
+"color": "",
+"condition": "new",
+"aliases": [],
+"specs": {
+"ref_as_of": "2026-10-15",
+"ref_price": 29831,
+"screen_in": 10.9,
+"chip_score": 48,
+"ref_source": "https://connect4techs.com/best-tablet-egypt-2026/"
+},
+"image_url": null,
+"active": true
+},
+"offers": [],
+"best": null,
+"history": [],
+"daily_lows": [],
+"insight": {
+"status": "no_current_price"
+},
+"fresh_hours": 48,
+"history_limit_days": null,
+"used_new": null,
+"lens": null,
+"reference": {
+"price": 29831,
+"price_max": null,
+"as_of": "2026-10-15",
+"source": "https://connect4techs.com/best-tablet-egypt-2026/",
+"kind": "list",
+"count": null,
+"avg": null
+}
+}
+},
+"GET /products/145ad41d-6871-465f-85f5-6077b0d72dea?@member": {
+"status": 200,
+"body": {
+"product": {
+"id": "145ad41d-6871-465f-85f5-6077b0d72dea",
+"brand": "Samsung",
+"model": "Galaxy Tab S10 FE",
+"category": "tablets",
+"gtin": null,
+"title_ar": "سامسونج جالاكسي تاب S10 FE",
+"title_en": "Samsung Galaxy Tab S10 FE",
+"storage": "128GB",
+"ram": "",
+"color": "",
+"condition": "new",
+"aliases": [],
+"specs": {
+"ref_as_of": "2026-10-15",
+"ref_price": 29831,
+"screen_in": 10.9,
+"chip_score": 48,
+"ref_source": "https://connect4techs.com/best-tablet-egypt-2026/"
+},
+"image_url": null,
+"active": true
+},
+"offers": [],
+"best": null,
+"history": [],
+"daily_lows": [],
+"insight": {
+"status": "no_current_price"
+},
+"fresh_hours": 48,
+"history_limit_days": null,
+"used_new": null,
+"lens": null,
+"reference": {
+"price": 29831,
+"price_max": null,
+"as_of": "2026-10-15",
+"source": "https://connect4techs.com/best-tablet-egypt-2026/",
+"kind": "list",
+"count": null,
+"avg": null
+}
+}
+},
+"GET /products/145ad41d-6871-465f-85f5-6077b0d72dea@member": {
+"status": 200,
+"body": {
+"product": {
+"id": "145ad41d-6871-465f-85f5-6077b0d72dea",
+"brand": "Samsung",
+"model": "Galaxy Tab S10 FE",
+"category": "tablets",
+"gtin": null,
+"title_ar": "سامسونج جالاكسي تاب S10 FE",
+"title_en": "Samsung Galaxy Tab S10 FE",
+"storage": "128GB",
+"ram": "",
+"color": "",
+"condition": "new",
+"aliases": [],
+"specs": {
+"ref_as_of": "2026-10-15",
+"ref_price": 29831,
+"screen_in": 10.9,
+"chip_score": 48,
+"ref_source": "https://connect4techs.com/best-tablet-egypt-2026/"
+},
+"image_url": null,
+"active": true
+},
+"offers": [],
+"best": null,
+"history": [],
+"daily_lows": [],
+"insight": {
+"status": "no_current_price"
+},
+"fresh_hours": 48,
+"history_limit_days": null,
+"used_new": null,
+"lens": null,
+"reference": {
+"price": 29831,
+"price_max": null,
+"as_of": "2026-10-15",
+"source": "https://connect4techs.com/best-tablet-egypt-2026/",
+"kind": "list",
+"count": null,
+"avg": null
+}
+}
+},
+"GET /products/145ad41d-6871-465f-85f5-6077b0d72dea?#@pro": {
+"status": 200,
+"body": {
+"product": {
+"id": "145ad41d-6871-465f-85f5-6077b0d72dea",
+"brand": "Samsung",
+"model": "Galaxy Tab S10 FE",
+"category": "tablets",
+"gtin": null,
+"title_ar": "سامسونج جالاكسي تاب S10 FE",
+"title_en": "Samsung Galaxy Tab S10 FE",
+"storage": "128GB",
+"ram": "",
+"color": "",
+"condition": "new",
+"aliases": [],
+"specs": {
+"ref_as_of": "2026-10-15",
+"ref_price": 29831,
+"screen_in": 10.9,
+"chip_score": 48,
+"ref_source": "https://connect4techs.com/best-tablet-egypt-2026/"
+},
+"image_url": null,
+"active": true
+},
+"offers": [],
+"best": null,
+"history": [],
+"daily_lows": [],
+"insight": {
+"status": "no_current_price"
+},
+"fresh_hours": 48,
+"history_limit_days": null,
+"used_new": null,
+"lens": null,
+"reference": {
+"price": 29831,
+"price_max": null,
+"as_of": "2026-10-15",
+"source": "https://connect4techs.com/best-tablet-egypt-2026/",
+"kind": "list",
+"count": null,
+"avg": null
+}
+}
+},
+"GET /products/145ad41d-6871-465f-85f5-6077b0d72dea?@pro": {
+"status": 200,
+"body": {
+"product": {
+"id": "145ad41d-6871-465f-85f5-6077b0d72dea",
+"brand": "Samsung",
+"model": "Galaxy Tab S10 FE",
+"category": "tablets",
+"gtin": null,
+"title_ar": "سامسونج جالاكسي تاب S10 FE",
+"title_en": "Samsung Galaxy Tab S10 FE",
+"storage": "128GB",
+"ram": "",
+"color": "",
+"condition": "new",
+"aliases": [],
+"specs": {
+"ref_as_of": "2026-10-15",
+"ref_price": 29831,
+"screen_in": 10.9,
+"chip_score": 48,
+"ref_source": "https://connect4techs.com/best-tablet-egypt-2026/"
+},
+"image_url": null,
+"active": true
+},
+"offers": [],
+"best": null,
+"history": [],
+"daily_lows": [],
+"insight": {
+"status": "no_current_price"
+},
+"fresh_hours": 48,
+"history_limit_days": null,
+"used_new": null,
+"lens": null,
+"reference": {
+"price": 29831,
+"price_max": null,
+"as_of": "2026-10-15",
+"source": "https://connect4techs.com/best-tablet-egypt-2026/",
+"kind": "list",
+"count": null,
+"avg": null
+}
+}
+},
+"GET /products/145ad41d-6871-465f-85f5-6077b0d72dea@pro": {
+"status": 200,
+"body": {
+"product": {
+"id": "145ad41d-6871-465f-85f5-6077b0d72dea",
+"brand": "Samsung",
+"model": "Galaxy Tab S10 FE",
+"category": "tablets",
+"gtin": null,
+"title_ar": "سامسونج جالاكسي تاب S10 FE",
+"title_en": "Samsung Galaxy Tab S10 FE",
+"storage": "128GB",
+"ram": "",
+"color": "",
+"condition": "new",
+"aliases": [],
+"specs": {
+"ref_as_of": "2026-10-15",
+"ref_price": 29831,
+"screen_in": 10.9,
+"chip_score": 48,
+"ref_source": "https://connect4techs.com/best-tablet-egypt-2026/"
+},
+"image_url": null,
+"active": true
+},
+"offers": [],
+"best": null,
+"history": [],
+"daily_lows": [],
+"insight": {
+"status": "no_current_price"
+},
+"fresh_hours": 48,
+"history_limit_days": null,
+"used_new": null,
+"lens": null,
+"reference": {
+"price": 29831,
+"price_max": null,
+"as_of": "2026-10-15",
+"source": "https://connect4techs.com/best-tablet-egypt-2026/",
+"kind": "list",
+"count": null,
+"avg": null
+}
+}
+},
+"GET /products/d83963f3-0f92-4d6e-8a50-8913e5b05a35?#@anon": {
+"status": 200,
+"body": {
+"product": {
+"id": "d83963f3-0f92-4d6e-8a50-8913e5b05a35",
+"brand": "Samsung",
+"model": "Galaxy A57",
+"category": "phones",
+"gtin": null,
+"title_ar": "سامسونج جالاكسي A57",
+"title_en": "Samsung Galaxy A57",
+"storage": "256GB",
+"ram": "8GB",
+"color": "",
+"condition": "new",
+"aliases": [],
+"specs": {
+"ref_avg": 28120,
+"ref_kind": "online",
+"camera_mp": 50,
+"ref_as_of": "2026-10-15",
+"ref_count": 7,
+"ref_price": 27950,
+"chip_score": 58,
+"ref_source": "متوسط 7 عرض أونلاين: Noon، B.TECH، Amazon.eg",
+"battery_mah": 5000,
+"ref_price_max": 28999
+},
+"image_url": null,
+"active": true
+},
+"offers": [],
+"best": null,
+"history": [],
+"daily_lows": [],
+"insight": {
+"status": "no_current_price"
+},
+"fresh_hours": 48,
+"history_limit_days": null,
+"used_new": null,
+"lens": null,
+"reference": {
+"price": 27950,
+"price_max": 28999,
+"as_of": "2026-10-15",
+"source": "متوسط 7 عرض أونلاين: Noon، B.TECH، Amazon.eg",
+"kind": "online",
+"count": 7,
+"avg": 28120
+}
+}
+},
+"GET /products/d83963f3-0f92-4d6e-8a50-8913e5b05a35?@anon": {
+"status": 200,
+"body": {
+"product": {
+"id": "d83963f3-0f92-4d6e-8a50-8913e5b05a35",
+"brand": "Samsung",
+"model": "Galaxy A57",
+"category": "phones",
+"gtin": null,
+"title_ar": "سامسونج جالاكسي A57",
+"title_en": "Samsung Galaxy A57",
+"storage": "256GB",
+"ram": "8GB",
+"color": "",
+"condition": "new",
+"aliases": [],
+"specs": {
+"ref_avg": 28120,
+"ref_kind": "online",
+"camera_mp": 50,
+"ref_as_of": "2026-10-15",
+"ref_count": 7,
+"ref_price": 27950,
+"chip_score": 58,
+"ref_source": "متوسط 7 عرض أونلاين: Noon، B.TECH، Amazon.eg",
+"battery_mah": 5000,
+"ref_price_max": 28999
+},
+"image_url": null,
+"active": true
+},
+"offers": [],
+"best": null,
+"history": [],
+"daily_lows": [],
+"insight": {
+"status": "no_current_price"
+},
+"fresh_hours": 48,
+"history_limit_days": null,
+"used_new": null,
+"lens": null,
+"reference": {
+"price": 27950,
+"price_max": 28999,
+"as_of": "2026-10-15",
+"source": "متوسط 7 عرض أونلاين: Noon، B.TECH، Amazon.eg",
+"kind": "online",
+"count": 7,
+"avg": 28120
+}
+}
+},
+"GET /products/d83963f3-0f92-4d6e-8a50-8913e5b05a35@anon": {
+"status": 200,
+"body": {
+"product": {
+"id": "d83963f3-0f92-4d6e-8a50-8913e5b05a35",
+"brand": "Samsung",
+"model": "Galaxy A57",
+"category": "phones",
+"gtin": null,
+"title_ar": "سامسونج جالاكسي A57",
+"title_en": "Samsung Galaxy A57",
+"storage": "256GB",
+"ram": "8GB",
+"color": "",
+"condition": "new",
+"aliases": [],
+"specs": {
+"ref_avg": 28120,
+"ref_kind": "online",
+"camera_mp": 50,
+"ref_as_of": "2026-10-15",
+"ref_count": 7,
+"ref_price": 27950,
+"chip_score": 58,
+"ref_source": "متوسط 7 عرض أونلاين: Noon، B.TECH، Amazon.eg",
+"battery_mah": 5000,
+"ref_price_max": 28999
+},
+"image_url": null,
+"active": true
+},
+"offers": [],
+"best": null,
+"history": [],
+"daily_lows": [],
+"insight": {
+"status": "no_current_price"
+},
+"fresh_hours": 48,
+"history_limit_days": null,
+"used_new": null,
+"lens": null,
+"reference": {
+"price": 27950,
+"price_max": 28999,
+"as_of": "2026-10-15",
+"source": "متوسط 7 عرض أونلاين: Noon، B.TECH، Amazon.eg",
+"kind": "online",
+"count": 7,
+"avg": 28120
+}
+}
+},
+"GET /products/d83963f3-0f92-4d6e-8a50-8913e5b05a35?#@member": {
+"status": 200,
+"body": {
+"product": {
+"id": "d83963f3-0f92-4d6e-8a50-8913e5b05a35",
+"brand": "Samsung",
+"model": "Galaxy A57",
+"category": "phones",
+"gtin": null,
+"title_ar": "سامسونج جالاكسي A57",
+"title_en": "Samsung Galaxy A57",
+"storage": "256GB",
+"ram": "8GB",
+"color": "",
+"condition": "new",
+"aliases": [],
+"specs": {
+"ref_avg": 28120,
+"ref_kind": "online",
+"camera_mp": 50,
+"ref_as_of": "2026-10-15",
+"ref_count": 7,
+"ref_price": 27950,
+"chip_score": 58,
+"ref_source": "متوسط 7 عرض أونلاين: Noon، B.TECH، Amazon.eg",
+"battery_mah": 5000,
+"ref_price_max": 28999
+},
+"image_url": null,
+"active": true
+},
+"offers": [],
+"best": null,
+"history": [],
+"daily_lows": [],
+"insight": {
+"status": "no_current_price"
+},
+"fresh_hours": 48,
+"history_limit_days": null,
+"used_new": null,
+"lens": null,
+"reference": {
+"price": 27950,
+"price_max": 28999,
+"as_of": "2026-10-15",
+"source": "متوسط 7 عرض أونلاين: Noon، B.TECH، Amazon.eg",
+"kind": "online",
+"count": 7,
+"avg": 28120
+}
+}
+},
+"GET /products/d83963f3-0f92-4d6e-8a50-8913e5b05a35?@member": {
+"status": 200,
+"body": {
+"product": {
+"id": "d83963f3-0f92-4d6e-8a50-8913e5b05a35",
+"brand": "Samsung",
+"model": "Galaxy A57",
+"category": "phones",
+"gtin": null,
+"title_ar": "سامسونج جالاكسي A57",
+"title_en": "Samsung Galaxy A57",
+"storage": "256GB",
+"ram": "8GB",
+"color": "",
+"condition": "new",
+"aliases": [],
+"specs": {
+"ref_avg": 28120,
+"ref_kind": "online",
+"camera_mp": 50,
+"ref_as_of": "2026-10-15",
+"ref_count": 7,
+"ref_price": 27950,
+"chip_score": 58,
+"ref_source": "متوسط 7 عرض أونلاين: Noon، B.TECH، Amazon.eg",
+"battery_mah": 5000,
+"ref_price_max": 28999
+},
+"image_url": null,
+"active": true
+},
+"offers": [],
+"best": null,
+"history": [],
+"daily_lows": [],
+"insight": {
+"status": "no_current_price"
+},
+"fresh_hours": 48,
+"history_limit_days": null,
+"used_new": null,
+"lens": null,
+"reference": {
+"price": 27950,
+"price_max": 28999,
+"as_of": "2026-10-15",
+"source": "متوسط 7 عرض أونلاين: Noon، B.TECH، Amazon.eg",
+"kind": "online",
+"count": 7,
+"avg": 28120
+}
+}
+},
+"GET /products/d83963f3-0f92-4d6e-8a50-8913e5b05a35@member": {
+"status": 200,
+"body": {
+"product": {
+"id": "d83963f3-0f92-4d6e-8a50-8913e5b05a35",
+"brand": "Samsung",
+"model": "Galaxy A57",
+"category": "phones",
+"gtin": null,
+"title_ar": "سامسونج جالاكسي A57",
+"title_en": "Samsung Galaxy A57",
+"storage": "256GB",
+"ram": "8GB",
+"color": "",
+"condition": "new",
+"aliases": [],
+"specs": {
+"ref_avg": 28120,
+"ref_kind": "online",
+"camera_mp": 50,
+"ref_as_of": "2026-10-15",
+"ref_count": 7,
+"ref_price": 27950,
+"chip_score": 58,
+"ref_source": "متوسط 7 عرض أونلاين: Noon، B.TECH، Amazon.eg",
+"battery_mah": 5000,
+"ref_price_max": 28999
+},
+"image_url": null,
+"active": true
+},
+"offers": [],
+"best": null,
+"history": [],
+"daily_lows": [],
+"insight": {
+"status": "no_current_price"
+},
+"fresh_hours": 48,
+"history_limit_days": null,
+"used_new": null,
+"lens": null,
+"reference": {
+"price": 27950,
+"price_max": 28999,
+"as_of": "2026-10-15",
+"source": "متوسط 7 عرض أونلاين: Noon، B.TECH، Amazon.eg",
+"kind": "online",
+"count": 7,
+"avg": 28120
+}
+}
+},
+"GET /products/d83963f3-0f92-4d6e-8a50-8913e5b05a35?#@pro": {
+"status": 200,
+"body": {
+"product": {
+"id": "d83963f3-0f92-4d6e-8a50-8913e5b05a35",
+"brand": "Samsung",
+"model": "Galaxy A57",
+"category": "phones",
+"gtin": null,
+"title_ar": "سامسونج جالاكسي A57",
+"title_en": "Samsung Galaxy A57",
+"storage": "256GB",
+"ram": "8GB",
+"color": "",
+"condition": "new",
+"aliases": [],
+"specs": {
+"ref_avg": 28120,
+"ref_kind": "online",
+"camera_mp": 50,
+"ref_as_of": "2026-10-15",
+"ref_count": 7,
+"ref_price": 27950,
+"chip_score": 58,
+"ref_source": "متوسط 7 عرض أونلاين: Noon، B.TECH، Amazon.eg",
+"battery_mah": 5000,
+"ref_price_max": 28999
+},
+"image_url": null,
+"active": true
+},
+"offers": [],
+"best": null,
+"history": [],
+"daily_lows": [],
+"insight": {
+"status": "no_current_price"
+},
+"fresh_hours": 48,
+"history_limit_days": null,
+"used_new": null,
+"lens": null,
+"reference": {
+"price": 27950,
+"price_max": 28999,
+"as_of": "2026-10-15",
+"source": "متوسط 7 عرض أونلاين: Noon، B.TECH، Amazon.eg",
+"kind": "online",
+"count": 7,
+"avg": 28120
+}
+}
+},
+"GET /products/d83963f3-0f92-4d6e-8a50-8913e5b05a35?@pro": {
+"status": 200,
+"body": {
+"product": {
+"id": "d83963f3-0f92-4d6e-8a50-8913e5b05a35",
+"brand": "Samsung",
+"model": "Galaxy A57",
+"category": "phones",
+"gtin": null,
+"title_ar": "سامسونج جالاكسي A57",
+"title_en": "Samsung Galaxy A57",
+"storage": "256GB",
+"ram": "8GB",
+"color": "",
+"condition": "new",
+"aliases": [],
+"specs": {
+"ref_avg": 28120,
+"ref_kind": "online",
+"camera_mp": 50,
+"ref_as_of": "2026-10-15",
+"ref_count": 7,
+"ref_price": 27950,
+"chip_score": 58,
+"ref_source": "متوسط 7 عرض أونلاين: Noon، B.TECH، Amazon.eg",
+"battery_mah": 5000,
+"ref_price_max": 28999
+},
+"image_url": null,
+"active": true
+},
+"offers": [],
+"best": null,
+"history": [],
+"daily_lows": [],
+"insight": {
+"status": "no_current_price"
+},
+"fresh_hours": 48,
+"history_limit_days": null,
+"used_new": null,
+"lens": null,
+"reference": {
+"price": 27950,
+"price_max": 28999,
+"as_of": "2026-10-15",
+"source": "متوسط 7 عرض أونلاين: Noon، B.TECH، Amazon.eg",
+"kind": "online",
+"count": 7,
+"avg": 28120
+}
+}
+},
+"GET /products/d83963f3-0f92-4d6e-8a50-8913e5b05a35@pro": {
+"status": 200,
+"body": {
+"product": {
+"id": "d83963f3-0f92-4d6e-8a50-8913e5b05a35",
+"brand": "Samsung",
+"model": "Galaxy A57",
+"category": "phones",
+"gtin": null,
+"title_ar": "سامسونج جالاكسي A57",
+"title_en": "Samsung Galaxy A57",
+"storage": "256GB",
+"ram": "8GB",
+"color": "",
+"condition": "new",
+"aliases": [],
+"specs": {
+"ref_avg": 28120,
+"ref_kind": "online",
+"camera_mp": 50,
+"ref_as_of": "2026-10-15",
+"ref_count": 7,
+"ref_price": 27950,
+"chip_score": 58,
+"ref_source": "متوسط 7 عرض أونلاين: Noon، B.TECH، Amazon.eg",
+"battery_mah": 5000,
+"ref_price_max": 28999
+},
+"image_url": null,
+"active": true
+},
+"offers": [],
+"best": null,
+"history": [],
+"daily_lows": [],
+"insight": {
+"status": "no_current_price"
+},
+"fresh_hours": 48,
+"history_limit_days": null,
+"used_new": null,
+"lens": null,
+"reference": {
+"price": 27950,
+"price_max": 28999,
+"as_of": "2026-10-15",
+"source": "متوسط 7 عرض أونلاين: Noon، B.TECH، Amazon.eg",
+"kind": "online",
+"count": 7,
+"avg": 28120
+}
 }
 },
 "GET /compare?ids=fecfbc2a-c448-4772-8fb7-734d7bdd8151,fbf2e837-a02e-4528-8abd-6e9c3401ba43,fdb4acbb-4c06-4f92-8a25-2aea51495712#@pro": {
