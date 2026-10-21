@@ -147,6 +147,12 @@ final class ScreenshotTests: XCTestCase {
     func test69_onlineMarketPrice() {
         let a = launch(route: "product:" + pid("ref_a57")); XCTAssertTrue(wait(a, "متوسط السوق أونلاين")); snap(a, "69_product_online_market_price")
     }
+    func test71_budgetAndNewVsUsed() {
+        let a = launch(route: "picks:phones"); wait(a, "أهم حاجة عندك")
+        a.buttons.matching(NSPredicate(format: "label CONTAINS %@", "رشّحلي")).firstMatch.tap()
+        XCTAssertTrue(wait(a, "في حدود ميزانيتك")); snap(a, "71_budget_range")
+        scrollTo(a, "مستعمل · "); snap(a, "72_new_vs_used_verdict")
+    }
     func test70_tabletAdvisorFromReference() {
         let a = launch(route: "picks:phones"); wait(a, "أهم حاجة عندك")
         tapText(a, "تابلت")
