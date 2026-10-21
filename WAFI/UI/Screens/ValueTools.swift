@@ -82,6 +82,7 @@ struct TradeInCard: View {
             ValuePanel(icon: Ic.exchange, title: t("هتبيع القديم؟", "Selling your old one?"), tint: PR.sky, wash: PR.skySoft, action: { open.toggle() }) {
                 vText(t("اختار اللي معاك ونقولك بيتباع مستعمل بكام، والفرق اللي هتدفعه فعلاً.", "Pick what you own: we'll show what it sells for used and what the upgrade really costs."))
             }
+            .accessibilityIdentifier("tradeInCard")
             // opens right under the card, so it stays with the product (same as Android)
             if open {
                 Panel(radius: 22, background: PR.white, border: PR.sky.opacity(0.45)) {
