@@ -12,12 +12,12 @@ final class AppState {
 
     // MARK: server & session
     var serverURL: URL { didSet { UserDefaults.standard.set(serverURL.absoluteString, forKey: "wafi.server.effective") } }
-    private(set) var token: String?
+    private(set) var token: String? { didSet { SessionToken.current = token } }
     var user: SessionUser?
     var me: Me?
     @ObservationIgnored let api = API(
         baseURL: { URL(string: UserDefaults.standard.string(forKey: "wafi.server.effective") ?? "") ?? URL(string: "https://api.example.com")! },
-        token: { Keychain.get("token") },
+        token: { SessionToken.current ?? Keychain.get("token") },
         country: { UserDefaults.standard.string(forKey: "wafi.country.code") ?? "EG" })
     /// Random per install; only used so guest quotas are counted per phone.
     let installId: String = {
@@ -68,8 +68,11 @@ final class AppState {
                 UserDefaults.standard.removeObject(forKey: k)
             }
         }
-        if let injected = args.string(forKey: "WAFI_TOKEN") ?? env["WAFI_TOKEN"], !injected.isEmpty { Keychain.set("token", injected) }
-        token = Keychain.get("token")
+        let injected = (args.string(forKey: "WAFI_TOKEN") ?? env["WAFI_TOKEN"]).flatMap { $0.isEmpty ? nil : $0 }
+        if let injected { Keychain.set("token", injected) }
+        // the keychain can refuse a write (e.g. unsigned simulator builds): the session still works from memory
+        token = Keychain.get("token") ?? injected
+        SessionToken.current = token
         user = Saved.load("wafi.user", as: SessionUser.self)
         config = Saved.load("wafi.config", as: AppConfig.self) ?? AppConfig()
         country = Saved.load("wafi.country", as: Country.self) ?? .egypt
@@ -195,4 +198,9 @@ extension AppState {
         UserDefaults.standard.set(url.absoluteString, forKey: "wafi.server")
         catalogEpoch += 1
     }
+}
+
+/// The signed-in token in memory, read by the API client (the keychain is the persistent copy).
+enum SessionToken {
+    static var current: String?
 }
