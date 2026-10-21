@@ -79,7 +79,7 @@ struct TradeInCard: View {
     @State private var open = false
     var body: some View {
         VStack(spacing: 0) {
-            ValuePanel(icon: Ic.exchange, title: t("هتبيع القديم؟", "Selling your old one?"), tint: PR.sky, wash: PR.skySoft, action: { open.toggle() }) {
+            ValuePanel(icon: Ic.exchange, title: t("هتبيع القديم؟", "Selling your old one?"), tint: PR.sky, wash: PR.skySoft, action: { withAnimation(.easeOut(duration: 0.2)) { open = true } }) {
                 vText(t("اختار اللي معاك ونقولك بيتباع مستعمل بكام، والفرق اللي هتدفعه فعلاً.", "Pick what you own: we'll show what it sells for used and what the upgrade really costs."))
             }
             .accessibilityIdentifier("tradeInCard")

@@ -99,19 +99,24 @@ final class ScreenshotTests: XCTestCase {
         let a = launch(route: "product:" + pid("ip15"), token: member); wait(a, "أرخص سعر")
         let card = a.descendants(matching: .any)["tradeInCard"].firstMatch
         scrollTo(a, "هتبيع القديم")
+        // bring the card to the middle of the screen, away from the bottom bar
+        let start = a.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.7))
+        start.press(forDuration: 0.05, thenDragTo: a.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.45)))
+        card.tap()
         let f = a.descendants(matching: .any)["tradeInSearch"].firstMatch
-        for i in 0..<3 where !f.exists {
-            if i > 0 { a.swipeUp(velocity: .slow) }      // the bottom "add to basket" bar may cover the card
-            if card.exists && card.isHittable { card.tap() } else { tapText(a, "هتبيع القديم") }
-            _ = f.waitForExistence(timeout: 5)
-        }
-        if !f.exists { snap(a, "64_debug_trade_in") }
+        if !f.waitForExistence(timeout: 8) { snap(a, "64_debug_trade_in") }
         XCTAssertTrue(f.exists, "trade-in panel did not open")
-        if !f.isHittable { a.swipeUp(velocity: .slow) }
+        if !f.isHittable {
+            a.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.7)).press(forDuration: 0.05,
+                thenDragTo: a.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.4)))
+        }
         f.tap(); f.typeText("iPhone 13")
         wait(a, "(مستعمل)")
         let hit = a.buttons.matching(NSPredicate(format: "label CONTAINS %@", "(مستعمل)")).firstMatch
-        if !hit.isHittable { a.swipeUp(velocity: .slow) }
+        if !hit.isHittable {
+            a.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.7)).press(forDuration: 0.05,
+                thenDragTo: a.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.4)))
+        }
         hit.tap()
         XCTAssertTrue(wait(a, "بيتباع مستعمل حوالي"), "no trade-in result")
         scrollTo(a, "سعر الجديد"); snap(a, "64_trade_in")
