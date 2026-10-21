@@ -96,6 +96,10 @@ for q in ("iPhone 13", "iPhone 1", "iPhone"):
     rec("GET", "/suggest", {"q": q}, who="member")
 rec("GET", "/tools/trade-in", {"from_id": P["ip13_used"], "to_id": P["ip15"]}, who="member")
 rec("POST", "/advisor/phones", body={"priority": "camera", "category": "phones", "budget": 15000})
+# market prices before any store lists a product (reference catalog), and a used-car search
+for pri in ("value", "camera", "battery", "gaming"):
+    rec("POST", "/advisor/phones", body={"priority": pri, "category": "tablets", "budget": 15000})
+rec("POST", "/advisor/cars", body={"family": "couple", "usage": "mixed", "economy": True, "condition": "used", "budget": 1000000})
 # Saudi Arabia, for the country screenshots
 rec("GET", "/products", {**IN, "limit": 40}, country="SA")
 

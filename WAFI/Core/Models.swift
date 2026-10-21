@@ -332,8 +332,9 @@ struct ProductDetail: Decodable {
     var historyLimitDays: Int?
     var usedNew: UsedNew?
     var lens: PriceLens?
+    var reference: ReferencePrice?
     enum CodingKeys: String, CodingKey {
-        case product, offers, best, insight, lens
+        case product, offers, best, insight, lens, reference
         case dailyLows = "daily_lows", freshHours = "fresh_hours", historyLimitDays = "history_limit_days", usedNew = "used_new"
     }
     init(from d: Decoder) throws {
@@ -347,6 +348,29 @@ struct ProductDetail: Decodable {
         historyLimitDays = try c.decodeIfPresent(Int.self, forKey: .historyLimitDays)
         usedNew = try c.decodeIfPresent(UsedNew.self, forKey: .usedNew)
         lens = try c.decodeIfPresent(PriceLens.self, forKey: .lens)
+        reference = try c.decodeIfPresent(ReferencePrice.self, forKey: .reference)
+    }
+}
+
+/// A market price for a product no store lists yet: a published price list, or the average of current online offers.
+struct ReferencePrice: Decodable, Hashable {
+    var price: Money
+    var priceMax: Money?
+    var asOf: String?
+    var source: String?
+    var kind: String = "list"
+    var count: Int?
+    var avg: Money?
+    enum CodingKeys: String, CodingKey { case price, source, kind, count, avg; case priceMax = "price_max", asOf = "as_of" }
+    init(from d: Decoder) throws {
+        let c = try d.container(keyedBy: CodingKeys.self)
+        price = try c.decode(Decimal.self, forKey: .price)
+        priceMax = try c.decodeIfPresent(Decimal.self, forKey: .priceMax)
+        asOf = try c.decodeIfPresent(String.self, forKey: .asOf)
+        source = try c.decodeIfPresent(String.self, forKey: .source)
+        kind = try c.decodeIfPresent(String.self, forKey: .kind) ?? "list"
+        count = try c.decodeIfPresent(Int.self, forKey: .count)
+        avg = try c.decodeIfPresent(Decimal.self, forKey: .avg)
     }
 }
 
@@ -816,10 +840,18 @@ struct Pick: Decodable, Identifiable, Hashable {
     var used: UsedListing?
     var vsNew: VsNew?
     var running: CarRunning?
+    var priceKind: String = "live"
+    var refPrice: Money?
+    var refPriceMax: Money?
+    var refAsOf: String?
+    var refKind: String?
+    var refCount: Int?
     enum CodingKeys: String, CodingKey {
         case id, brand, model, category, offers, specs, score, condition, used, running
         case titleAr = "title_ar", titleEn = "title_en", minPrice = "min_price", bestTotal = "best_total", imageUrl = "image_url"
         case reasonsAr = "reasons_ar", reasonsEn = "reasons_en", vsNew = "vs_new"
+        case priceKind = "price_kind", refPrice = "ref_price", refPriceMax = "ref_price_max", refAsOf = "ref_as_of"
+        case refKind = "ref_kind", refCount = "ref_count"
     }
     init(from d: Decoder) throws {
         let c = try d.container(keyedBy: CodingKeys.self)
@@ -841,8 +873,15 @@ struct Pick: Decodable, Identifiable, Hashable {
         used = try c.decodeIfPresent(UsedListing.self, forKey: .used)
         vsNew = try c.decodeIfPresent(VsNew.self, forKey: .vsNew)
         running = try c.decodeIfPresent(CarRunning.self, forKey: .running)
+        priceKind = try c.decodeIfPresent(String.self, forKey: .priceKind) ?? "live"
+        refPrice = try c.decodeIfPresent(Decimal.self, forKey: .refPrice)
+        refPriceMax = try c.decodeIfPresent(Decimal.self, forKey: .refPriceMax)
+        refAsOf = try c.decodeIfPresent(String.self, forKey: .refAsOf)
+        refKind = try c.decodeIfPresent(String.self, forKey: .refKind)
+        refCount = try c.decodeIfPresent(Int.self, forKey: .refCount)
     }
-    var price: Money? { bestTotal ?? minPrice }
+    var price: Money? { bestTotal ?? minPrice ?? refPrice }
+    var isReference: Bool { bestTotal == nil && minPrice == nil && refPrice != nil }
     var summary: ProductSummary {
         ProductSummary(id: id, brand: brand, model: model, category: category, titleAr: titleAr, titleEn: titleEn,
                        minPrice: minPrice, bestTotal: bestTotal, offers: offers, specs: specs, imageUrl: imageUrl)

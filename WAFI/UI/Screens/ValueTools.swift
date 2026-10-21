@@ -210,6 +210,9 @@ struct UsedLeadCard: View {
 struct PickValueLines: View {
     var p: Pick
     var body: some View {
+        if p.isReference {
+            line(Ic.globe, refLabel(kind: p.refKind, count: p.refCount, asOf: p.refAsOf), PR.amberDeep)
+        }
         if let u = p.used {
             line(Ic.tag, t("متوفر مستعمل بـ ", "Available used for ") + Fmt.money(u.price) + t(" · وفّر ", " · save ") + Fmt.money(u.saving), PR.signalDeep)
         }
@@ -270,3 +273,41 @@ struct SignInWall: View {
         .padding(.horizontal, 20).padding(.vertical, 12)
     }
 }
+
+// MARK: - market price (no store lists it yet)
+
+func refLabel(kind: String?, count: Int?, asOf: String?) -> String {
+    let date = asOf.flatMap { Fmt.parseDay($0) }.map { d -> String in
+        let f = DateFormatter(); f.locale = Lang.locale; f.dateFormat = Lang.isArabic ? "d MMMM yyyy" : "d MMM yyyy"
+        return f.string(from: d)
+    }
+    if kind == "online" {
+        return t("متوسط السوق أونلاين", "Online market average") + (count.map { t(" · \(Fmt.number($0)) عرض", " · \($0) offers") } ?? "")
+            + (date.map { " · " + $0 } ?? "")
+    }
+    return t("سعر تقريبي من قوائم الأسعار", "Approximate, from price lists") + (date.map { " · " + $0 } ?? "")
+}
+
+/// Product page: the market price while no connected store lists the product, and a way to look for offers.
+struct ReferencePriceCard: View {
+    var r: ReferencePrice
+    var query: String
+    @Environment(Router.self) private var router
+    var body: some View {
+        ValuePanel(icon: Ic.globe, title: r.kind == "online" ? t("سعره في السوق دلوقتي", "Its market price now") : t("سعر تقريبي", "Approximate price"),
+                   tint: PR.amberDeep, wash: PR.amberWash) {
+            let range = r.priceMax.flatMap { $0 > r.price ? " – " + Fmt.money($0) : nil } ?? ""
+            Text("≈ " + Fmt.money(r.price) + range).font(.titleM).foregroundStyle(PR.ink)
+            vNote(refLabel(kind: r.kind, count: r.count, asOf: r.asOf))
+            if r.kind == "online", let a = r.avg {
+                vNote(t("المتوسط الحسابي ", "Mean ") + Fmt.money(a) + t("، والرقم فوق هو الوسيط.", "; the figure above is the median."))
+            }
+            vNote(t("لسه مفيش متجر مربوط بيعرضه عندنا — السعر للاسترشاد.", "No connected store lists it yet — a guide, not an offer."))
+            PRButton(t("دوّر على أحسن سعر", "Find the best price"), kind: .outline, icon: Ic.search) {
+                router.push(.search(category: nil, query: query, part: nil))
+            }
+            .padding(.top, 6)
+        }
+    }
+}
+

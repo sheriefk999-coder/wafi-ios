@@ -122,9 +122,13 @@ private struct ProductBody: View {
                     .padding(.top, 2)
                 }
                 .padding(.horizontal, 20)
-                BestPrice(d: d)
+                let onlyMarket = d.reference != nil && d.offers.isEmpty      // no store yet: the market price says it all
+                if !onlyMarket { BestPrice(d: d) }
+                if let r = d.reference {
+                    ReferencePriceCard(r: r, query: [p.brand, p.model, p.storage].filter { !$0.isEmpty }.joined(separator: " "))
+                }
                 if let u = d.usedNew { UsedNewCard(u: u) }
-                InsightCard(i: d.insight)
+                if !onlyMarket { InsightCard(i: d.insight) }
                 if let l = d.lens { PriceLensCard(l: l) }
                 if !["fashion", "other"].contains(p.category) { TradeInCard(toId: p.id, category: p.category) }
                 HistoryCard(lows: d.dailyLows, limitDays: d.historyLimitDays)

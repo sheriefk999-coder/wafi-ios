@@ -133,7 +133,25 @@ final class ScreenshotTests: XCTestCase {
         let a = launch(route: "picks:cars"); wait(a, "مين هيركب")
         a.buttons.matching(NSPredicate(format: "label CONTAINS %@", "رشّحلي")).firstMatch.tap()
         wait(a, "تكلفة التشغيل"); snap(a, "66_car_running_cost")
-        scrollTo(a, "أرخص من الجديد"); snap(a, "67_car_used_vs_new")
+    }
+    func test67_usedCarVsNew() {
+        let a = launch(route: "picks:cars"); wait(a, "مين هيركب")
+        scrollTo(a, "مستعملة"); tapText(a, "مستعملة")
+        a.buttons.matching(NSPredicate(format: "label CONTAINS %@", "رشّحلي")).firstMatch.tap()
+        XCTAssertTrue(wait(a, "الاختيار الأنسب")); scrollTo(a, "أرخص من الجديد"); snap(a, "67_car_used_vs_new")
+    }
+    // market price before any store lists a product
+    func test68_referencePrice() {
+        let a = launch(route: "product:" + pid("ref_tab_s10fe")); XCTAssertTrue(wait(a, "سعر تقريبي")); snap(a, "68_product_reference_price")
+    }
+    func test69_onlineMarketPrice() {
+        let a = launch(route: "product:" + pid("ref_a57")); XCTAssertTrue(wait(a, "متوسط السوق أونلاين")); snap(a, "69_product_online_market_price")
+    }
+    func test70_tabletAdvisorFromReference() {
+        let a = launch(route: "picks:phones"); wait(a, "أهم حاجة عندك")
+        tapText(a, "تابلت")
+        a.buttons.matching(NSPredicate(format: "label CONTAINS %@", "رشّحلي")).firstMatch.tap()
+        XCTAssertTrue(wait(a, "سعر تقريبي من قوائم")); snap(a, "70_tablet_advisor_reference_prices")
     }
     func test18_deals() { let a = launch(route: "deals"); wait(a, "نزلت أسعارها"); snap(a, "18_deals") }
     func test19_compare() { let a = launch(route: "compare:" + [pid("a55"), pid("ip15"), pid("rn13")].joined(separator: ","), token: pro); wait(a, "الأرخص"); snap(a, "19_compare") }
