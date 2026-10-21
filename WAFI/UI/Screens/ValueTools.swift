@@ -78,14 +78,19 @@ struct TradeInCard: View {
     @Environment(Router.self) private var router
     @State private var open = false
     var body: some View {
-        ValuePanel(icon: Ic.exchange, title: t("هتبيع القديم؟", "Selling your old one?"), tint: PR.sky, wash: PR.skySoft, action: { open = true }) {
-            vText(t("اختار اللي معاك ونقولك بيتباع مستعمل بكام، والفرق اللي هتدفعه فعلاً.", "Pick what you own: we'll show what it sells for used and what the upgrade really costs."))
-        }
-        .sheet(isPresented: $open) {
-            TradeInSheet(toId: toId, category: category, guestBlocked: !app.isSignedIn && app.config.searchRequiresAccount) {
-                open = false; router.push(.signIn)
+        VStack(spacing: 0) {
+            ValuePanel(icon: Ic.exchange, title: t("هتبيع القديم؟", "Selling your old one?"), tint: PR.sky, wash: PR.skySoft, action: { open.toggle() }) {
+                vText(t("اختار اللي معاك ونقولك بيتباع مستعمل بكام، والفرق اللي هتدفعه فعلاً.", "Pick what you own: we'll show what it sells for used and what the upgrade really costs."))
             }
-            .presentationDetents([.medium, .large])
+            // opens right under the card, so it stays with the product (same as Android)
+            if open {
+                Panel(radius: 22, background: PR.white, border: PR.sky.opacity(0.45)) {
+                    TradeInSheet(toId: toId, category: category, guestBlocked: !app.isSignedIn && app.config.searchRequiresAccount) {
+                        router.push(.signIn)
+                    }
+                }
+                .padding(.horizontal, 20).padding(.vertical, 4)
+            }
         }
     }
 }
@@ -101,9 +106,8 @@ private struct TradeInSheet: View {
     @State private var busy = false
     @State private var failed = false
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 10) {
-                Text(t("فرق التغيير", "Upgrade cost")).font(.headlineS).foregroundStyle(PR.ink)
+        VStack(alignment: .leading, spacing: 10) {
+                Text(t("فرق التغيير", "Upgrade cost")).font(.titleM).foregroundStyle(PR.ink)
                 if guestBlocked {
                     vText(t("سجّل حسابك المجاني الأول عشان تدوّر على جهازك.", "Sign in with a free account first to look up your device."))
                     PRButton(t("دخول / حساب جديد", "Sign in / create account"), action: onSignIn)
@@ -125,10 +129,8 @@ private struct TradeInSheet: View {
                         .buttonStyle(Pressable())
                     }
                 }
-            }
-            .padding(20)
         }
-        .background(PR.white)
+        .frame(maxWidth: .infinity, alignment: .leading)
         .task(id: q) {
             let s = q.trimmingCharacters(in: .whitespaces)
             guard s.count >= 2, !guestBlocked else { hits = []; return }

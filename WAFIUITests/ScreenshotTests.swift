@@ -98,14 +98,17 @@ final class ScreenshotTests: XCTestCase {
     func test64_tradeIn() {
         let a = launch(route: "product:" + pid("ip15"), token: member); wait(a, "أرخص سعر")
         scrollTo(a, "هتبيع القديم"); a.swipeUp(velocity: .slow)          // clear of the bottom "add to basket" bar
+        tapText(a, "هتبيع القديم")
         let f = a.textFields.firstMatch
-        for _ in 0..<3 where !f.exists {
-            tapText(a, "هتبيع القديم"); _ = f.waitForExistence(timeout: 6)
-        }
-        XCTAssertTrue(f.exists, "trade-in sheet did not open")
+        XCTAssertTrue(f.waitForExistence(timeout: 8), "trade-in panel did not open")
+        if !f.isHittable { a.swipeUp(velocity: .slow) }
         f.tap(); f.typeText("iPhone 13")
-        wait(a, "(مستعمل)"); tapText(a, "(مستعمل)")
-        wait(a, "الفرق اللي هتدفعه"); snap(a, "64_trade_in")
+        wait(a, "(مستعمل)")
+        let hit = a.buttons.matching(NSPredicate(format: "label CONTAINS %@", "(مستعمل)")).firstMatch
+        if !hit.isHittable { a.swipeUp(velocity: .slow) }
+        hit.tap()
+        XCTAssertTrue(wait(a, "بيتباع مستعمل حوالي"), "no trade-in result")
+        scrollTo(a, "سعر الجديد"); snap(a, "64_trade_in")
     }
     func test65_phoneStepUp() {
         let a = launch(route: "picks:phones"); wait(a, "أهم حاجة عندك")
