@@ -71,8 +71,9 @@ final class AppState {
         let injected = (args.string(forKey: "WAFI_TOKEN") ?? env["WAFI_TOKEN"]).flatMap { $0.isEmpty ? nil : $0 }
         if let injected { Keychain.set("token", injected) }
         // the keychain can refuse a write (e.g. unsigned simulator builds): the session still works from memory
-        token = Keychain.get("token") ?? injected
-        SessionToken.current = token
+        let tok = Keychain.get("token") ?? injected
+        token = tok
+        SessionToken.current = tok
         user = Saved.load("wafi.user", as: SessionUser.self)
         config = Saved.load("wafi.config", as: AppConfig.self) ?? AppConfig()
         country = Saved.load("wafi.country", as: Country.self) ?? .egypt
