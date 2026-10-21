@@ -164,6 +164,7 @@ struct SearchScreen: View {
                 Results(res: model.results, retry: { model.reload() }) { p in
                     ProductRow(p: p) { router.push(.product(p.id)) }.padding(.horizontal, 20).padding(.vertical, 5)
                 }
+                if model.results.value != nil { OnlineResults(query: model.filter.query) }
             }
             .padding(.bottom, 90)
         }

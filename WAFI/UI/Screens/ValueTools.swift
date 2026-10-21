@@ -311,3 +311,107 @@ struct ReferencePriceCard: View {
     }
 }
 
+// MARK: - new vs used, per pick and per PC part
+
+/// "New ≈ X · Used ≈ Y" and the verdict: is used worth it here.
+struct NewUsedBlock: View {
+    var nu: NewUsed
+    var body: some View {
+        let v = nu.verdict
+        let tint: Color = v.choice == "used" ? PR.signalDeep : (v.choice == "either" ? PR.amberDeep : PR.ink)
+        let wash: Color = v.choice == "used" ? PR.signalSoft : (v.choice == "either" ? PR.amberWash : PR.paper)
+        let label = v.choice == "used" ? t("المستعمل يستاهل", "Used is worth it") : (v.choice == "either" ? t("الاتنين ينفعوا", "Either works") : t("خده جديد", "Buy new"))
+        let usedLabel: String = {
+            switch nu.used.kind {
+            case "listing": return t("عرض مستعمل", "used listing")
+            case "online": return t("متوسط المستعمل أونلاين", "online used average") + (nu.used.count.map { " (\(Fmt.number($0)))" } ?? "")
+            default: return t("تقدير", "estimate")
+            }
+        }()
+        VStack(alignment: .leading, spacing: 4) {
+            HStack(alignment: .center) {
+                VStack(alignment: .leading, spacing: 1) { vNote(t("جديد", "New")); Text("≈ " + Fmt.money(nu.newPrice)).font(.titleS).foregroundStyle(PR.ink) }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                VStack(alignment: .leading, spacing: 1) { vNote(t("مستعمل · ", "Used · ") + usedLabel); Text("≈ " + Fmt.money(nu.used.price)).font(.titleS).foregroundStyle(PR.ink) }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                Text(label).font(.labelM).foregroundStyle(tint).padding(.horizontal, 8).padding(.vertical, 4)
+                    .background(PR.white).clipShape(RoundedRectangle(cornerRadius: 10))
+            }
+            Text(Lang.isArabic ? v.reasonAr : v.reasonEn).font(.bodyS).foregroundStyle(PR.ink).fixedSize(horizontal: false, vertical: true)
+            if nu.used.kind == "estimate" {
+                vNote(t("المستعمل هنا تقدير (حوالي \(Fmt.number(nu.used.sharePct ?? 0))٪ من الجديد) لحد ما نلاقي عروض فعلية.",
+                        "Used here is an estimate (about \(nu.used.sharePct ?? 0)% of new) until real listings show up."))
+            }
+        }
+        .padding(10).frame(maxWidth: .infinity, alignment: .leading).background(wash).clipShape(RoundedRectangle(cornerRadius: 14))
+    }
+}
+
+/// Top of the advisor: what the budget buys.
+struct BudgetViewCard: View {
+    var bv: BudgetView
+    var body: some View {
+        ValuePanel(icon: Ic.wallet, title: t("في حدود ميزانيتك", "Within your budget"), tint: PR.signalDeep, wash: PR.signalSoft) {
+            vText(t("\(Fmt.number(bv.count)) اختيار، من ", "\(bv.count) options, from ") + Fmt.money(bv.min) + t(" لـ ", " to ") + Fmt.money(bv.max)
+                  + t(" · النص بـ ", " · middle ") + Fmt.money(bv.median))
+        }
+    }
+}
+
+struct ApproxPartsNote: View {
+    var n: Int
+    var body: some View {
+        if n > 0 {
+            Text(t("\(Fmt.number(n)) من القطع بسعر السوق التقريبي (لسه مفيش متجر مربوط بيعرضها) — الإجمالي للاسترشاد.",
+                   "\(n) parts are at approximate market prices (no connected store lists them yet) — the total is a guide."))
+                .font(.bodyS).foregroundStyle(PR.amberDeep).padding(.horizontal, 24).padding(.vertical, 4)
+        }
+    }
+}
+
+// MARK: - "found online" under search
+
+/// Web results for the query: leads with any price the page mentions, never verified offers.
+struct OnlineResults: View {
+    var query: String
+    @Environment(AppState.self) private var app
+    @Environment(\.openURL) private var openURL
+    @State private var res: OnlineSearchResponse?
+    var body: some View {
+        Group {
+            if let r = res, !r.items.isEmpty {
+                VStack(alignment: .leading, spacing: 8) {
+                    HStack(spacing: 8) {
+                        Image(systemName: Ic.globe).foregroundStyle(PR.sky)
+                        Text(t("لقيناه أونلاين", "Found online")).font(.titleS).foregroundStyle(PR.ink)
+                    }
+                    vNote((Lang.isArabic ? r.noticeAr : r.notice) ?? "")
+                    ForEach(r.items) { it in
+                        Button { if it.url.hasPrefix("https://"), let u = URL(string: it.url) { openURL(u) } } label: {
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text(it.title).font(.bodyM).foregroundStyle(PR.ink).lineLimit(2).multilineTextAlignment(.leading)
+                                vNote(it.sourceDomain)
+                                if let p = it.priceEgp, let d = Decimal(string: p) {
+                                    Text(t("مذكور: ", "Mentioned: ") + Fmt.money(d) + t(" (غير مؤكد)", " (unverified)")).font(.labelM).foregroundStyle(PR.amberDeep)
+                                }
+                            }
+                            .padding(12).frame(maxWidth: .infinity, alignment: .leading)
+                            .background(PR.white).clipShape(RoundedRectangle(cornerRadius: 16))
+                            .overlay(RoundedRectangle(cornerRadius: 16).stroke(PR.line, lineWidth: 1))
+                        }
+                        .buttonStyle(Pressable())
+                    }
+                }
+                .padding(.horizontal, 20).padding(.vertical, 8)
+            }
+        }
+        .task(id: query) {
+            let q = query.trimmingCharacters(in: .whitespaces)
+            guard app.config.onlineSearch, app.isSignedIn, q.count >= 2 else { res = nil; return }
+            try? await Task.sleep(for: .milliseconds(400))
+            if Task.isCancelled { return }
+            res = try? await app.api.onlineProductSearch(q)
+        }
+    }
+}
+

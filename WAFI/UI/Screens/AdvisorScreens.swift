@@ -426,6 +426,7 @@ private struct PcAdviceBody: View {
             if let ua = a.usedAdvice { PcUsedAdviceCard(ua: ua) }
             ForEach(Array(a.parts.enumerated()), id: \.element.productId) { i, p in
                 Panel(radius: 20, action: { router.push(.product(p.productId)) }) {
+                  VStack(alignment: .leading, spacing: 8) {
                     HStack(alignment: .top, spacing: 12) {
                         Image(systemName: partIcon(p.part)).font(.system(size: 20)).foregroundStyle(partColor(p.part))
                             .frame(width: 44, height: 44).background(partColor(p.part).opacity(0.14)).clipShape(RoundedRectangle(cornerRadius: 14))
@@ -436,11 +437,17 @@ private struct PcAdviceBody: View {
                             if let u = p.used { UsedTagLine(u: u) }
                         }
                         Spacer(minLength: 4)
-                        PriceText(value: p.price, font: .titleS)
+                        VStack(alignment: .trailing, spacing: 2) {
+                            PriceText(value: p.price, font: .titleS)
+                            if p.pricedBy == "reference" { Text(t("تقريبي", "approx.")).font(.labelS).foregroundStyle(PR.amberDeep) }
+                        }
                     }
+                    if let nu = p.newUsed { NewUsedBlock(nu: nu) }
+                  }
                 }
                 .padding(.horizontal, 20).padding(.vertical, 5).reveal(i)
             }
+            ApproxPartsNote(n: a.approximateParts)
             if !a.missing.isEmpty {
                 Text(t("مش لاقيين في الكتالوج: ", "Not in the catalog yet: ") + a.missing.map(partLabel).joined(separator: "، "))
                     .font(.bodyS).foregroundStyle(PR.amberDeep).padding(.horizontal, 24).padding(.vertical, 6)
@@ -612,6 +619,7 @@ private struct PicksBody: View {
                         .font(.bodyS).foregroundStyle(PR.amberDeep).padding(12).frame(maxWidth: .infinity, alignment: .leading)
                         .background(PR.amberSoft).clipShape(RoundedRectangle(cornerRadius: 14)).padding(.horizontal, 20).padding(.vertical, 6)
                 }
+                if let bv = r.budgetView { BudgetViewCard(bv: bv) }
                 if let ua = r.usedAdvice { UsedLeadCard(ua: ua) }
                 if let rs = r.running { RunningSummaryCard(rs: rs) }
                 ForEach(Array(r.picks.enumerated()), id: \.element.id) { i, p in
@@ -648,6 +656,7 @@ private struct PicksBody: View {
                     }
                 }
                 PickValueLines(p: p)
+                if let nu = p.newUsed { NewUsedBlock(nu: nu) }
             }
         }
         .padding(.horizontal, 20).padding(.vertical, 6)

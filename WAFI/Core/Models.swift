@@ -634,9 +634,12 @@ struct PcPart: Decodable, Hashable {
     var reasonAr: String
     var reasonEn: String
     var used: UsedListing?
+    var newUsed: NewUsed?
+    var pricedBy: String = "best_total"
     enum CodingKeys: String, CodingKey {
         case part, price, specs, used
         case productId = "product_id", titleAr = "title_ar", titleEn = "title_en", reasonAr = "reason_ar", reasonEn = "reason_en"
+        case newUsed = "new_used", pricedBy = "priced_by"
     }
     init(from d: Decoder) throws {
         let c = try d.container(keyedBy: CodingKeys.self)
@@ -649,6 +652,105 @@ struct PcPart: Decodable, Hashable {
         reasonAr = try c.decodeIfPresent(String.self, forKey: .reasonAr) ?? ""
         reasonEn = try c.decodeIfPresent(String.self, forKey: .reasonEn) ?? ""
         used = try c.decodeIfPresent(UsedListing.self, forKey: .used)
+        newUsed = try c.decodeIfPresent(NewUsed.self, forKey: .newUsed)
+        pricedBy = try c.decodeIfPresent(String.self, forKey: .pricedBy) ?? "best_total"
+    }
+}
+
+/// The used side of a pick: a real listing, the online used average, or an estimate (labelled).
+struct UsedSide: Decodable, Hashable {
+    var price: Money
+    var kind: String
+    var productId: String?
+    var count: Int?
+    var sharePct: Int?
+    enum CodingKeys: String, CodingKey { case price, kind, count; case productId = "product_id", sharePct = "share_pct" }
+    init(from d: Decoder) throws {
+        let c = try d.container(keyedBy: CodingKeys.self)
+        price = try c.decode(Decimal.self, forKey: .price)
+        kind = try c.decode(String.self, forKey: .kind)
+        productId = try c.decodeIfPresent(String.self, forKey: .productId)
+        count = try c.decodeIfPresent(Int.self, forKey: .count)
+        sharePct = try c.decodeIfPresent(Int.self, forKey: .sharePct)
+    }
+}
+
+/// Is the used one worth it: new | either | used, with the numbers.
+struct NewUsedVerdict: Decodable, Hashable {
+    var choice: String
+    var saving: Money
+    var savingPct: Int
+    var reasonAr: String
+    var reasonEn: String
+    enum CodingKeys: String, CodingKey { case choice, saving; case savingPct = "saving_pct", reasonAr = "reason_ar", reasonEn = "reason_en" }
+    init(from d: Decoder) throws {
+        let c = try d.container(keyedBy: CodingKeys.self)
+        choice = try c.decode(String.self, forKey: .choice)
+        saving = try c.decode(Decimal.self, forKey: .saving)
+        savingPct = try c.decode(Int.self, forKey: .savingPct)
+        reasonAr = try c.decode(String.self, forKey: .reasonAr)
+        reasonEn = try c.decode(String.self, forKey: .reasonEn)
+    }
+}
+
+struct NewUsed: Decodable, Hashable {
+    var newPrice: Money
+    var used: UsedSide
+    var verdict: NewUsedVerdict
+    enum CodingKeys: String, CodingKey { case used, verdict; case newPrice = "new_price" }
+    init(from d: Decoder) throws {
+        let c = try d.container(keyedBy: CodingKeys.self)
+        newPrice = try c.decode(Decimal.self, forKey: .newPrice)
+        used = try c.decode(UsedSide.self, forKey: .used)
+        verdict = try c.decode(NewUsedVerdict.self, forKey: .verdict)
+    }
+}
+
+/// What the budget buys: how many options and their price range.
+struct BudgetView: Decodable, Hashable {
+    var count: Int
+    var min: Money
+    var max: Money
+    var median: Money
+    init(from d: Decoder) throws {
+        enum K: String, CodingKey { case count, min, max, median }
+        let c = try d.container(keyedBy: K.self)
+        count = try c.decode(Int.self, forKey: .count)
+        min = try c.decode(Decimal.self, forKey: .min)
+        max = try c.decode(Decimal.self, forKey: .max)
+        median = try c.decode(Decimal.self, forKey: .median)
+    }
+}
+
+/// "Found online": web results as leads, never verified offers.
+struct OnlineSearchCandidate: Decodable, Identifiable, Hashable {
+    var id: String { url }
+    var title: String
+    var url: String
+    var snippet: String
+    var priceEgp: String?
+    var sourceDomain: String
+    enum CodingKeys: String, CodingKey { case title, url, snippet; case priceEgp = "price_egp", sourceDomain = "source_domain" }
+    init(from d: Decoder) throws {
+        let c = try d.container(keyedBy: CodingKeys.self)
+        title = try c.decodeIfPresent(String.self, forKey: .title) ?? ""
+        url = try c.decodeIfPresent(String.self, forKey: .url) ?? ""
+        snippet = try c.decodeIfPresent(String.self, forKey: .snippet) ?? ""
+        priceEgp = try c.decodeIfPresent(String.self, forKey: .priceEgp)
+        sourceDomain = try c.decodeIfPresent(String.self, forKey: .sourceDomain) ?? ""
+    }
+}
+
+struct OnlineSearchResponse: Decodable {
+    var items: [OnlineSearchCandidate]
+    var notice: String?
+    var noticeAr: String?
+    enum CodingKeys: String, CodingKey { case items, notice; case noticeAr = "notice_ar" }
+    init(from d: Decoder) throws {
+        let c = try d.container(keyedBy: CodingKeys.self)
+        items = try c.decodeIfPresent([OnlineSearchCandidate].self, forKey: .items) ?? []
+        notice = try c.decodeIfPresent(String.self, forKey: .notice)
+        noticeAr = try c.decodeIfPresent(String.self, forKey: .noticeAr)
     }
 }
 
@@ -675,9 +777,10 @@ struct PcBuild: Decodable, Hashable {
     /// The advisor's focus part ("gpu" / "cpu").
     var focus: String?
     var usedAdvice: UsedAdvice?
+    var approximateParts: Int = 0
     enum CodingKeys: String, CodingKey {
         case use, budget, total, remaining, complete, parts, missing, notes, resolution, split, focus
-        case withinBudget = "within_budget", usedAdvice = "used_advice"
+        case withinBudget = "within_budget", usedAdvice = "used_advice", approximateParts = "approximate_parts"
     }
     init(from d: Decoder) throws {
         let c = try d.container(keyedBy: CodingKeys.self)
@@ -694,6 +797,7 @@ struct PcBuild: Decodable, Hashable {
         split = try c.decodeIfPresent([BudgetSlice].self, forKey: .split) ?? []
         focus = try c.decodeIfPresent(String.self, forKey: .focus)
         usedAdvice = try c.decodeIfPresent(UsedAdvice.self, forKey: .usedAdvice)
+        approximateParts = try c.decodeIfPresent(Int.self, forKey: .approximateParts) ?? 0
     }
 }
 
@@ -846,12 +950,13 @@ struct Pick: Decodable, Identifiable, Hashable {
     var refAsOf: String?
     var refKind: String?
     var refCount: Int?
+    var newUsed: NewUsed?
     enum CodingKeys: String, CodingKey {
         case id, brand, model, category, offers, specs, score, condition, used, running
         case titleAr = "title_ar", titleEn = "title_en", minPrice = "min_price", bestTotal = "best_total", imageUrl = "image_url"
         case reasonsAr = "reasons_ar", reasonsEn = "reasons_en", vsNew = "vs_new"
         case priceKind = "price_kind", refPrice = "ref_price", refPriceMax = "ref_price_max", refAsOf = "ref_as_of"
-        case refKind = "ref_kind", refCount = "ref_count"
+        case refKind = "ref_kind", refCount = "ref_count", newUsed = "new_used"
     }
     init(from d: Decoder) throws {
         let c = try d.container(keyedBy: CodingKeys.self)
@@ -879,6 +984,7 @@ struct Pick: Decodable, Identifiable, Hashable {
         refAsOf = try c.decodeIfPresent(String.self, forKey: .refAsOf)
         refKind = try c.decodeIfPresent(String.self, forKey: .refKind)
         refCount = try c.decodeIfPresent(Int.self, forKey: .refCount)
+        newUsed = try c.decodeIfPresent(NewUsed.self, forKey: .newUsed)
     }
     var price: Money? { bestTotal ?? minPrice ?? refPrice }
     var isReference: Bool { bestTotal == nil && minPrice == nil && refPrice != nil }
@@ -894,7 +1000,8 @@ struct AdviceResponse: Decodable {
     var notes: [String]
     var usedAdvice: PickUsedAdvice?
     var running: RunningSummary?
-    enum CodingKeys: String, CodingKey { case picks, considered, notes, running; case usedAdvice = "used_advice" }
+    var budgetView: BudgetView?
+    enum CodingKeys: String, CodingKey { case picks, considered, notes, running; case usedAdvice = "used_advice", budgetView = "budget_view" }
     init(from d: Decoder) throws {
         let c = try d.container(keyedBy: CodingKeys.self)
         picks = try c.decodeIfPresent([Pick].self, forKey: .picks) ?? []
@@ -902,6 +1009,7 @@ struct AdviceResponse: Decodable {
         notes = try c.decodeIfPresent([String].self, forKey: .notes) ?? []
         usedAdvice = try c.decodeIfPresent(PickUsedAdvice.self, forKey: .usedAdvice)
         running = try c.decodeIfPresent(RunningSummary.self, forKey: .running)
+        budgetView = try c.decodeIfPresent(BudgetView.self, forKey: .budgetView)
     }
 }
 
@@ -1066,8 +1174,9 @@ struct AppConfig: Codable, Equatable {
     var storeUrl: String?
     var supportEmail: String?
     var searchRequiresAccount = true
+    var onlineSearch = false
     enum CodingKeys: String, CodingKey {
-        case searchRequiresAccount = "search_requires_account"
+        case searchRequiresAccount = "search_requires_account", onlineSearch = "online_search"
         case firebase, ads, pro, features, announcement, maintenance
         case freeWatchLimit = "free_watch_limit", freeHistoryDays = "free_history_days", freeWalletItems = "free_wallet_items"
         case quotas
@@ -1093,6 +1202,7 @@ struct AppConfig: Codable, Equatable {
         storeUrl = try c.decodeIfPresent(String.self, forKey: .storeUrl)
         supportEmail = try c.decodeIfPresent(String.self, forKey: .supportEmail)
         searchRequiresAccount = try c.decodeIfPresent(Bool.self, forKey: .searchRequiresAccount) ?? true
+        onlineSearch = try c.decodeIfPresent(Bool.self, forKey: .onlineSearch) ?? false
     }
 }
 

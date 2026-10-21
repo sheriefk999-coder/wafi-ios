@@ -194,6 +194,10 @@ final class API: @unchecked Sendable {
         try await send("GET", "compare", query: [.init(name: "ids", value: ids.joined(separator: ","))])
     }
     func suggest(_ q: String) async throws -> SuggestResponse { try await send("GET", "suggest", query: [.init(name: "q", value: q)]) }
+    /// "Found online": web results for a product (leads, never verified offers).
+    func onlineProductSearch(_ query: String, limit: Int = 8) async throws -> OnlineSearchResponse {
+        try await send("GET", "agent/search", query: [.init(name: "q", value: query), .init(name: "limit", value: "\(min(max(limit, 1), 10))")])
+    }
     func tradeIn(from: String, to: String) async throws -> TradeIn {
         try await send("GET", "tools/trade-in", query: [.init(name: "from_id", value: from), .init(name: "to_id", value: to)])
     }

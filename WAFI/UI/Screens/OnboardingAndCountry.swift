@@ -275,6 +275,7 @@ struct PcBuilderScreen: View {
         if let ua = b.usedAdvice { PcUsedAdviceCard(ua: ua) }
         ForEach(b.parts, id: \.part) { p in
             Panel(padding: 12, action: { router.push(.product(p.productId)) }) {
+              VStack(alignment: .leading, spacing: 8) {
                 HStack(spacing: 12) {
                     IconTile(icon: partIcon(p.part), size: 48, iconSize: 22)
                     VStack(alignment: .leading, spacing: 1) {
@@ -285,11 +286,17 @@ struct PcBuilderScreen: View {
                         if let u = p.used { UsedTagLine(u: u) }
                     }
                     Spacer(minLength: 4)
-                    PriceText(value: p.price, font: .titleS)
+                    VStack(alignment: .trailing, spacing: 2) {
+                        PriceText(value: p.price, font: .titleS)
+                        if p.pricedBy == "reference" { Text(t("تقريبي", "approx.")).font(.labelS).foregroundStyle(PR.amberDeep) }
+                    }
                 }
+                if let nu = p.newUsed { NewUsedBlock(nu: nu) }
+              }
             }
             .padding(.horizontal, 20).padding(.vertical, 5)
         }
+        ApproxPartsNote(n: b.approximateParts)
         if !b.missing.isEmpty {
             Panel(background: PR.amberSoft, border: PR.amberSoft) {
                 VStack(alignment: .leading, spacing: 8) {
