@@ -453,15 +453,24 @@ private struct PcAdviceBody: View {
                     .font(.bodyS).foregroundStyle(PR.amberDeep).padding(.horizontal, 24).padding(.vertical, 6)
             }
             Panel(background: PR.paper, border: PR.paper) {
-                HStack {
-                    VStack(alignment: .leading, spacing: 0) {
-                        Text(t("الإجمالي", "Total")).font(.labelM).foregroundStyle(PR.inkSoft)
-                        AnimatedMoney(value: a.total, font: .headlineS)
+                VStack(alignment: .leading, spacing: 8) {
+                    HStack {
+                        VStack(alignment: .leading, spacing: 0) {
+                            Text(t("الإجمالي", "Total")).font(.labelM).foregroundStyle(PR.inkSoft)
+                            AnimatedMoney(value: a.total, font: .headlineS)
+                        }
+                        Spacer()
+                        VStack(alignment: .trailing, spacing: 0) {
+                            Text(!a.withinBudget ? t("فوق الميزانية بـ", "Over budget by")
+                                 : a.maxed ? t("ميزانيتك تكفي وزيادة", "Budget to spare")
+                                 : t("فاضل من ميزانيتك", "Left of your budget")).font(.labelM).foregroundStyle(PR.inkSoft)
+                            Text(Fmt.money(abs(a.remaining))).font(.titleM).foregroundStyle(a.withinBudget ? PR.signalDeep : PR.danger)
+                        }
                     }
-                    Spacer()
-                    VStack(alignment: .trailing, spacing: 0) {
-                        Text(a.withinBudget ? t("فاضل من ميزانيتك", "Left of your budget") : t("فوق الميزانية بـ", "Over budget by")).font(.labelM).foregroundStyle(PR.inkSoft)
-                        Text(Fmt.money(abs(a.remaining))).font(.titleM).foregroundStyle(a.withinBudget ? PR.signalDeep : PR.danger)
+                    if a.maxed && a.withinBudget {
+                        Text(t("دي أقوى تجميعة متاحة في الكتالوج — مش محتاج تصرف الميزانية كلها؛ الباقي بيفضل معاك.",
+                               "This is the strongest build in the catalog — you don't need to spend the whole budget; the rest stays with you."))
+                            .font(.bodyS).foregroundStyle(PR.signalDeep)
                     }
                 }
             }

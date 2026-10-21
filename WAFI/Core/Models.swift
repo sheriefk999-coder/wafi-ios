@@ -86,6 +86,11 @@ extension Dictionary where Key == String, Value == JSONValue {
     func int(_ k: String) -> Int? { self[k]?.int }
     func num(_ k: String) -> Double? { self[k]?.double }
     func flag(_ k: String) -> Bool? { self[k]?.bool }
+    func money(_ k: String) -> Money? {
+        if let s = self[k]?.string, let d = Decimal(string: s) { return d }
+        if let n = self[k]?.double { return Decimal(n) }
+        return nil
+    }
 }
 
 // MARK: - Identity
@@ -202,8 +207,14 @@ struct ProductSummary: Codable, Identifiable, Hashable {
         inStock = try c.decodeIfPresent(Bool.self, forKey: .inStock)
     }
 
-    /// The price to show in lists: confirmed best total, else lowest listed price.
+    /// The price from a store: confirmed best total, else lowest listed price. Nil until a store lists it.
     var displayPrice: Money? { bestTotal ?? minPrice }
+    /// The approximate market price from the reference catalog, shown until a store has a real offer.
+    var refPrice: Money? { specs.money("ref_price") }
+    /// True when no store lists this yet but we have an approximate market price to show.
+    var isReference: Bool { displayPrice == nil && refPrice != nil }
+    /// The price to show in lists: a real offer price when we have one, otherwise the approximate price.
+    var shownPrice: Money? { displayPrice ?? refPrice }
 }
 
 struct Items<T: Decodable>: Decodable { var items: [T] }
@@ -789,6 +800,8 @@ struct PcBuild: Decodable, Hashable {
     var total: Money
     var remaining: Money
     var withinBudget: Bool
+    /// True when every part is already the strongest compatible option: a bigger budget buys nothing more.
+    var maxed: Bool = false
     var complete: Bool
     var parts: [PcPart]
     var missing: [String]
@@ -800,7 +813,7 @@ struct PcBuild: Decodable, Hashable {
     var usedAdvice: UsedAdvice?
     var approximateParts: Int = 0
     enum CodingKeys: String, CodingKey {
-        case use, budget, total, remaining, complete, parts, missing, notes, resolution, split, focus
+        case use, budget, total, remaining, complete, parts, missing, notes, resolution, split, focus, maxed
         case withinBudget = "within_budget", usedAdvice = "used_advice", approximateParts = "approximate_parts"
     }
     init(from d: Decoder) throws {
@@ -810,6 +823,7 @@ struct PcBuild: Decodable, Hashable {
         total = try c.decode(Decimal.self, forKey: .total)
         remaining = try c.decode(Decimal.self, forKey: .remaining)
         withinBudget = try c.decode(Bool.self, forKey: .withinBudget)
+        maxed = try c.decodeIfPresent(Bool.self, forKey: .maxed) ?? false
         complete = try c.decode(Bool.self, forKey: .complete)
         parts = try c.decode([PcPart].self, forKey: .parts)
         missing = try c.decodeIfPresent([String].self, forKey: .missing) ?? []
