@@ -379,27 +379,52 @@ struct OnlineResults: View {
     @State private var res: OnlineSearchResponse?
     var body: some View {
         Group {
-            if let r = res, !r.items.isEmpty {
+            if let r = res, !(r.products.isEmpty && r.items.isEmpty) {
                 VStack(alignment: .leading, spacing: 8) {
                     HStack(spacing: 8) {
                         Image(systemName: Ic.globe).foregroundStyle(PR.sky)
-                        Text(t("لقيناه أونلاين", "Found online")).font(.titleS).foregroundStyle(PR.ink)
+                        Text(t("منتجات من متاجر أونلاين", "Products from online stores")).font(.titleS).foregroundStyle(PR.ink)
                     }
                     vNote((Lang.isArabic ? r.noticeAr : r.notice) ?? "")
-                    ForEach(r.items) { it in
-                        Button { if it.url.hasPrefix("https://"), let u = URL(string: it.url) { openURL(u) } } label: {
-                            VStack(alignment: .leading, spacing: 2) {
-                                Text(it.title).font(.bodyM).foregroundStyle(PR.ink).lineLimit(2).multilineTextAlignment(.leading)
-                                vNote(it.sourceDomain)
-                                if let p = it.priceEgp, let d = Decimal(string: p) {
-                                    Text(t("مذكور: ", "Mentioned: ") + Fmt.money(d) + t(" (غير مؤكد)", " (unverified)")).font(.labelM).foregroundStyle(PR.amberDeep)
+                    // real products from a licensed shopping search (image, price, store) — the card opens the store's page
+                    ForEach(r.products) { pr in
+                        Button { if pr.url.hasPrefix("https://"), let u = URL(string: pr.url) { openURL(u) } } label: {
+                            HStack(spacing: 12) {
+                                ProductImage(category: "other", part: nil, imageURL: pr.imageUrl, size: 58, radius: 14).frame(width: 58, height: 58)
+                                VStack(alignment: .leading, spacing: 2) {
+                                    Text(pr.title).font(.bodyM).foregroundStyle(PR.ink).lineLimit(2).multilineTextAlignment(.leading)
+                                    if !pr.store.isEmpty {
+                                        HStack(spacing: 4) { Image(systemName: Ic.store).font(.system(size: 11)).foregroundStyle(PR.inkSoft); vNote(pr.store) }
+                                    }
+                                    if let p = pr.priceEgp, let d = Decimal(string: p) {
+                                        Text(Fmt.money(d) + t(" · غير مؤكد", " · unverified")).font(.titleS).foregroundStyle(PR.ink)
+                                    }
                                 }
+                                Spacer(minLength: 4)
+                                Image(systemName: Ic.external).font(.system(size: 14)).foregroundStyle(PR.inkSoft)
                             }
-                            .padding(12).frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(10).frame(maxWidth: .infinity, alignment: .leading)
                             .background(PR.white).clipShape(RoundedRectangle(cornerRadius: 16))
                             .overlay(RoundedRectangle(cornerRadius: 16).stroke(PR.line, lineWidth: 1))
                         }
                         .buttonStyle(Pressable())
+                    }
+                    if r.products.isEmpty {
+                        ForEach(r.items) { it in
+                            Button { if it.url.hasPrefix("https://"), let u = URL(string: it.url) { openURL(u) } } label: {
+                                VStack(alignment: .leading, spacing: 2) {
+                                    Text(it.title).font(.bodyM).foregroundStyle(PR.ink).lineLimit(2).multilineTextAlignment(.leading)
+                                    vNote(it.sourceDomain)
+                                    if let p = it.priceEgp, let d = Decimal(string: p) {
+                                        Text(t("مذكور: ", "Mentioned: ") + Fmt.money(d) + t(" (غير مؤكد)", " (unverified)")).font(.labelM).foregroundStyle(PR.amberDeep)
+                                    }
+                                }
+                                .padding(12).frame(maxWidth: .infinity, alignment: .leading)
+                                .background(PR.white).clipShape(RoundedRectangle(cornerRadius: 16))
+                                .overlay(RoundedRectangle(cornerRadius: 16).stroke(PR.line, lineWidth: 1))
+                            }
+                            .buttonStyle(Pressable())
+                        }
                     }
                 }
                 .padding(.horizontal, 20).padding(.vertical, 8)

@@ -32,7 +32,9 @@ struct AccountScreen: View {
                     if app.isSignedIn {
                         ItemRow(icon: Ic.shield, title: t("الأمان والحساب", "Security & account"), value: t("الإيميل، كلمة السر، حذف الحساب", "Email, password, delete account")) { router.push(.security) }
                     }
+                    #if DEBUG
                     ItemRow(icon: Ic.server, title: t("عنوان الخادم", "Server address"), value: app.serverURL.absoluteString, ltr: true) { router.push(.server) }
+                    #endif
                     ItemRow(icon: Ic.info, title: t("عن التطبيق", "About"), value: "WAFI — Know More. Pay Smarter. · " + t("نسخة", "Version") + " \(AppInfo.version) (\(AppInfo.build))")
                 }
                 .modifier(RowGroup())

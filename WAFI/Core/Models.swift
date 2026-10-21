@@ -741,13 +741,34 @@ struct OnlineSearchCandidate: Decodable, Identifiable, Hashable {
     }
 }
 
+/// A product from an online shopping search (image, price, store) — a licensed result, not scraped; the link opens the store.
+struct OnlineProduct: Decodable, Identifiable, Hashable {
+    var id: String { url }
+    var title: String
+    var priceEgp: String?
+    var imageUrl: String?
+    var store: String
+    var url: String
+    enum CodingKeys: String, CodingKey { case title, store, url; case priceEgp = "price_egp", imageUrl = "image_url" }
+    init(from d: Decoder) throws {
+        let c = try d.container(keyedBy: CodingKeys.self)
+        title = try c.decodeIfPresent(String.self, forKey: .title) ?? ""
+        priceEgp = try c.decodeIfPresent(String.self, forKey: .priceEgp)
+        imageUrl = try c.decodeIfPresent(String.self, forKey: .imageUrl)
+        store = try c.decodeIfPresent(String.self, forKey: .store) ?? ""
+        url = try c.decodeIfPresent(String.self, forKey: .url) ?? ""
+    }
+}
+
 struct OnlineSearchResponse: Decodable {
+    var products: [OnlineProduct]
     var items: [OnlineSearchCandidate]
     var notice: String?
     var noticeAr: String?
-    enum CodingKeys: String, CodingKey { case items, notice; case noticeAr = "notice_ar" }
+    enum CodingKeys: String, CodingKey { case products, items, notice; case noticeAr = "notice_ar" }
     init(from d: Decoder) throws {
         let c = try d.container(keyedBy: CodingKeys.self)
+        products = try c.decodeIfPresent([OnlineProduct].self, forKey: .products) ?? []
         items = try c.decodeIfPresent([OnlineSearchCandidate].self, forKey: .items) ?? []
         notice = try c.decodeIfPresent(String.self, forKey: .notice)
         noticeAr = try c.decodeIfPresent(String.self, forKey: .noticeAr)
