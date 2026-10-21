@@ -35,8 +35,8 @@ struct ProductFilter: Equatable, Hashable {
     /// relevance | price_asc | price_desc | newest
     var sort = "relevance"
     var limit = 50
-    /// Only products some store has in stock (the default).
-    var inStock = true
+    /// Only products some store has in stock. Off by default so the market catalog (no stock yet) still shows.
+    var inStock = false
 
     var queryItems: [URLQueryItem] {
         var q: [URLQueryItem] = []
