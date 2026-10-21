@@ -97,8 +97,13 @@ final class ScreenshotTests: XCTestCase {
     }
     func test64_tradeIn() {
         let a = launch(route: "product:" + pid("ip15"), token: member); wait(a, "أرخص سعر")
-        scrollTo(a, "هتبيع القديم"); tapText(a, "هتبيع القديم"); wait(a, "فرق التغيير")
-        let f = a.textFields.firstMatch; _ = f.waitForExistence(timeout: 5); f.tap(); f.typeText("iPhone 13")
+        scrollTo(a, "هتبيع القديم"); a.swipeUp(velocity: .slow)          // clear of the bottom "add to basket" bar
+        let f = a.textFields.firstMatch
+        for _ in 0..<3 where !f.exists {
+            tapText(a, "هتبيع القديم"); _ = f.waitForExistence(timeout: 6)
+        }
+        XCTAssertTrue(f.exists, "trade-in sheet did not open")
+        f.tap(); f.typeText("iPhone 13")
         wait(a, "(مستعمل)"); tapText(a, "(مستعمل)")
         wait(a, "الفرق اللي هتدفعه"); snap(a, "64_trade_in")
     }
