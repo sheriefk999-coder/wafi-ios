@@ -57,6 +57,9 @@ class H(BaseHTTPRequestHandler):
         for k in keys(self.command, u.path, canon_query(u.query), body, who):
             if k in FIX:
                 r = FIX[k]
+                # a guest's "sign in required" is never replayed to a signed-in caller (the app would sign out)
+                if r["status"] == 401 and who != "anon" and not k.endswith("@" + who):
+                    continue
                 return self._send(r["status"], r["body"], r.get("headers", {}))
         # anything never recorded: an empty success the app shows as "nothing yet"
         sys.stderr.write(f"MISS {self.command} {self.path} ({who})\n")
