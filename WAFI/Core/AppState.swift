@@ -16,7 +16,7 @@ final class AppState {
     var user: SessionUser?
     var me: Me?
     @ObservationIgnored let api = API(
-        baseURL: { URL(string: UserDefaults.standard.string(forKey: "wafi.server.effective") ?? "") ?? URL(string: "https://api.example.com")! },
+        baseURL: { URL(string: UserDefaults.standard.string(forKey: "wafi.server.effective") ?? "") ?? URL(string: "https://api.13-48-163-20.sslip.io")! },
         token: { SessionToken.current ?? Keychain.get("token") },
         country: { UserDefaults.standard.string(forKey: "wafi.country.code") ?? "EG" })
     /// Random per install; only used so guest quotas are counted per phone.
@@ -58,8 +58,8 @@ final class AppState {
         let env = ProcessInfo.processInfo.environment
         let args = UserDefaults.standard
         let fromBundle = Bundle.main.object(forInfoDictionaryKey: "WAFIAPIBaseURL") as? String
-        let raw = args.string(forKey: "WAFI_API") ?? env["WAFI_API"] ?? UserDefaults.standard.string(forKey: "wafi.server") ?? fromBundle ?? "https://api.example.com"
-        let url = URL(string: raw) ?? URL(string: "https://api.example.com")!
+        let raw = args.string(forKey: "WAFI_API") ?? env["WAFI_API"] ?? UserDefaults.standard.string(forKey: "wafi.server") ?? fromBundle ?? "https://api.13-48-163-20.sslip.io"
+        let url = URL(string: raw) ?? URL(string: "https://api.13-48-163-20.sslip.io")!
         serverURL = url
         UserDefaults.standard.set(url.absoluteString, forKey: "wafi.server.effective")
         if args.bool(forKey: "WAFI_RESET") {      // UI tests: every launch starts clean
