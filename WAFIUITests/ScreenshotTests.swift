@@ -97,14 +97,15 @@ final class ScreenshotTests: XCTestCase {
     }
     func test64_tradeIn() {
         let a = launch(route: "product:" + pid("ip15"), token: member); wait(a, "أرخص سعر")
-        let card = a.buttons["tradeInCard"]
+        let card = a.descendants(matching: .any)["tradeInCard"].firstMatch
         scrollTo(a, "هتبيع القديم")
-        let f = a.textFields.firstMatch
+        let f = a.descendants(matching: .any)["tradeInSearch"].firstMatch
         for i in 0..<3 where !f.exists {
             if i > 0 { a.swipeUp(velocity: .slow) }      // the bottom "add to basket" bar may cover the card
-            if card.exists { card.tap() } else { tapText(a, "هتبيع القديم") }
+            if card.exists && card.isHittable { card.tap() } else { tapText(a, "هتبيع القديم") }
             _ = f.waitForExistence(timeout: 5)
         }
+        if !f.exists { snap(a, "64_debug_trade_in") }
         XCTAssertTrue(f.exists, "trade-in panel did not open")
         if !f.isHittable { a.swipeUp(velocity: .slow) }
         f.tap(); f.typeText("iPhone 13")

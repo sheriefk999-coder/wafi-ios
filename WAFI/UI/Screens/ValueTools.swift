@@ -115,7 +115,7 @@ private struct TradeInSheet: View {
                 } else if let r = result {
                     resultView(r)
                 } else {
-                    PRField(label: t("اكتب اسم اللي معاك (مثلاً iPhone 13)", "Type what you own (e.g. iPhone 13)"), text: $q, icon: Ic.search)
+                    PRField(label: t("اكتب اسم اللي معاك (مثلاً iPhone 13)", "Type what you own (e.g. iPhone 13)"), text: $q, icon: Ic.search, fieldId: "tradeInSearch")
                     if busy { vNote(t("بنحسب…", "Working it out…")) }
                     if failed { vNote(t("مقدرناش نحسب دلوقتي، جرّب تاني.", "Couldn't work it out right now, try again.")) }
                     ForEach(hits) { h in

@@ -333,6 +333,8 @@ struct PRField: View {
     var ltr = false
     var placeholder: String?
     var content: UITextContentType?
+    /// Accessibility identifier for the text field itself (UI tests).
+    var fieldId: String? = nil
     @FocusState private var focused: Bool
     @State private var reveal = false
 
@@ -355,6 +357,7 @@ struct PRField: View {
                 .autocorrectionDisabled(keyboard != .default || secure)
                 .environment(\.layoutDirection, ltr ? .leftToRight : (Lang.isArabic ? .rightToLeft : .leftToRight))
                 .focused($focused)
+                .accessibilityIdentifier(fieldId ?? "")
                 if secure {
                     Button { reveal.toggle() } label: { Image(systemName: reveal ? Ic.eyeOff : Ic.eye).foregroundStyle(PR.inkSoft) }
                         .accessibilityLabel(reveal ? t("إخفاء", "Hide") : t("إظهار", "Show"))
