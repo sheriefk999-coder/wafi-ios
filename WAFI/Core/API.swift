@@ -250,13 +250,13 @@ final class API: @unchecked Sendable {
     }
 
     func installment(price: Decimal, down: Decimal) async throws -> InstallmentResult {
-        try await send("GET", "tools/installment", query: [.init(name: "price", value: API.num(price)), .init(name: "down", value: API.num(down))])
+        try await send("GET", "tools/installment", query: [.init(name: "price", value: "\(price)"), .init(name: "down", value: "\(down)")])
     }
 
     func goldCalc(grams: Decimal, karat: Int, makingPerGram: Decimal, monthlySaving: Decimal?) async throws -> GoldCalcResult {
-        var q: [URLQueryItem] = [.init(name: "grams", value: API.num(grams)), .init(name: "karat", value: String(karat)),
-                                 .init(name: "making_per_gram", value: API.num(makingPerGram))]
-        if let monthlySaving { q.append(.init(name: "monthly_saving", value: API.num(monthlySaving))) }
+        var q: [URLQueryItem] = [.init(name: "grams", value: "\(grams)"), .init(name: "karat", value: String(karat)),
+                                 .init(name: "making_per_gram", value: "\(makingPerGram)")]
+        if let monthlySaving { q.append(.init(name: "monthly_saving", value: "\(monthlySaving)")) }
         return try await send("GET", "tools/gold-calc", query: q)
     }
 
