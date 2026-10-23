@@ -241,6 +241,25 @@ final class API: @unchecked Sendable {
         return try await send("POST", "advisor/fashion", json: j)
     }
 
+    func homeAdvice(budget: Decimal?, category: String, priority: String, kind: String?, roomM2: Double?) async throws -> AdviceResponse {
+        var j: [String: Any] = ["category": category, "priority": priority]
+        if let budget { j["budget"] = API.num(budget) }
+        if let kind { j["kind"] = kind }
+        if let roomM2 { j["room_m2"] = roomM2 }
+        return try await send("POST", "advisor/home", json: j)
+    }
+
+    func installment(price: Decimal, down: Decimal) async throws -> InstallmentResult {
+        try await send("GET", "tools/installment", query: [.init(name: "price", value: API.num(price)), .init(name: "down", value: API.num(down))])
+    }
+
+    func goldCalc(grams: Decimal, karat: Int, makingPerGram: Decimal, monthlySaving: Decimal?) async throws -> GoldCalcResult {
+        var q: [URLQueryItem] = [.init(name: "grams", value: API.num(grams)), .init(name: "karat", value: String(karat)),
+                                 .init(name: "making_per_gram", value: API.num(makingPerGram))]
+        if let monthlySaving { q.append(.init(name: "monthly_saving", value: API.num(monthlySaving))) }
+        return try await send("GET", "tools/gold-calc", query: q)
+    }
+
     // MARK: watchlist, alerts, Pro
 
     func watchlist() async throws -> [WatchItem] { try await send("GET", "me/watchlist", as: Items<WatchItem>.self).items }

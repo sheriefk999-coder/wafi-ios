@@ -14,6 +14,9 @@ struct AdvisorHubScreen: View {
             Tile(icon: Ic.phone, bg: PR.skySoft, fg: PR.sky, title: t("موبايل", "Phone"), sub: t("كاميرا ولا بطارية ولا ألعاب؟", "Camera, battery or games?"), go: .picks("phones")),
             Tile(icon: Ic.car, bg: Color(0xFDEDE7, 0x3A1C10), fg: Color(0xC2521F, 0xFF9466), title: t("عربية", "Car"), sub: t("لوحدك ولا عيلة، مدينة ولا سفر", "Solo or family, city or highway"), go: .picks("cars")),
             Tile(icon: Ic.shirt, bg: Color(0xFCE8F3, 0x3A1029), fg: Color(0xC2287A, 0xFF7CC0), title: t("هدوم", "Clothes"), sub: t("شكل حلو ولا دفا؟ ومقاسك إيه", "Look or warmth? And your size"), go: .picks("fashion")),
+            Tile(icon: Ic.monitor, bg: Color(0xE7F0FD, 0x10243A), fg: Color(0x1F5FC2, 0x66A3FF), title: t("أجهزة", "Home"), sub: t("تلفزيون، تكييف، أجهزة منزلية", "TVs, ACs and appliances"), go: .picks("home")),
+            Tile(icon: Ic.card, bg: Color(0xEAF6EE, 0x10291A), fg: Color(0x1C7A43, 0x66CF95), title: t("تقسيط", "Installment"), sub: t("القسط الشهري وإجمالي التكلفة لأي سعر", "Monthly cost and total for any price"), go: .installment),
+            Tile(icon: Ic.gold, bg: PR.amberSoft, fg: PR.amberDeep, title: t("حاسبة الدهب", "Gold calc"), sub: t("سعر قطعة الدهب وخطة ادخار", "A piece's price and a savings plan"), go: .goldCalc),
         ]
         Screen(title: t("المستشار", "Advisor")) {
             VStack(spacing: 0) {
@@ -509,9 +512,16 @@ struct PicksAdvisorScreen: View {
     @State private var occasion = "casual"
     @State private var size = "any"
     @State private var clothesBudget = 2_500
+    // home electronics
+    @State private var homeCat = "tv"
+    @State private var homePriority = "balanced"
+    @State private var homeKind = "refrigerator"
+    @State private var homeRoom = 20
+    @State private var homeBudget = 25_000
 
     var body: some View {
-        let title = kind == "cars" ? t("مستشار العربيات", "Car advisor") : kind == "fashion" ? t("مستشار الهدوم", "Clothes advisor") : t("مستشار الموبايلات", "Phone advisor")
+        let title = kind == "cars" ? t("مستشار العربيات", "Car advisor") : kind == "fashion" ? t("مستشار الهدوم", "Clothes advisor")
+            : kind == "home" ? t("مستشار الأجهزة", "Home advisor") : t("مستشار الموبايلات", "Phone advisor")
         VStack(spacing: 0) {
             TopBar(title: title, onBack: { if state != nil { state = nil } else { router.back() } })
             ScrollView {
@@ -521,6 +531,7 @@ struct PicksAdvisorScreen: View {
                         switch kind {
                         case "cars": cars
                         case "fashion": fashion
+                        case "home": home
                         default: phones
                         }
                         PRButton(t("رشّحلي", "Suggest"), icon: Ic.sparkle) { Task { await run() } }.padding(20)
@@ -596,6 +607,34 @@ struct PicksAdvisorScreen: View {
         }
     }
 
+    @ViewBuilder private var home: some View {
+        Question(index: 0, title: t("بتدوّر على إيه؟", "What are you after?")) {
+            OptChips(options: [Opt(id: "tv", icon: Ic.monitor, ar: "تلفزيون", en: "TV"), Opt(id: "ac", icon: Ic.snow, ar: "تكييف", en: "AC"),
+                               Opt(id: "appliances", icon: Ic.store, ar: "أجهزة منزلية", en: "Appliance")], selected: $homeCat)
+        }
+        if homeCat == "appliances" {
+            Question(index: 1, title: t("أي جهاز؟", "Which appliance?")) {
+                OptChips(options: [Opt(id: "refrigerator", ar: "تلاجة", en: "Fridge"), Opt(id: "washer", ar: "غسالة", en: "Washer"),
+                                   Opt(id: "deep_freezer", ar: "ديب فريزر", en: "Freezer"), Opt(id: "cooker", ar: "بوتاجاز", en: "Cooker"),
+                                   Opt(id: "water_heater", ar: "سخان", en: "Heater"), Opt(id: "microwave", ar: "ميكروويف", en: "Microwave"),
+                                   Opt(id: "dishwasher", ar: "غسالة أطباق", en: "Dishwasher")], selected: $homeKind)
+            }
+        }
+        if homeCat == "ac" {
+            Question(index: 1, title: t("مساحة الأوضة بالمتر؟", "Room size (m²)?")) {
+                BudgetPicker(min: 6, max: 60, value: $homeRoom, presets: [12, 18, 25, 35, 50])
+            }
+        }
+        Question(index: 2, title: t("الأهم؟", "What matters most?")) {
+            OptionCards(options: [Opt(id: "balanced", icon: Ic.check, ar: "متوازن", en: "Balanced", subAr: "جودة وسعر", subEn: "Quality and price"),
+                                  Opt(id: "quality", icon: Ic.crown, ar: "الأعلى جودة", en: "Best quality", subAr: "أحسن حاجة", subEn: "The best there is"),
+                                  Opt(id: "value", icon: Ic.tag, ar: "أوفر", en: "Best value", subAr: "أقل سعر مناسب", subEn: "Lowest sensible price")], selected: $homePriority)
+        }
+        Question(index: 3, title: t("ميزانيتك؟", "Your budget?")) {
+            BudgetPicker(min: 3_000, max: 120_000, value: $homeBudget, presets: [10_000, 20_000, 35_000, 60_000, 90_000])
+        }
+    }
+
     private func run() async {
         state = .loading
         let api = app.api
@@ -603,6 +642,9 @@ struct PicksAdvisorScreen: View {
         switch kind {
         case "cars": r = await load { try await api.carsAdvice(budget: Decimal(carBudget), family: family, usage: usage, economy: economy, condition: condition) }
         case "fashion": r = await load { try await api.fashionAdvice(budget: Decimal(clothesBudget), need: need, occasion: occasion, gender: gender, size: size == "any" ? nil : size) }
+        case "home": r = await load { try await api.homeAdvice(budget: Decimal(homeBudget), category: homeCat, priority: homePriority,
+                                                                kind: homeCat == "appliances" ? homeKind : nil,
+                                                                roomM2: homeCat == "ac" ? Double(homeRoom) : nil) }
         default: r = await load { try await api.phonesAdvice(budget: Decimal(phoneBudget), priority: priority, category: cat) }
         }
         withAnimation { state = r }

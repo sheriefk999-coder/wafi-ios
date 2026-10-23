@@ -1575,3 +1575,55 @@ struct PickUsedAdvice: Decodable {
         noteEn = try c.decodeIfPresent(String.self, forKey: .noteEn) ?? ""
     }
 }
+
+// MARK: - Installment calculator
+
+struct InstallmentPlan: Decodable, Hashable {
+    var months: Int
+    var ratePct: Double
+    var monthly: Money
+    var total: Money
+    var extraVsCash: Money
+    var markupPct: Double
+    enum CodingKeys: String, CodingKey {
+        case months, monthly, total
+        case ratePct = "rate_pct", extraVsCash = "extra_vs_cash", markupPct = "markup_pct"
+    }
+}
+
+struct InstallmentResult: Decodable {
+    var price: Money
+    var down: Money
+    var financed: Money
+    var plans: [InstallmentPlan]
+    var noteAr: String
+    var noteEn: String
+    enum CodingKeys: String, CodingKey { case price, down, financed, plans; case noteAr = "note_ar", noteEn = "note_en" }
+}
+
+// MARK: - Gold piece calculator
+
+struct GoldSavings: Decodable, Hashable {
+    var monthly: Money
+    var months: Int
+    var lastMonth: Money?
+    enum CodingKeys: String, CodingKey { case monthly, months; case lastMonth = "last_month" }
+}
+
+struct GoldCalcResult: Decodable {
+    var karat: Int
+    var grams: Money
+    var pricePerGram: Money
+    var metalValue: Money
+    var making: Money
+    var total: Money
+    var gold24Gram: Money
+    var savings: GoldSavings?
+    var noteAr: String
+    var noteEn: String
+    enum CodingKeys: String, CodingKey {
+        case karat, grams, making, total, savings
+        case pricePerGram = "price_per_gram", metalValue = "metal_value", gold24Gram = "gold24_gram"
+        case noteAr = "note_ar", noteEn = "note_en"
+    }
+}
