@@ -10,7 +10,7 @@ enum Route: Hashable {
     case cars, pc, pro, watchlist, alerts, server, deals, compare, assistant
     case signIn, signUp, forgot, security, settings
     case advisor, goldAdvisor, pcAdvisor, picks(String)
-    case installment, goldCalc
+    case installment, goldCalc, convert, zakat
     case wallet, marketAlerts, country
 }
 
@@ -82,6 +82,8 @@ extension View {
                 case .picks(let kind): PicksAdvisorScreen(kind: kind)
                 case .installment: InstallmentScreen()
                 case .goldCalc: GoldCalcScreen()
+                case .convert: ConvertScreen()
+                case .zakat: ZakatScreen()
                 case .wallet: WalletScreen()
                 case .marketAlerts: MarketAlertsScreen()
                 case .country: CountryPickerScreen(firstRun: false)

@@ -1627,3 +1627,37 @@ struct GoldCalcResult: Decodable {
         case noteAr = "note_ar", noteEn = "note_en"
     }
 }
+
+// MARK: - Currency converter
+
+struct ConvertResult: Decodable {
+    var amount: Money
+    var egp: Money
+    var result: Money
+    var rate: Money
+    var from: String
+    var to: String
+    var currencies: [String]
+}
+
+// MARK: - Zakat calculator
+
+struct ZakatResult: Decodable {
+    var goldValue: Money
+    var cash: Money
+    var total: Money
+    var nisabGrams: Int
+    var nisabValue: Money
+    var aboveNisab: Bool
+    var ratePct: Double
+    var zakat: Money
+    var gold24Gram: Money
+    var noteAr: String
+    var noteEn: String
+    enum CodingKeys: String, CodingKey {
+        case cash, total, zakat
+        case goldValue = "gold_value", nisabGrams = "nisab_grams", nisabValue = "nisab_value"
+        case aboveNisab = "above_nisab", ratePct = "rate_pct", gold24Gram = "gold24_gram"
+        case noteAr = "note_ar", noteEn = "note_en"
+    }
+}

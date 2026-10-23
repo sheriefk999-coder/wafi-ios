@@ -132,3 +132,113 @@ struct GoldCalcScreen: View {
 }
 
 private func fmtPct(_ v: Double) -> String { String(format: "%.1f%%", v) }
+
+// MARK: - Currency converter
+
+struct ConvertScreen: View {
+    @Environment(AppState.self) private var app
+    @State private var amount = ""
+    @State private var from = "USD"
+    @State private var to = "EGP"
+    @State private var busy = false
+    @State private var err: String?
+    @State private var result: ConvertResult?
+    private let codes = ["EGP", "USD", "SAR", "AED", "EUR", "GBP", "KWD"]
+
+    var body: some View {
+        Screen(title: t("محوّل العملات", "Currency converter")) {
+            VStack(alignment: .leading, spacing: 14) {
+                PRField(label: t("المبلغ", "Amount"), text: $amount, icon: Ic.wallet, error: err, keyboard: .decimalPad, placeholder: "100")
+                Text(t("من", "From")).font(.labelM).foregroundStyle(PR.inkSoft)
+                chips($from)
+                Text(t("إلى", "To")).font(.labelM).foregroundStyle(PR.inkSoft)
+                chips($to)
+                PRButton(busy ? t("بيحوّل…", "Converting…") : t("حوّل", "Convert"), icon: Ic.exchange, enabled: !busy) { Task { await calc() } }
+                if let r = result {
+                    Panel {
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text(Fmt.number(r.amount, decimals: 2) + " " + r.from + " =").font(.bodyM).foregroundStyle(PR.inkSoft)
+                            Text(Fmt.number(r.result, decimals: 2) + " " + r.to).font(.headlineS).foregroundStyle(PR.ink)
+                            Text(t("السعر: ", "Rate: ") + "1 \(r.from) = \(Fmt.number(r.rate, decimals: 4)) \(r.to)").font(.labelS).foregroundStyle(PR.inkFaint)
+                        }
+                    }
+                    Text(t("أسعار مرجعية، بتفرق شوية عن سعر الصرافة.", "Reference rates; a bureau may differ slightly.")).font(.bodyS).foregroundStyle(PR.inkFaint)
+                }
+            }
+            .padding(20)
+        }
+    }
+
+    @ViewBuilder private func chips(_ sel: Binding<String>) -> some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 8) { ForEach(codes, id: \.self) { c in Chip(c, selected: sel.wrappedValue == c) { sel.wrappedValue = c } } }
+        }
+    }
+
+    private func calc() async {
+        guard let a = dec(amount), a > 0 else { err = t("اكتب مبلغ صحيح", "Enter a valid amount"); return }
+        busy = true; err = nil
+        do { result = try await app.api.convert(amount: a, src: from, dst: to) }
+        catch { err = t("حصل خطأ، جرّب تاني", "Something went wrong, try again") }
+        busy = false
+    }
+}
+
+// MARK: - Zakat calculator
+
+struct ZakatScreen: View {
+    @Environment(AppState.self) private var app
+    @State private var grams = ""
+    @State private var karat = 21
+    @State private var cash = ""
+    @State private var busy = false
+    @State private var err: String?
+    @State private var result: ZakatResult?
+
+    var body: some View {
+        Screen(title: t("حاسبة الزكاة", "Zakat calculator")) {
+            VStack(alignment: .leading, spacing: 14) {
+                PRField(label: t("وزن الدهب بالجرام", "Gold weight (grams)"), text: $grams, icon: Ic.gold, error: err, keyboard: .decimalPad, placeholder: "50")
+                Text(t("العيار", "Karat")).font(.labelM).foregroundStyle(PR.inkSoft)
+                HStack(spacing: 8) { ForEach([24, 22, 21, 18, 14], id: \.self) { k in Chip("\(k)", selected: karat == k) { karat = k } } }
+                PRField(label: t("كاش وادخار (اختياري)", "Cash & savings (optional)"), text: $cash, icon: Ic.wallet, keyboard: .numberPad, placeholder: "0")
+                PRButton(busy ? t("بيحسب…", "Calculating…") : t("احسب الزكاة", "Calculate zakat"), icon: Ic.gold, enabled: !busy) { Task { await calc() } }
+                if let r = result {
+                    Panel {
+                        VStack(spacing: 8) {
+                            line(t("قيمة الدهب", "Gold value"), Fmt.money(r.goldValue))
+                            line(t("كاش", "Cash"), Fmt.money(r.cash))
+                            line(t("الإجمالي", "Total"), Fmt.money(r.total))
+                            line(t("النصاب (٨٥ج دهب ٢٤)", "Nisab (85g 24k)"), Fmt.money(r.nisabValue))
+                            Divider()
+                            if r.aboveNisab {
+                                HStack {
+                                    Text(t("الزكاة (٢٫٥٪)", "Zakat (2.5%)")).font(.titleS).foregroundStyle(PR.ink)
+                                    Spacer()
+                                    Text(Fmt.money(r.zakat)).font(.titleM).foregroundStyle(PR.signalDeep)
+                                }
+                            } else {
+                                Text(t("تحت النصاب — مفيش زكاة واجبة.", "Below the nisab — no zakat due.")).font(.bodyM).foregroundStyle(PR.inkSoft)
+                            }
+                        }
+                    }
+                    Text(Lang.isArabic ? r.noteAr : r.noteEn).font(.bodyS).foregroundStyle(PR.inkFaint)
+                }
+            }
+            .padding(20)
+        }
+    }
+
+    @ViewBuilder private func line(_ label: String, _ value: String) -> some View {
+        HStack { Text(label).font(.bodyS).foregroundStyle(PR.inkSoft); Spacer(); Text(value).font(.bodyM).foregroundStyle(PR.ink) }
+    }
+
+    private func calc() async {
+        let g = dec(grams) ?? 0, c = dec(cash) ?? 0
+        guard g > 0 || c > 0 else { err = t("اكتب دهب أو كاش", "Enter gold or cash"); return }
+        busy = true; err = nil
+        do { result = try await app.api.zakat(goldGrams: g, goldKarat: karat, cash: c) }
+        catch { err = t("حصل خطأ، جرّب تاني", "Something went wrong, try again") }
+        busy = false
+    }
+}

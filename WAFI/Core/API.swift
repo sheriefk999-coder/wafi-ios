@@ -260,6 +260,14 @@ final class API: @unchecked Sendable {
         return try await send("GET", "tools/gold-calc", query: q)
     }
 
+    func convert(amount: Decimal, src: String, dst: String) async throws -> ConvertResult {
+        try await send("GET", "tools/convert", query: [.init(name: "amount", value: "\(amount)"), .init(name: "src", value: src), .init(name: "dst", value: dst)])
+    }
+
+    func zakat(goldGrams: Decimal, goldKarat: Int, cash: Decimal) async throws -> ZakatResult {
+        try await send("GET", "tools/zakat", query: [.init(name: "gold_grams", value: "\(goldGrams)"), .init(name: "gold_karat", value: String(goldKarat)), .init(name: "cash", value: "\(cash)")])
+    }
+
     // MARK: watchlist, alerts, Pro
 
     func watchlist() async throws -> [WatchItem] { try await send("GET", "me/watchlist", as: Items<WatchItem>.self).items }

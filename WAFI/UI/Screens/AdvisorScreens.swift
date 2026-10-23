@@ -17,6 +17,8 @@ struct AdvisorHubScreen: View {
             Tile(icon: Ic.monitor, bg: Color(0xE7F0FD, 0x10243A), fg: Color(0x1F5FC2, 0x66A3FF), title: t("أجهزة", "Home"), sub: t("تلفزيون، تكييف، أجهزة منزلية", "TVs, ACs and appliances"), go: .picks("home")),
             Tile(icon: Ic.card, bg: Color(0xEAF6EE, 0x10291A), fg: Color(0x1C7A43, 0x66CF95), title: t("تقسيط", "Installment"), sub: t("القسط الشهري وإجمالي التكلفة لأي سعر", "Monthly cost and total for any price"), go: .installment),
             Tile(icon: Ic.gold, bg: PR.amberSoft, fg: PR.amberDeep, title: t("حاسبة الدهب", "Gold calc"), sub: t("سعر قطعة الدهب وخطة ادخار", "A piece's price and a savings plan"), go: .goldCalc),
+            Tile(icon: Ic.exchange, bg: Color(0xEAF6EE, 0x10291A), fg: Color(0x1C7A43, 0x66CF95), title: t("محوّل العملات", "Convert"), sub: t("دولار، ريال، يورو… بأسعار اليوم", "USD, SAR, EUR… at today's rates"), go: .convert),
+            Tile(icon: Ic.gold, bg: Color(0xF3EEFF, 0x1E1633), fg: Color(0x6D4AC2, 0xB9A3F5), title: t("حاسبة الزكاة", "Zakat"), sub: t("زكاة الدهب والكاش على النصاب", "Zakat on gold & cash vs the nisab"), go: .zakat),
         ]
         Screen(title: t("المستشار", "Advisor")) {
             VStack(spacing: 0) {
