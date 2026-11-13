@@ -394,7 +394,8 @@ struct OnlineResults: View {
                     // Web leads rendered as clean store cards: logo, product, store name, price, visit button.
                     if r.products.isEmpty {
                         ForEach(r.items) { it in
-                            StoreResultCard(imageURL: nil, host: it.sourceDomain, storeName: Self.storeName(it.sourceDomain),
+                            StoreResultCard(imageURL: it.imageUrl, host: it.sourceDomain,
+                                            storeName: it.store.isEmpty ? Self.storeName(it.sourceDomain) : it.store,
                                             title: Self.cleanTitle(it.title), priceEgp: it.priceEgp, onOpen: { openStore(it.url) })
                         }
                     }
@@ -451,32 +452,30 @@ private struct StoreResultCard: View {
     }
 
     var body: some View {
-        VStack(spacing: 10) {
+        Button(action: onOpen) {
             HStack(spacing: 12) {
-                ProductImage(category: "other", part: nil, imageURL: logo, size: 52, radius: 14).frame(width: 52, height: 52)
-                VStack(alignment: .leading, spacing: 3) {
+                ProductImage(category: "other", part: nil, imageURL: logo, size: 64, radius: 14).frame(width: 64, height: 64)
+                VStack(alignment: .leading, spacing: 4) {
                     Text(title).font(.bodyM).foregroundStyle(PR.ink).lineLimit(2).multilineTextAlignment(.leading)
                     HStack(spacing: 5) {
-                        Image(systemName: Ic.store).font(.system(size: 12)).foregroundStyle(PR.sky)
-                        Text(storeName).font(.labelL).foregroundStyle(PR.inkSoft)
+                        Image(systemName: Ic.store).font(.system(size: 11)).foregroundStyle(PR.sky)
+                        Text(storeName).font(.labelM).foregroundStyle(PR.inkSoft).lineLimit(1)
+                    }
+                    if let p = priceEgp, let d = Decimal(string: p) {
+                        Text(Fmt.money(d)).font(.titleM).foregroundStyle(PR.ink)
+                    }
+                    HStack(spacing: 3) {
+                        Text(t("زيارة المتجر", "Visit store")).font(.labelM).foregroundStyle(PR.signal)
+                        Image(systemName: Ic.external).font(.system(size: 11)).foregroundStyle(PR.signal)
                     }
                 }
                 Spacer(minLength: 4)
-                if let p = priceEgp, let d = Decimal(string: p) {
-                    Text(Fmt.money(d)).font(.titleM).foregroundStyle(PR.ink)
-                }
             }
-            Button(action: onOpen) {
-                Text(t("زيارة المتجر", "Visit store"))
-                    .font(.labelL).foregroundStyle(PR.onAccent)
-                    .frame(maxWidth: .infinity).frame(height: 44)
-                    .background(PR.signal).clipShape(RoundedRectangle(cornerRadius: 12))
-            }
-            .buttonStyle(Pressable())
+            .padding(12).frame(maxWidth: .infinity, alignment: .leading)
+            .background(PR.white).clipShape(RoundedRectangle(cornerRadius: 18))
+            .overlay(RoundedRectangle(cornerRadius: 18).stroke(PR.line, lineWidth: 1))
         }
-        .padding(12).frame(maxWidth: .infinity, alignment: .leading)
-        .background(PR.white).clipShape(RoundedRectangle(cornerRadius: 18))
-        .overlay(RoundedRectangle(cornerRadius: 18).stroke(PR.line, lineWidth: 1))
+        .buttonStyle(Pressable())
     }
 }
 

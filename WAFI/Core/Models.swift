@@ -741,7 +741,9 @@ struct OnlineSearchCandidate: Decodable, Identifiable, Hashable {
     var snippet: String
     var priceEgp: String?
     var sourceDomain: String
-    enum CodingKeys: String, CodingKey { case title, url, snippet; case priceEgp = "price_egp", sourceDomain = "source_domain" }
+    var imageUrl: String?
+    var store: String
+    enum CodingKeys: String, CodingKey { case title, url, snippet, store; case priceEgp = "price_egp", sourceDomain = "source_domain", imageUrl = "image_url" }
     init(from d: Decoder) throws {
         let c = try d.container(keyedBy: CodingKeys.self)
         title = try c.decodeIfPresent(String.self, forKey: .title) ?? ""
@@ -749,6 +751,8 @@ struct OnlineSearchCandidate: Decodable, Identifiable, Hashable {
         snippet = try c.decodeIfPresent(String.self, forKey: .snippet) ?? ""
         priceEgp = try c.decodeIfPresent(String.self, forKey: .priceEgp)
         sourceDomain = try c.decodeIfPresent(String.self, forKey: .sourceDomain) ?? ""
+        imageUrl = try c.decodeIfPresent(String.self, forKey: .imageUrl)
+        store = try c.decodeIfPresent(String.self, forKey: .store) ?? ""
     }
 }
 
