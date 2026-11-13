@@ -5,6 +5,9 @@ import SwiftUI
 struct AccountScreen: View {
     @Environment(AppState.self) private var app
     @Environment(Router.self) private var router
+    // Owner tool: the "Server address" row is hidden by default; tap About 7× to reveal it in any build.
+    @AppStorage("wafi.serverTool") private var serverToolOn = false
+    @State private var aboutTaps = 0
 
     var body: some View {
         ScrollView {
@@ -32,10 +35,15 @@ struct AccountScreen: View {
                     if app.isSignedIn {
                         ItemRow(icon: Ic.shield, title: t("الأمان والحساب", "Security & account"), value: t("الإيميل، كلمة السر، حذف الحساب", "Email, password, delete account")) { router.push(.security) }
                     }
+                    if serverToolOn { ItemRow(icon: Ic.server, title: t("عنوان الخادم", "Server address"), value: app.serverURL.absoluteString, ltr: true) { router.push(.server) } }
                     #if DEBUG
-                    ItemRow(icon: Ic.server, title: t("عنوان الخادم", "Server address"), value: app.serverURL.absoluteString, ltr: true) { router.push(.server) }
+                    if !serverToolOn { ItemRow(icon: Ic.server, title: t("عنوان الخادم", "Server address"), value: app.serverURL.absoluteString, ltr: true) { router.push(.server) } }
                     #endif
-                    ItemRow(icon: Ic.info, title: t("عن التطبيق", "About"), value: "WAFI — Know More. Pay Smarter. · " + t("نسخة", "Version") + " \(AppInfo.version) (\(AppInfo.build))")
+                    ItemRow(icon: Ic.info, title: t("عن التطبيق", "About"), value: "WAFI — Know More. Pay Smarter. · " + t("نسخة", "Version") + " \(AppInfo.version) (\(AppInfo.build))") {
+                        guard !serverToolOn else { return }
+                        aboutTaps += 1
+                        if aboutTaps >= 7 { serverToolOn = true }
+                    }
                 }
                 .modifier(RowGroup())
                 if app.isSignedIn {
