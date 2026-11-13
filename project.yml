@@ -98,10 +98,10 @@ targets:
       configs:
         Debug:
           APS_ENVIRONMENT: development
-          WAFI_API_BASE_URL: https://api.13-48-163-20.sslip.io
+          WAFI_API_BASE_URL: https://api.51-20-242-94.sslip.io
         Release:
           APS_ENVIRONMENT: production
-          WAFI_API_BASE_URL: https://api.13-48-163-20.sslip.io
+          WAFI_API_BASE_URL: https://api.51-20-242-94.sslip.io
     scheme:
       testTargets: [WAFITests, WAFIUITests]
       gatherCoverageData: false
