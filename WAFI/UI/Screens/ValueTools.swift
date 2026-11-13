@@ -386,44 +386,16 @@ struct OnlineResults: View {
                         Text(t("منتجات من متاجر أونلاين", "Products from online stores")).font(.titleS).foregroundStyle(PR.ink)
                     }
                     vNote((Lang.isArabic ? r.noticeAr : r.notice) ?? "")
-                    // real products from a licensed shopping search (image, price, store) — the card opens the store's page
+                    // Real shopping cards (image, price, store) when the shopping API returns them.
                     ForEach(r.products) { pr in
-                        Button { if pr.url.hasPrefix("https://"), let u = URL(string: pr.url) { openURL(u) } } label: {
-                            HStack(spacing: 12) {
-                                ProductImage(category: "other", part: nil, imageURL: pr.imageUrl, size: 58, radius: 14).frame(width: 58, height: 58)
-                                VStack(alignment: .leading, spacing: 2) {
-                                    Text(pr.title).font(.bodyM).foregroundStyle(PR.ink).lineLimit(2).multilineTextAlignment(.leading)
-                                    if !pr.store.isEmpty {
-                                        HStack(spacing: 4) { Image(systemName: Ic.store).font(.system(size: 11)).foregroundStyle(PR.inkSoft); vNote(pr.store) }
-                                    }
-                                    if let p = pr.priceEgp, let d = Decimal(string: p) {
-                                        Text(Fmt.money(d) + t(" · غير مؤكد", " · unverified")).font(.titleS).foregroundStyle(PR.ink)
-                                    }
-                                }
-                                Spacer(minLength: 4)
-                                Image(systemName: Ic.external).font(.system(size: 14)).foregroundStyle(PR.inkSoft)
-                            }
-                            .padding(10).frame(maxWidth: .infinity, alignment: .leading)
-                            .background(PR.white).clipShape(RoundedRectangle(cornerRadius: 16))
-                            .overlay(RoundedRectangle(cornerRadius: 16).stroke(PR.line, lineWidth: 1))
-                        }
-                        .buttonStyle(Pressable())
+                        StoreResultCard(imageURL: pr.imageUrl, host: "", storeName: pr.store,
+                                        title: pr.title, priceEgp: pr.priceEgp, onOpen: { openStore(pr.url) })
                     }
+                    // Web leads rendered as clean store cards: logo, product, store name, price, visit button.
                     if r.products.isEmpty {
                         ForEach(r.items) { it in
-                            Button { if it.url.hasPrefix("https://"), let u = URL(string: it.url) { openURL(u) } } label: {
-                                VStack(alignment: .leading, spacing: 2) {
-                                    Text(it.title).font(.bodyM).foregroundStyle(PR.ink).lineLimit(2).multilineTextAlignment(.leading)
-                                    vNote(it.sourceDomain)
-                                    if let p = it.priceEgp, let d = Decimal(string: p) {
-                                        Text(t("مذكور: ", "Mentioned: ") + Fmt.money(d) + t(" (غير مؤكد)", " (unverified)")).font(.labelM).foregroundStyle(PR.amberDeep)
-                                    }
-                                }
-                                .padding(12).frame(maxWidth: .infinity, alignment: .leading)
-                                .background(PR.white).clipShape(RoundedRectangle(cornerRadius: 16))
-                                .overlay(RoundedRectangle(cornerRadius: 16).stroke(PR.line, lineWidth: 1))
-                            }
-                            .buttonStyle(Pressable())
+                            StoreResultCard(imageURL: nil, host: it.sourceDomain, storeName: Self.storeName(it.sourceDomain),
+                                            title: Self.cleanTitle(it.title), priceEgp: it.priceEgp, onOpen: { openStore(it.url) })
                         }
                     }
                 }
@@ -437,6 +409,74 @@ struct OnlineResults: View {
             if Task.isCancelled { return }
             res = try? await app.api.onlineProductSearch(q)
         }
+    }
+
+    private func openStore(_ url: String) {
+        if url.hasPrefix("https://"), let u = URL(string: url) { openURL(u) }
+    }
+
+    /// A readable store name from a host: "www.dream2000.com" -> "Dream2000", "amazon.eg" -> "Amazon".
+    static func storeName(_ host: String) -> String {
+        var h = host
+        for p in ["www.", "m."] where h.hasPrefix(p) { h.removeFirst(p.count) }
+        let label = h.split(separator: ".").first.map(String.init) ?? h
+        return label.prefix(1).uppercased() + label.dropFirst()
+    }
+
+    /// Trim the noisy tail off a web title: "iPhone 17 | best price | buy" -> "iPhone 17".
+    static func cleanTitle(_ title: String) -> String {
+        for sep in ["|", "،", "::", " - ", " – ", " — "] {
+            if let r = title.range(of: sep) {
+                let head = String(title[..<r.lowerBound]).trimmingCharacters(in: .whitespaces)
+                if !head.isEmpty { return head }
+            }
+        }
+        return title.trimmingCharacters(in: .whitespaces)
+    }
+}
+
+/// A clean store result: logo + product name + store name + price + a button to the store's page.
+private struct StoreResultCard: View {
+    var imageURL: String?
+    var host: String
+    var storeName: String
+    var title: String
+    var priceEgp: String?
+    var onOpen: () -> Void
+
+    private var logo: String? {
+        if let u = imageURL, !u.isEmpty { return u }
+        if !host.isEmpty { return "https://www.google.com/s2/favicons?domain=\(host)&sz=128" }
+        return nil
+    }
+
+    var body: some View {
+        VStack(spacing: 10) {
+            HStack(spacing: 12) {
+                ProductImage(category: "other", part: nil, imageURL: logo, size: 52, radius: 14).frame(width: 52, height: 52)
+                VStack(alignment: .leading, spacing: 3) {
+                    Text(title).font(.bodyM).foregroundStyle(PR.ink).lineLimit(2).multilineTextAlignment(.leading)
+                    HStack(spacing: 5) {
+                        Image(systemName: Ic.store).font(.system(size: 12)).foregroundStyle(PR.sky)
+                        Text(storeName).font(.labelL).foregroundStyle(PR.inkSoft)
+                    }
+                }
+                Spacer(minLength: 4)
+                if let p = priceEgp, let d = Decimal(string: p) {
+                    Text(Fmt.money(d)).font(.titleM).foregroundStyle(PR.ink)
+                }
+            }
+            Button(action: onOpen) {
+                Text(t("زيارة المتجر", "Visit store"))
+                    .font(.labelL).foregroundStyle(PR.onAccent)
+                    .frame(maxWidth: .infinity).frame(height: 44)
+                    .background(PR.signal).clipShape(RoundedRectangle(cornerRadius: 12))
+            }
+            .buttonStyle(Pressable())
+        }
+        .padding(12).frame(maxWidth: .infinity, alignment: .leading)
+        .background(PR.white).clipShape(RoundedRectangle(cornerRadius: 18))
+        .overlay(RoundedRectangle(cornerRadius: 18).stroke(PR.line, lineWidth: 1))
     }
 }
 
