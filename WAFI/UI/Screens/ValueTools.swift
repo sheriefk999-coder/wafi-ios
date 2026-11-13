@@ -432,7 +432,7 @@ struct OnlineResults: View {
         }
         .task(id: query) {
             let q = query.trimmingCharacters(in: .whitespaces)
-            guard app.config.onlineSearch, app.isSignedIn, q.count >= 2 else { res = nil; return }
+            guard app.config.onlineSearch, q.count >= 2 else { res = nil; return }
             try? await Task.sleep(for: .milliseconds(400))
             if Task.isCancelled { return }
             res = try? await app.api.onlineProductSearch(q)
