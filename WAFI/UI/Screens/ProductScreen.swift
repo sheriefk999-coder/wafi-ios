@@ -127,6 +127,10 @@ private struct ProductBody: View {
                 if let r = d.reference {
                     ReferencePriceCard(r: r, query: [p.brand, p.model, p.storage].filter { !$0.isEmpty }.joined(separator: " "))
                 }
+                // Live web results for this exact product, inline (store links + prices when no connected store lists it yet).
+                if d.offers.isEmpty {
+                    OnlineResults(query: [p.brand, p.model, p.storage].filter { !$0.isEmpty }.joined(separator: " "))
+                }
                 if let u = d.usedNew { UsedNewCard(u: u) }
                 if !onlyMarket { InsightCard(i: d.insight) }
                 if let l = d.lens { PriceLensCard(l: l) }
