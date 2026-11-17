@@ -19,7 +19,7 @@ concurrency:
 
 jobs:
   build-test:
-    runs-on: macos-14
+    runs-on: macos-15
     timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
@@ -27,7 +27,7 @@ jobs:
       - name: Tools
         run: |
           brew install xcodegen xcbeautify
-          sudo xcode-select -s "$(ls -d /Applications/Xcode_16*.app | sort -V | tail -1)"
+          sudo xcode-select -s "$(ls -d /Applications/Xcode_1[6-9]*.app /Applications/Xcode_2*.app /Applications/Xcode.app 2>/dev/null | sort -V | tail -1)"
           xcodebuild -version
 
       - name: Generate the Xcode project
@@ -124,7 +124,7 @@ jobs:
       - name: Tools
         run: |
           brew install xcodegen
-          sudo xcode-select -s "$(ls -d /Applications/Xcode_16*.app | sort -V | tail -1)"
+          sudo xcode-select -s "$(ls -d /Applications/Xcode_1[6-9]*.app /Applications/Xcode_2*.app /Applications/Xcode.app 2>/dev/null | sort -V | tail -1)"
           xcodegen generate
       - name: App Store Connect key
         run: |
