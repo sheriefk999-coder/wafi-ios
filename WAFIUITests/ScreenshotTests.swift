@@ -57,7 +57,17 @@ final class ScreenshotTests: XCTestCase {
     func test01_onboarding() { let a = launch(onboarded: false, country: false); wait(a, "رادار واحد"); snap(a, "01_onboarding") }
     func test02_country() { let a = launch(country: false); wait(a, "بتشتري منين"); snap(a, "02_country") }
     func test03_home() { let a = launch(); wait(a, "الرادار شغّال"); snap(a, "03_home"); a.swipeUp(); snap(a, "04_home_more") }
-    func test05_searchAnalysis() { let a = launch(route: "search:آيفون", token: member); wait(a, "تحليل الأسعار"); snap(a, "05_search_analysis") }
+    /// A typed search is answered by the live engine: real products with a price a shop is showing now.
+    func test05_liveSearch() {
+        let a = launch(route: "search:آيفون", token: member)
+        wait(a, "يبدأ من"); snap(a, "05_live_search")
+    }
+    func test05b_liveProduct() {
+        let a = launch(route: "search:آيفون", token: member)
+        wait(a, "يبدأ من")
+        a.staticTexts["Apple iPhone 17 256GB"].firstMatch.tap()
+        wait(a, "أرخص سعر"); snap(a, "05b_live_product")
+    }
     func test06_category() { let a = launch(route: "category:phones"); wait(a, "تحليل الأسعار"); snap(a, "06_phones") }
     func test07_music() { let a = launch(route: "category:music"); wait(a, "تحليل الأسعار"); snap(a, "07_music") }
     func test08_product() { let a = launch(route: "product:" + pid("a55")); wait(a, "أرخص سعر"); snap(a, "08_product"); a.swipeUp(); snap(a, "09_product_offers") }
@@ -85,7 +95,11 @@ final class ScreenshotTests: XCTestCase {
         var n = 0
         while (!el.exists || !el.isHittable) && n < 6 { a.swipeUp(velocity: .slow); n += 1 }
     }
-    func test60_searchNeedsAccount() { let a = launch(route: "search:آيفون"); wait(a, "سجّل حسابك عشان تبحث"); snap(a, "60_search_sign_in_wall") }
+    /// A guest can search the shops live — no account wall in front of a price.
+    func test60_guestCanSearchLive() {
+        let a = launch(route: "search:آيفون")
+        wait(a, "يبدأ من"); snap(a, "60_guest_live_search")
+    }
     func test61_productUsedAndLens() {
         let a = launch(route: "product:" + pid("a55"), token: member); wait(a, "أرخص سعر")
         scrollTo(a, "متوفر مستعمل"); snap(a, "61_product_used_option")

@@ -6,6 +6,7 @@ enum Tab: String, CaseIterable, Hashable { case home, search, market, basket, ac
 /// Every screen you can push.
 enum Route: Hashable {
     case product(String)
+    case liveProduct(key: String, query: String)
     case search(category: String?, query: String, part: String?)
     case cars, pc, pro, watchlist, alerts, server, deals, compare, assistant
     case signIn, signUp, forgot, security, settings
@@ -61,6 +62,7 @@ extension View {
             Group {
                 switch r {
                 case .product(let id): ProductScreen(id: id)
+                case .liveProduct(let key, let q): LiveProductScreen(key: key, query: q)
                 case .search(let c, let q, let p): SearchScreen(initial: ProductFilter(query: q, category: c, part: p))
                 case .cars: CarsScreen()
                 case .pc: PcBuilderScreen()

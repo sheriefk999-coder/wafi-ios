@@ -67,7 +67,7 @@ struct HomeScreen: View {
             }
             Spacer()
             CountryChip { router.push(.country) }
-            Button { router.push(app.isSignedIn ? .alerts : .signIn) } label: {
+            Button { router.push(.alerts) } label: {
                 Image(systemName: Ic.bell).font(.system(size: 19)).foregroundStyle(PR.ink).frame(width: 44, height: 44)
             }
             .accessibilityLabel(t("التنبيهات", "Alerts"))
@@ -160,6 +160,7 @@ struct HomeScreen: View {
         Tools()
         AdSlot(kind: .banner, placement: "home")
         Categories()
+        LiveTrendingStrip()
         let confirmed = d.products.filter { $0.bestTotal != nil }.sorted { ($0.bestTotal ?? 0) < ($1.bestTotal ?? 0) }
         if !confirmed.isEmpty {
             SectionHeader(title: t("أسعار مؤكدة شامل الشحن", "Confirmed prices, shipping included"), action: t("الكل", "All")) { router.select(.search) }

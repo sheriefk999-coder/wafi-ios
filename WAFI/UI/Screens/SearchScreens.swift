@@ -128,6 +128,9 @@ struct SearchScreen: View {
 
     init(initial: ProductFilter) { _model = State(initialValue: SearchModel(initial)) }
 
+    /// True once there is something to search for: the live engine answers, not the catalog.
+    private var searching: Bool { model.filter.query.trimmingCharacters(in: .whitespaces).count >= 2 }
+
     var body: some View {
         let f = model.filter
         ScrollView {
@@ -156,22 +159,28 @@ struct SearchScreen: View {
                         }
                     }
                 }
-                SortRow(sort: f.sort, count: model.results.value?.count, onSort: { s in model.update { $0.sort = s } },
-                        inStock: f.inStock, onStock: { v in model.update { $0.inStock = v } })
-                if let a = model.analysis, model.results.value != nil, a.priced > 0 {
-                    SearchAnalysisCard(a: a)
+                // A typed search goes to the live engine: real products with a price a shop is showing now.
+                // The catalog is for browsing a category, and never shows an approximate price here.
+                if searching {
+                    LiveResultsView(query: f.query.trimmingCharacters(in: .whitespaces))
+                        .padding(.horizontal, 20).padding(.top, 8)
+                } else {
+                    SortRow(sort: f.sort, count: model.results.value?.count, onSort: { s in model.update { $0.sort = s } },
+                            inStock: f.inStock, onStock: { v in model.update { $0.inStock = v } })
+                    if let a = model.analysis, model.results.value != nil, a.priced > 0 {
+                        SearchAnalysisCard(a: a)
+                    }
+                    Results(res: model.results, retry: { model.reload() }) { p in
+                        ProductRow(p: p) { router.push(.product(p.id)) }.padding(.horizontal, 20).padding(.vertical, 5)
+                    }
                 }
-                Results(res: model.results, retry: { model.reload() }) { p in
-                    ProductRow(p: p) { router.push(.product(p.id)) }.padding(.horizontal, 20).padding(.vertical, 5)
-                }
-                if model.filter.query.trimmingCharacters(in: .whitespaces).count >= 2 { OnlineResults(query: model.filter.query) }
             }
             .padding(.bottom, 90)
         }
         .scrollDismissesKeyboard(.interactively)
         .background(PR.white)
         .task {
-            if model.results.value == nil { model.reload() }
+            if model.results.value == nil && !searching { model.reload() }
         }
         .onChange(of: app.isSignedIn) { _, signedIn in
             // back from signing in: run the search that was waiting
@@ -395,102 +404,75 @@ struct SearchAnalysisCard: View {
 // MARK: - Cars
 
 private let carBrands = ["Toyota", "Hyundai", "Kia", "Nissan", "Chevrolet", "MG", "Chery", "BYD", "Renault", "Peugeot", "Skoda", "Mercedes", "BMW"]
-private let carMax: Double = 5_000_000
 
 struct CarsScreen: View {
     @Environment(Router.self) private var router
-    @State private var model = SearchModel(ProductFilter(category: Category.cars.rawValue, sort: "price_asc"))
-    @State private var low: Double = 0
-    @State private var high: Double = carMax
-    @State private var expanded = true
+    @State private var query = ""
+    @State private var brand: String?
+    @State private var used: Bool?
+    @FocusState private var focused: Bool
+
+    /// What the live engine is asked: the brand or the typed words, plus "new" or "used" when chosen.
+    private var liveQuery: String {
+        var parts: [String] = []
+        let typed = query.trimmingCharacters(in: .whitespaces)
+        if !typed.isEmpty { parts.append(typed) }
+        if let b = brand, !typed.lowercased().contains(b.lowercased()) { parts.append(b) }
+        if let u = used { parts.append(u ? t("مستعمل", "used") : t("زيرو", "new")) }
+        return parts.joined(separator: " ")
+    }
 
     var body: some View {
-        let f = model.filter
         VStack(spacing: 0) {
-            TopBar(title: t("دوّر على عربية", "Find a car"), subtitle: t("جديدة ومستعملة، بالسعر الشامل", "New and used, by full price"), onBack: { router.back() }) {
-                Button { withAnimation { expanded.toggle() } } label: { Image(systemName: Ic.filter).foregroundStyle(PR.ink).frame(width: 44, height: 44) }
-                    .accessibilityLabel(t("الفلاتر", "Filters"))
-            }
+            TopBar(title: t("دوّر على عربية", "Find a car"),
+                   subtitle: t("أسعار من معارض ومواقع البيع، لايف", "Live prices from dealers and listing sites"),
+                   onBack: { router.back() })
             ScrollView {
                 VStack(alignment: .leading, spacing: 0) {
-                    if expanded {
-                        Panel(padding: 16, radius: 22) {
-                            VStack(alignment: .leading, spacing: 12) {
-                                Text(t("الحالة", "Condition")).font(.labelL).foregroundStyle(PR.ink)
-                                HStack(spacing: 8) {
-                                    Chip(t("الكل", "All"), selected: f.condition == nil) { model.update { $0.condition = nil } }
-                                    Chip(t("زيرو", "New"), selected: f.condition == "new") { model.update { $0.condition = "new" } }
-                                    Chip(t("مستعملة", "Used"), selected: f.condition == "used") { model.update { $0.condition = "used" } }
-                                }
-                                HStack {
-                                    Text(t("الميزانية", "Budget")).font(.labelL).foregroundStyle(PR.ink)
-                                    Spacer()
-                                    Text(Fmt.compact(Decimal(low)) + " – " + (high >= carMax ? t("مفتوح", "any") : Fmt.compact(Decimal(high))))
-                                        .font(.labelL).foregroundStyle(PR.signalDeep)
-                                }
-                                VStack(spacing: 0) {
-                                    Slider(value: $low, in: 0...carMax, step: 50_000, onEditingChanged: { if !$0 { apply() } })
-                                    Slider(value: $high, in: 0...carMax, step: 50_000, onEditingChanged: { if !$0 { apply() } })
-                                }
-                                .tint(PR.signal)
-                                Text(t("الماركة", "Brand")).font(.labelL).foregroundStyle(PR.ink)
+                    HStack(spacing: 10) {
+                        Image(systemName: Ic.search).foregroundStyle(PR.inkSoft)
+                        TextField(t("الموديل: كورولا 2026، النترا…", "Model: Corolla 2026, Elantra…"), text: $query)
+                            .font(.bodyL).foregroundStyle(PR.ink).submitLabel(.search).focused($focused)
+                            .autocorrectionDisabled()
+                            .accessibilityIdentifier("cars.field")
+                        if !query.isEmpty {
+                            Button { query = "" } label: {
+                                Image(systemName: Ic.close).foregroundStyle(PR.inkSoft).frame(width: 36, height: 36)
                             }
+                            .accessibilityLabel(t("مسح", "Clear"))
                         }
-                        .padding(.horizontal, 20).padding(.vertical, 6)
-                        .transition(.opacity.combined(with: .move(edge: .top)))
                     }
+                    .padding(.horizontal, 14).frame(height: 54)
+                    .background(PR.paper).clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+                    .padding(.horizontal, 20).padding(.top, 10)
                     ChipRow {
-                        Chip(t("كل الماركات", "All brands"), selected: f.brand == nil) { model.update { $0.brand = nil } }
-                        ForEach(carBrands, id: \.self) { b in Chip(b, selected: f.brand == b) { model.update { $0.brand = $0.brand == b ? nil : b } } }
+                        Chip(t("الكل", "All"), selected: used == nil) { used = nil }
+                        Chip(t("زيرو", "New"), selected: used == false) { used = false }
+                        Chip(t("مستعملة", "Used"), selected: used == true) { used = true }
                     }
-                    SortRow(sort: f.sort, count: model.results.value?.count, onSort: { s in model.update { $0.sort = s } })
-                    Results(res: model.results, retry: { model.reload() }) { p in CarCard(p: p) { router.push(.product(p.id)) } }
+                    .padding(.vertical, 8)
+                    ChipRow {
+                        Chip(t("كل الماركات", "All brands"), selected: brand == nil) { brand = nil }
+                        ForEach(carBrands, id: \.self) { b in
+                            Chip(b, selected: brand == b) { brand = brand == b ? nil : b }
+                        }
+                    }
+                    if liveQuery.trimmingCharacters(in: .whitespaces).count >= 2 {
+                        LiveResultsView(query: liveQuery)
+                            .padding(.horizontal, 20).padding(.top, 10)
+                    } else {
+                        EmptyState(icon: Ic.car, title: t("اختار ماركة أو اكتب الموديل", "Pick a brand or type the model"),
+                                   bodyText: t("هنجيب أسعار العربية من المعارض ومواقع البيع دلوقتي — مفيش أسعار تقديرية.",
+                                               "We read the car's price from dealers and listing sites right now — no estimates."))
+                            .padding(.top, 20)
+                    }
                 }
                 .padding(.bottom, 32)
             }
+            .scrollDismissesKeyboard(.interactively)
         }
         .background(PR.white)
-        .task { if model.results.value == nil { model.reload() } }
-    }
-
-    private func apply() {
-        if low > high { swap(&low, &high) }
-        model.update {
-            $0.minPrice = low > 0 ? Decimal(low) : nil
-            $0.maxPrice = high < carMax ? Decimal(high) : nil
-        }
+        .navigationBarBackButtonHidden(true)
     }
 }
 
-private struct CarCard: View {
-    var p: ProductSummary
-    var action: () -> Void
-    var body: some View {
-        Panel(padding: 14, radius: 22, action: action) {
-            VStack(alignment: .leading, spacing: 12) {
-                HStack(spacing: 12) {
-                    ProductImage(category: p.category, imageURL: p.imageUrl, size: 64).frame(width: 64, height: 64)
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text(p.title).font(.titleM).foregroundStyle(PR.ink).lineLimit(2)
-                        Text("\(p.brand) \(p.model)" + (p.color.isEmpty ? "" : " · \(p.color)")).font(.bodyS).foregroundStyle(PR.inkSoft)
-                    }
-                    Spacer()
-                    Badge(p.condition == "new" ? t("زيرو", "New") : t("مستعملة", "Used"), p.condition == "new" ? .signal : .neutral)
-                }
-                HStack(spacing: 6) {
-                    if let y = p.specs.int("year") { Badge("\(y)", .sky) }
-                    if let km = p.specs.int("km") { Badge(km == 0 ? t("٠ كم", "0 km") : Fmt.number(km) + t(" كم", " km"), .neutral, icon: Ic.gauge) }
-                    if let tr = p.specs.str("transmission") { Badge(transmissionLabel(tr)) }
-                    if let fu = p.specs.str("fuel") { Badge(fuelLabel(fu)) }
-                }
-                HStack {
-                    PriceText(value: p.displayPrice, font: .headlineS, fallback: t("السعر عند الطلب", "Price on request"))
-                    Spacer()
-                    if p.offers > 1 { Text(t("\(Fmt.number(p.offers)) معرض", "\(p.offers) dealers")).font(.labelM).foregroundStyle(PR.inkSoft) }
-                }
-                OfferMeta(store: p.bestStore, seenAt: p.bestSeenAt, inStock: p.inStock)
-            }
-        }
-        .padding(.horizontal, 20).padding(.vertical, 6)
-    }
-}

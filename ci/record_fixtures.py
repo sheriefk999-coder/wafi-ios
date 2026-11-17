@@ -82,6 +82,13 @@ for q in ("آيفون", "سامسونج", "Yamaha", "iPhone"):
 for key in ("a55", "ip15", "rn13", "mba", "corolla", "strat", "4060", "xm5", "ip15_used", "a55_used", "ipad", "ref_tab_s10fe", "ref_a57"):
     for who in ("anon", "member", "pro"):
         rec("GET", f"/products/{P[key]}", who=who)
+# the live engine: a real search against the shops, the product it returns, and the home strip
+for q in ("آيفون", "تويوتا كورولا"):
+    for who in ("anon", "member"):
+        rec("GET", "/live/search", {"q": q}, who=who)
+rec("GET", "/live/trending", {"limit": 12}, also_anon=True)
+rec("GET", "/live/watches", also_anon=True)
+rec("GET", "/live/notifications", {"mark_read": "false"}, also_anon=True)
 rec("GET", "/compare", {"ids": ",".join([P["a55"], P["ip15"], P["rn13"]])}, who="pro", also_anon=True)
 rec("POST", "/basket", body={"items": [{"product_id": P[k], "qty": 1} for k in ("a55", "xm5", "ipad")]}, also_anon=True)
 rec("POST", "/advisor/phones", body={"priority": "value", "category": "phones", "budget": 15000})

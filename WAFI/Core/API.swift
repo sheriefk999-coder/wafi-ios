@@ -208,6 +208,42 @@ final class API: @unchecked Sendable {
         try await send("POST", "assistant", json: ["message": message, "lang": lang])
     }
 
+    // MARK: live engine — products found across Egyptian shops right now
+
+    /// Search the shops live. Each price comes from that shop's own page; nothing is estimated.
+    func liveSearch(_ query: String) async throws -> LiveSearchResponse {
+        try await send("GET", "live/search", query: [.init(name: "q", value: query)])
+    }
+    /// One product: every shop that sells it, its price history and whether a discount is real.
+    func liveProduct(key: String, query: String = "") async throws -> LiveProductResponse {
+        var q = [URLQueryItem(name: "key", value: key)]
+        if !query.isEmpty { q.append(.init(name: "q", value: query)) }
+        return try await send("GET", "live/product", query: q)
+    }
+    func liveHistory(key: String) async throws -> LiveHistory {
+        try await send("GET", "live/history", query: [.init(name: "key", value: key)])
+    }
+    func liveTrending(limit: Int = 12) async throws -> [LiveTrending] {
+        try await send("GET", "live/trending", query: [.init(name: "limit", value: "\(limit)")], as: Items<LiveTrending>.self).items
+    }
+    /// Wafi Shadow: watch this product, optionally until it reaches a price.
+    func liveWatch(key: String, query: String, title: String, image: String?, target: Decimal?, price: Decimal?) async throws {
+        var j: [String: Any] = ["key": key, "q": query, "title": title]
+        if let image, image.hasPrefix("https://") { j["image"] = image }
+        if let target { j["target_price"] = API.num(target) }
+        if let price { j["price"] = API.num(price) }
+        _ = try await send("POST", "live/watch", json: j, as: Empty.self)
+    }
+    func liveUnwatch(key: String) async throws {
+        _ = try await send("DELETE", "live/watch", query: [.init(name: "key", value: key)], as: Empty.self)
+    }
+    func liveWatches() async throws -> [LiveWatch] {
+        try await send("GET", "live/watches", as: Items<LiveWatch>.self).items
+    }
+    func liveNotifications(markRead: Bool = false) async throws -> LiveNotifications {
+        try await send("GET", "live/notifications", query: [.init(name: "mark_read", value: markRead ? "true" : "false")])
+    }
+
     // MARK: market
 
     func market() async throws -> MarketResponse { try await send("GET", "market") }

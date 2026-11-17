@@ -272,17 +272,19 @@ struct AlertsScreen: View {
             ScrollView {
                 switch state {
                 case .loading: LoadingList(rows: 4).padding(20)
+                case .err(let e) where e.status == 401:
+                    // a guest has no account alerts, but Wafi Shadow follows the phone: show what it is watching
+                    ShadowSection().padding(20)
                 case .err(let e):
                     EmptyState(icon: Ic.bell, title: t("مقدرناش نجيب التنبيهات", "Couldn't load alerts"), bodyText: e.message, action: t("حاول تاني", "Try again")) {
                         Task { await reload() }
                     }
                     .padding(.top, 30)
                 case .ok(let items) where items.isEmpty:
-                    EmptyState(icon: Ic.bell, title: t("مفيش تنبيهات", "No alerts"),
-                               bodyText: t("لما سعر منتج بتتابعه يوصل لهدفك، هيظهر هنا.", "When a watched product hits your target, it shows up here."))
-                        .padding(.top, 30)
+                    ShadowSection().padding(20)
                 case .ok(let items):
                     LazyVStack(spacing: 0) { ForEach(items) { a in row(a) } }.padding(.vertical, 8)
+                    ShadowSection().padding(20)
                 }
             }
         }
