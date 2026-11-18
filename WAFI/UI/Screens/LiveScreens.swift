@@ -588,6 +588,10 @@ struct LiveOfferRow: View {
 
     /// How this price was established, in words a shopper understands.
     private var verification: String? {
+        // the store's page could not be read: this is what the search listing says, and it says so
+        if offer.method?.hasPrefix("listing") == true {
+            return t("من نتيجة البحث — اتأكد من السعر في المتجر", "from the search listing — check the price at the store")
+        }
         switch offer.priceStatus {
         case "VERIFIED": return t("سعر مؤكد من الصفحة", "confirmed on the page")
         case "PARTIALLY_VERIFIED": return t("من بيانات الصفحة", "from the page's own data")
