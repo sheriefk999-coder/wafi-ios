@@ -199,10 +199,22 @@ struct LiveResultsView: View {
             } else if let e = model.error, model.groups.isEmpty {
                 LiveErrorView(error: e, signIn: { router.push(.signIn) }) { model.run(app.api, query: query) }
             } else if model.groups.isEmpty {
-                EmptyState(icon: Ic.search,
-                           title: t("مفيش منتج بسعر حالي", "No product with a live price"),
-                           bodyText: t("مفيش متجر عارض سعر للحاجة دي دلوقتي. جرّب اسم أقرب للموديل.",
-                                       "No shop is showing a price for this right now. Try the model's exact name."))
+                // A search that could not reach the shops is not a market with nothing in it, and must never
+                // be shown as one.
+                if model.coverage?.state == "FAILED" {
+                    EmptyState(icon: Ic.info,
+                               title: t("مقدرناش ندوّر في المتاجر دلوقتي", "We couldn't reach the shops"),
+                               bodyText: t("المشكلة عندنا إحنا مش في المنتج. جرّب تاني بعد شوية.",
+                                           "The problem is on our side, not with the product. Try again shortly."),
+                               action: t("حاول تاني", "Try again"),
+                               onAction: { model.run(app.api, query: query) })
+                    if let c = model.coverage { CoverageNote(coverage: c) }
+                } else {
+                    EmptyState(icon: Ic.search,
+                               title: t("مفيش منتج بسعر حالي", "No product with a live price"),
+                               bodyText: t("مفيش متجر عارض سعر للحاجة دي دلوقتي. جرّب اسم أقرب للموديل.",
+                                           "No shop is showing a price for this right now. Try the model's exact name."))
+                }
             } else {
                 if model.pending {
                     HStack(spacing: 8) {
