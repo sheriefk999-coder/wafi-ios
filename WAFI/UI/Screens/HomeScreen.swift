@@ -172,12 +172,15 @@ struct HomeScreen: View {
                 .padding(.horizontal, 20)
             }
         }
+        // only products a shop is actually selling: an approximate price is never shown on the home screen
+        let priced = d.products.filter { !$0.isReference }
         SectionHeader(title: t("وصل حديثاً", "Just added")).padding(.horizontal, 20).padding(.top, 24).padding(.bottom, 10)
-        if d.products.isEmpty {
-            EmptyState(icon: Ic.search, title: t("لسه مفيش منتجات", "No products yet"),
-                       bodyText: t("أول ما المتاجر تتضاف هتلاقي أسعارها هنا.", "As stores are added their prices appear here."))
+        if priced.isEmpty {
+            EmptyState(icon: Ic.search, title: t("لسه مفيش أسعار محفوظة", "No stored prices yet"),
+                       bodyText: t("دوّر على أي منتج وإحنا نجيب سعره من المتاجر دلوقتي.",
+                                   "Search for anything and we'll read its price from the shops now."))
         }
-        ForEach(Array(d.products.prefix(12).enumerated()), id: \.element.id) { i, p in
+        ForEach(Array(priced.prefix(12).enumerated()), id: \.element.id) { i, p in
             ProductRow(p: p) { router.push(.product(p.id)) }.padding(.horizontal, 20).padding(.vertical, 5).reveal(i)
             if i == 5 { AdSlot(kind: .inline, placement: "home") }
         }
@@ -189,7 +192,10 @@ struct HomeScreen: View {
 /// The signature panel: every store is a blip; the amber blip is the lowest confirmed price.
 private struct RadarHero: View {
     var d: HomeData
+    @Environment(AppState.self) private var app
     @State private var pulse = false
+    /// The engine's own numbers: shops it reads and prices it holds. Catalog counts are the fallback.
+    @State private var live: LiveStats?
     var body: some View {
         var blips = d.stores.enumerated().map { i, _ in Blip(angle: Double((i * 137 + 20) % 360), distance: 0.35 + Double(i % 3) * 0.22) }
         if d.products.contains(where: { $0.bestTotal != nil }) { blips.append(Blip(angle: 48, distance: 0.62, color: PR.amber, big: true)) }
@@ -200,9 +206,9 @@ private struct RadarHero: View {
                     Text(t("الرادار شغّال", "Radar live")).font(.labelM).foregroundStyle(PR.signalDeep)
                 }
                 .padding(.bottom, 8)
-                stat(d.stores.count, t("متجر بنراقبه", "stores watched"))
-                stat(d.products.count, t("منتج", "products"))
-                stat(d.products.reduce(0) { $0 + $1.offers }, t("عرض سعر", "price offers"))
+                stat(live.map { max($0.shops, d.stores.count) } ?? d.stores.count, t("متجر بنقرا منه", "shops we read"))
+                stat(live?.fresh48h ?? d.products.count, t("سعر محدّث", "fresh prices"))
+                stat(live?.offers ?? d.products.reduce(0) { $0 + $1.offers }, t("عرض سعر", "price offers"))
             }
             Spacer()
             RadarScope(blips: blips).frame(width: 150, height: 150)
@@ -210,6 +216,10 @@ private struct RadarHero: View {
         .padding(18)
         .background(PR.white)
         .clipShape(RoundedRectangle(cornerRadius: 26, style: .continuous))
+        .task {
+            // an engine with nothing stored yet has nothing to say: the catalog's own counts stand
+            if let got = try? await app.api.liveStats(), got.offers > 0 { live = got }
+        }
         .overlay(RoundedRectangle(cornerRadius: 26, style: .continuous).stroke(PR.line))
         .shadow(color: PR.signal.opacity(0.18), radius: 14, y: 6)
         .padding(.horizontal, 20).padding(.vertical, 8)

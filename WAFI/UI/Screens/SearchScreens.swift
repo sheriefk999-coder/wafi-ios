@@ -101,10 +101,13 @@ struct Results<Row: View>: View {
                 EmptyState(icon: Ic.server, title: t("البحث وقف", "Search stopped"), bodyText: e.message, action: t("حاول تاني", "Try again"), onAction: retry)
                     .padding(.top, 24)
             }
-        case .ok(let items):
+        case .ok(let all):
+            // A product no shop is selling has no price we can stand behind, so it is not shown at all.
+            let items = all.filter { !$0.isReference }
             if items.isEmpty {
-                EmptyState(icon: Ic.search, title: t("مفيش نتايج", "No results"),
-                           bodyText: t("جرّب كلمة تانية أو شيل بعض الفلاتر.", "Try another word or remove some filters.")).padding(.top, 24)
+                EmptyState(icon: Ic.search, title: t("مفيش منتج بسعر حالي", "Nothing with a live price"),
+                           bodyText: t("اكتب اسم الموديل فوق وإحنا نجيبه من المتاجر دلوقتي.",
+                                       "Type the model's name above and we'll read it from the shops now.")).padding(.top, 24)
             } else {
                 LazyVStack(spacing: 0) {
                     ForEach(Array(items.enumerated()), id: \.element.id) { i, p in

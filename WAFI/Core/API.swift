@@ -223,6 +223,7 @@ final class API: @unchecked Sendable {
     func liveHistory(key: String) async throws -> LiveHistory {
         try await send("GET", "live/history", query: [.init(name: "key", value: key)])
     }
+    func liveStats() async throws -> LiveStats { try await send("GET", "live/stats") }
     func liveTrending(limit: Int = 12) async throws -> [LiveTrending] {
         try await send("GET", "live/trending", query: [.init(name: "limit", value: "\(limit)")], as: Items<LiveTrending>.self).items
     }

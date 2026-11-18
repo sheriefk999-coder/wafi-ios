@@ -50877,5 +50877,86 @@
    "items": []
   },
   "headers": {}
+ },
+ "GET /live/stats@anon": {
+  "status": 200,
+  "body": {
+   "offers": 1840,
+   "shops": 37,
+   "fresh_48h": 1206,
+   "stale": 634,
+   "sources": 58,
+   "approved": 31,
+   "discovered": 19,
+   "suspended": 6,
+   "blocked": 2,
+   "attempts": 9120,
+   "ok": 6480,
+   "refused": 210,
+   "success_pct": 71.1,
+   "methods": {
+    "jsonld": 4210,
+    "adapter:shopify": 820,
+    "html": 610,
+    "feed": 540,
+    "text": 300
+   },
+   "render_available": true
+  },
+  "headers": {}
+ },
+ "GET /live/stats@member": {
+  "status": 200,
+  "body": {
+   "offers": 1840,
+   "shops": 37,
+   "fresh_48h": 1206,
+   "stale": 634,
+   "sources": 58,
+   "approved": 31,
+   "discovered": 19,
+   "suspended": 6,
+   "blocked": 2,
+   "attempts": 9120,
+   "ok": 6480,
+   "refused": 210,
+   "success_pct": 71.1,
+   "methods": {
+    "jsonld": 4210,
+    "adapter:shopify": 820,
+    "html": 610,
+    "feed": 540,
+    "text": 300
+   },
+   "render_available": true
+  },
+  "headers": {}
+ },
+ "GET /live/stats@pro": {
+  "status": 200,
+  "body": {
+   "offers": 1840,
+   "shops": 37,
+   "fresh_48h": 1206,
+   "stale": 634,
+   "sources": 58,
+   "approved": 31,
+   "discovered": 19,
+   "suspended": 6,
+   "blocked": 2,
+   "attempts": 9120,
+   "ok": 6480,
+   "refused": 210,
+   "success_pct": 71.1,
+   "methods": {
+    "jsonld": 4210,
+    "adapter:shopify": 820,
+    "html": 610,
+    "feed": 540,
+    "text": 300
+   },
+   "render_available": true
+  },
+  "headers": {}
  }
 }

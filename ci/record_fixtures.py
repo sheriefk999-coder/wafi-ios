@@ -86,6 +86,7 @@ for key in ("a55", "ip15", "rn13", "mba", "corolla", "strat", "4060", "xm5", "ip
 for q in ("آيفون", "تويوتا كورولا"):
     for who in ("anon", "member"):
         rec("GET", "/live/search", {"q": q}, who=who)
+rec("GET", "/live/stats", also_anon=True)
 rec("GET", "/live/trending", {"limit": 12}, also_anon=True)
 rec("GET", "/live/watches", also_anon=True)
 rec("GET", "/live/notifications", {"mark_read": "false"}, also_anon=True)
