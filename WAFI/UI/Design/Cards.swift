@@ -57,18 +57,12 @@ struct ProductRow: View {
                 VStack(alignment: .leading, spacing: 2) {
                     Text(p.title).font(.titleS).foregroundStyle(PR.ink).lineLimit(2).multilineTextAlignment(.leading)
                     Text(p.subtitle).font(.bodyS).foregroundStyle(PR.inkSoft).lineLimit(1)
-                    // Reference-catalog items have no store yet: show the market price, not an "out of stock" dot.
-                    if p.isReference {
-                        Text(t("سعر تقريبي · لسه مفيش متجر", "Approximate · no store yet")).font(.labelS).foregroundStyle(PR.inkFaint).lineLimit(1)
-                    } else {
-                        OfferMeta(store: p.bestStore, seenAt: p.bestSeenAt, inStock: p.inStock)
-                    }
+                    OfferMeta(store: p.bestStore, seenAt: p.bestSeenAt, inStock: p.inStock)
                     HStack(spacing: 8) {
                         PriceText(value: p.shownPrice, font: .titleM, color: p.bestTotal != nil ? PR.ink : PR.inkSoft,
                                   fallback: t("لا يوجد سعر حالي", "No current price"))
                         if p.bestTotal != nil { Badge(t("شامل الشحن", "incl. shipping"), .signal) }
                         else if p.minPrice != nil { Badge(t("بدون الشحن", "before shipping")) }
-                        else if p.isReference { Badge(t("تقريبي", "approx."), .amber) }
                     }
                     .padding(.top, 4)
                 }
@@ -99,9 +93,9 @@ struct ProductTile: View {
                 }
                 Text(p.title).font(.wafi(15, .semibold)).foregroundStyle(PR.ink).lineLimit(2).frame(height: 42, alignment: .top).padding(.top, 10)
                 PriceText(value: p.shownPrice, font: .titleM).padding(.top, 6)
-                Text(p.bestTotal != nil ? t("شامل الشحن", "incl. shipping") : p.isReference ? t("سعر تقريبي", "approximate") : t("قبل الشحن", "before shipping"))
-                    .font(.labelS).foregroundStyle(p.isReference ? PR.amberDeep : PR.inkSoft)
-                if !p.isReference { OfferMeta(store: p.bestStore, seenAt: p.bestSeenAt, inStock: p.inStock, compact: true).padding(.top, 4) }
+                Text(p.bestTotal != nil ? t("شامل الشحن", "incl. shipping") : t("قبل الشحن", "before shipping"))
+                    .font(.labelS).foregroundStyle(PR.inkSoft)
+                OfferMeta(store: p.bestStore, seenAt: p.bestSeenAt, inStock: p.inStock, compact: true).padding(.top, 4)
             }
         }
         .frame(width: 168)

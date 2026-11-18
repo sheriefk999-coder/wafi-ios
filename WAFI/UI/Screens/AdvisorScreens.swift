@@ -444,7 +444,6 @@ private struct PcAdviceBody: View {
                         Spacer(minLength: 4)
                         VStack(alignment: .trailing, spacing: 2) {
                             PriceText(value: p.price, font: .titleS)
-                            if p.pricedBy == "reference" { Text(t("تقريبي", "approx.")).font(.labelS).foregroundStyle(PR.amberDeep) }
                         }
                     }
                     if let nu = p.newUsed { NewUsedBlock(nu: nu) }
@@ -452,7 +451,6 @@ private struct PcAdviceBody: View {
                 }
                 .padding(.horizontal, 20).padding(.vertical, 5).reveal(i)
             }
-            ApproxPartsNote(n: a.approximateParts)
             if !a.missing.isEmpty {
                 Text(t("مش لاقيين في الكتالوج: ", "Not in the catalog yet: ") + a.missing.map(partLabel).joined(separator: "، "))
                     .font(.bodyS).foregroundStyle(PR.amberDeep).padding(.horizontal, 24).padding(.vertical, 6)

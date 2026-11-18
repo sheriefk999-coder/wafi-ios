@@ -154,12 +154,12 @@ final class ScreenshotTests: XCTestCase {
         a.buttons.matching(NSPredicate(format: "label CONTAINS %@", "رشّحلي")).firstMatch.tap()
         XCTAssertTrue(wait(a, "الاختيار الأنسب")); scrollTo(a, "أرخص من الجديد"); snap(a, "67_car_used_vs_new")
     }
-    // market price before any store lists a product
-    func test68_referencePrice() {
-        let a = launch(route: "product:" + pid("ref_tab_s10fe")); XCTAssertTrue(wait(a, "سعر تقريبي")); snap(a, "68_product_reference_price")
-    }
-    func test69_onlineMarketPrice() {
-        let a = launch(route: "product:" + pid("ref_a57")); XCTAssertTrue(wait(a, "متوسط السوق أونلاين")); snap(a, "69_product_online_market_price")
+    // A product nobody is selling carries no price at all — not an approximate one.
+    func test68_noApproximatePriceOnProduct() {
+        let a = launch(route: "product:" + pid("ref_tab_s10fe"))
+        XCTAssertTrue(wait(a, "مفيش سعر"))
+        XCTAssertFalse(a.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", "تقريبي")).firstMatch.exists)
+        snap(a, "68_product_without_a_store_price")
     }
     func test71_budgetAndNewVsUsed() {
         let a = launch(route: "picks:phones"); wait(a, "أهم حاجة عندك")
@@ -167,11 +167,13 @@ final class ScreenshotTests: XCTestCase {
         XCTAssertTrue(wait(a, "في حدود ميزانيتك")); snap(a, "71_budget_range")
         scrollTo(a, "مستعمل · "); snap(a, "72_new_vs_used_verdict")
     }
-    func test70_tabletAdvisorFromReference() {
+    func test70_tabletAdvisorPricesFromStoresOnly() {
         let a = launch(route: "picks:phones"); wait(a, "أهم حاجة عندك")
         tapText(a, "تابلت")
         a.buttons.matching(NSPredicate(format: "label CONTAINS %@", "رشّحلي")).firstMatch.tap()
-        XCTAssertTrue(wait(a, "سعر تقريبي من قوائم")); snap(a, "70_tablet_advisor_reference_prices")
+        XCTAssertTrue(wait(a, "الاختيار الأنسب"))
+        XCTAssertFalse(a.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", "تقريبي")).firstMatch.exists)
+        snap(a, "70_tablet_advisor_store_prices")
     }
     func test18_deals() { let a = launch(route: "deals"); wait(a, "نزلت أسعارها"); snap(a, "18_deals") }
     func test19_compare() { let a = launch(route: "compare:" + [pid("a55"), pid("ip15"), pid("rn13")].joined(separator: ","), token: pro); wait(a, "الأرخص"); snap(a, "19_compare") }

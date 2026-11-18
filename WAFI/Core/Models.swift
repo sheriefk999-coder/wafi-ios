@@ -210,11 +210,12 @@ struct ProductSummary: Codable, Identifiable, Hashable {
     /// The price from a store: confirmed best total, else lowest listed price. Nil until a store lists it.
     var displayPrice: Money? { bestTotal ?? minPrice }
     /// The approximate market price from the reference catalog, shown until a store has a real offer.
-    var refPrice: Money? { specs.money("ref_price") }
+
     /// True when no store lists this yet but we have an approximate market price to show.
-    var isReference: Bool { displayPrice == nil && refPrice != nil }
+    /// There is no approximate price any more: a product no store is listing simply has no price.
+    var isReference: Bool { false }
     /// The price to show in lists: a real offer price when we have one, otherwise the approximate price.
-    var shownPrice: Money? { displayPrice ?? refPrice }
+    var shownPrice: Money? { displayPrice }
 }
 
 struct Items<T: Decodable>: Decodable { var items: [T] }
@@ -1025,8 +1026,9 @@ struct Pick: Decodable, Identifiable, Hashable {
         refCount = try c.decodeIfPresent(Int.self, forKey: .refCount)
         newUsed = try c.decodeIfPresent(NewUsed.self, forKey: .newUsed)
     }
-    var price: Money? { bestTotal ?? minPrice ?? refPrice }
-    var isReference: Bool { bestTotal == nil && minPrice == nil && refPrice != nil }
+    var price: Money? { bestTotal ?? minPrice }
+    /// Kept so an older server's reply still decodes; nothing is drawn from it.
+    var isReference: Bool { false }
     var summary: ProductSummary {
         ProductSummary(id: id, brand: brand, model: model, category: category, titleAr: titleAr, titleEn: titleEn,
                        minPrice: minPrice, bestTotal: bestTotal, offers: offers, specs: specs, imageUrl: imageUrl)
