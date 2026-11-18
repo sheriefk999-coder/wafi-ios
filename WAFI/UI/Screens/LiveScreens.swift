@@ -369,6 +369,7 @@ struct LiveProductScreen: View {
                     }
                 }
                 .padding(16)
+                .padding(.bottom, 90)          // clear of the floating tab bar
             }
         }
         .background(PR.paper)
@@ -563,7 +564,8 @@ struct LiveOfferRow: View {
                     if let total = offer.total, total != offer.price {
                         Text(t("\(Fmt.money(total)) بالشحن", "\(Fmt.money(total)) with delivery"))
                             .font(.labelS).foregroundStyle(PR.inkSoft)
-                    } else {
+                    } else if best {
+                        // said once, on the row people act on, instead of under every shop
                         Text(t("الشحن مش مكتوب", "delivery not stated")).font(.labelS).foregroundStyle(PR.inkFaint)
                     }
                     if let d = offer.discountPct, d >= 1 { Badge("−" + String(format: "%.0f", d) + "%", .amber) }
