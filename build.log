@@ -1,0 +1,14 @@
+
+----- xcbeautify -----
+Version: 3.2.1
+----------------------
+
+[[36mWAFI[0m] [1mCompiling[0m Ads.swift
+::warning file=/Users/runner/work/wafi-ios/wafi-ios/WAFI/Core/Ads.swift,line=27,col=51::consider using asynchronous alternative function
+                    GADMobileAds.sharedInstance().start(completionHandler: nil)
+                                                  ^
+[[36mWAFI[0m] [1mCompiling[0m Billing.swift
+::warning file=/Users/runner/work/wafi-ios/wafi-ios/WAFI/Core/Billing.swift,line=96,col=25::no calls to throwing functions occur within 'try' expression
+        if let status = try? await tx.subscriptionStatus, case .verified = status.renewalInfo {
+                        ^
+[32;1mTest Build Succeeded[0m

@@ -1,0 +1,107 @@
+
+----- xcbeautify -----
+Version: 3.2.1
+----------------------
+
+[36;1mResolving Package Graph[0m
+[32;1mResolved source packages[0m
+[36;1mGoogleAdsOnDeviceConversion[0m - [1mhttps://github.com/googleads/google-ads-on-device-conversion-ios-sdk[0m @ [32m2.3.0[0m
+[36;1mgRPC[0m - [1mhttps://github.com/google/grpc-binary.git[0m @ [32m1.69.1[0m
+[36;1mSwiftProtobuf[0m - [1mhttps://github.com/apple/swift-protobuf.git[0m @ [32m1.41.0[0m
+[36;1mleveldb[0m - [1mhttps://github.com/firebase/leveldb.git[0m @ [32m1.22.5[0m
+[36;1mGoogleUserMessagingPlatform[0m - [1mhttps://github.com/googleads/swift-package-manager-google-user-messaging-platform[0m @ [32m2.7.0[0m
+[36;1mAppCheck[0m - [1mhttps://github.com/google/app-check.git[0m @ [32m11.3.2[0m
+[36;1mabseil[0m - [1mhttps://github.com/google/abseil-cpp-binary.git[0m @ [32m1.2024072200.0[0m
+[36;1mnanopb[0m - [1mhttps://github.com/firebase/nanopb.git[0m @ [32m2.30910.1[0m
+[36;1mGTMSessionFetcher[0m - [1mhttps://github.com/google/gtm-session-fetcher.git[0m @ [32m4.5.0[0m
+[36;1mGoogleUtilities[0m - [1mhttps://github.com/google/GoogleUtilities.git[0m @ [32m8.1.5[0m
+[36;1mFirebase[0m - [1mhttps://github.com/firebase/firebase-ios-sdk[0m @ [32m11.15.0[0m
+[36;1mGoogleMobileAds[0m - [1mhttps://github.com/googleads/swift-package-manager-google-mobile-ads[0m @ [32m11.13.0[0m
+[36;1mInteropForGoogle[0m - [1mhttps://github.com/google/interop-ios-for-google-sdks.git[0m @ [32m101.0.0[0m
+[36;1mGoogleDataTransport[0m - [1mhttps://github.com/google/GoogleDataTransport.git[0m @ [32m10.1.1[0m
+[36;1mPromises[0m - [1mhttps://github.com/google/promises.git[0m @ [32m2.4.1[0m
+[36;1mGoogleAppMeasurement[0m - [1mhttps://github.com/google/GoogleAppMeasurement.git[0m @ [32m11.15.0[0m
+Test Suite 'All tests' started at 2026-11-18 16:25:15.272.
+Test Suite 'WAFITests.xctest' started at 2026-11-18 16:25:15.276.
+Test Suite 'DecodingTests' started at 2026-11-18 16:25:15.277.
+    [32m✔[0m testCountryFlag (0.006 seconds)
+    [32m✔[0m testMoneyFromStringsAndNumbersIsExact ([33m0.030[0m seconds)
+    [32m✔[0m testQuotasInConfig (0.003 seconds)
+Executed 3 tests, with 0 failures (0 unexpected) in 0.039 (0.043) seconds
+Test Suite 'FormatTests' started at 2026-11-18 16:25:15.320.
+    [32m✔[0m testCompactAndPct (0.004 seconds)
+    [32m✔[0m testMoneyKeepsWholeUnitsAndFractions (0.014 seconds)
+    [32m✔[0m testSeenTodayYesterday (0.019 seconds)
+Executed 3 tests, with 0 failures (0 unexpected) in 0.038 (0.047) seconds
+Test Suite 'LiveEngineTests' started at 2026-11-18 16:25:15.368.
+    [32m✔[0m testEmptyResponsesDecode ([33m0.032[0m seconds)
+    [32m✔[0m testLiveSearchDecodes ([33m0.045[0m seconds)
+    [32m✔[0m testUnknownStockIsNotAClaim ([31m3.452[0m seconds)
+Executed 3 tests, with 0 failures (0 unexpected) in 3.529 (3.532) seconds
+Test Suite 'QuotaTextTests' started at 2026-11-18 16:25:18.900.
+    [32m✔[0m testWaitAndWindowText (0.003 seconds)
+Executed 1 test, with 0 failures (0 unexpected) in 0.003 (0.004) seconds
+Test Suite 'WalletTests' started at 2026-11-18 16:25:18.904.
+    [32m✔[0m testGoldAndCurrencySidesValueSeparately ([33m0.036[0m seconds)
+Executed 1 test, with 0 failures (0 unexpected) in 0.036 (0.036) seconds
+Test Suite 'WAFITests.xctest' passed at 2026-11-18 16:25:18.941.
+Executed 11 tests, with 0 failures (0 unexpected) in 3.644 (3.665) seconds
+Test Suite 'All tests' passed at 2026-11-18 16:25:18.941.
+Executed 11 tests, with 0 failures (0 unexpected) in 3.644 (3.670) seconds
+Test Suite 'All tests' started at 2026-11-18 16:25:38.517.
+Test Suite 'WAFIUITests.xctest' started at 2026-11-18 16:25:38.522.
+Test Suite 'ScreenshotTests' started at 2026-11-18 16:25:38.522.
+    [32m✔[0m test01_onboarding ([31m20.088[0m seconds)
+    [32m✔[0m test02_country ([31m11.943[0m seconds)
+    [32m✔[0m test03_home ([31m17.156[0m seconds)
+    [32m✔[0m test05_liveSearch ([31m10.596[0m seconds)
+    [32m✔[0m test05b_liveProduct ([31m16.904[0m seconds)
+    [32m✔[0m test06_category ([31m11.670[0m seconds)
+    [32m✔[0m test07_music ([31m9.845[0m seconds)
+    [32m✔[0m test08_product ([31m14.881[0m seconds)
+    [32m✔[0m test10_market ([31m46.329[0m seconds)
+    [32m✔[0m test12_wallet ([31m56.877[0m seconds)
+    [32m✔[0m test13_goldAdvisor ([31m21.437[0m seconds)
+    [32m✔[0m test14_assistant ([31m28.829[0m seconds)
+    [32m✔[0m test15_advisorHub ([31m11.027[0m seconds)
+    [32m✔[0m test16_phoneAdvisor ([31m11.604[0m seconds)
+    [32m✔[0m test17_pcAdvisor ([31m11.677[0m seconds)
+    [32m✔[0m test18_deals ([31m9.593[0m seconds)
+    [32m✔[0m test19_compare ([31m8.571[0m seconds)
+    [32m✔[0m test20_basket ([31m41.735[0m seconds)
+    [32m✔[0m test21_pro ([31m10.590[0m seconds)
+    [32m✔[0m test22_account ([31m10.874[0m seconds)
+    [32m✔[0m test23_accountGuest ([31m10.696[0m seconds)
+    [32m✔[0m test24_signIn ([31m10.071[0m seconds)
+    [32m✔[0m test25_marketAlerts ([31m25.629[0m seconds)
+    [32m✔[0m test26_cars ([31m9.816[0m seconds)
+    [32m✔[0m test27_pcBuilder ([31m13.965[0m seconds)
+    [32m✔[0m test28_settings ([31m12.916[0m seconds)
+    [32m✔[0m test40_darkHome ([31m11.465[0m seconds)
+    [32m✔[0m test41_darkProduct ([31m14.099[0m seconds)
+    [32m✔[0m test42_darkMarket ([31m10.412[0m seconds)
+    [32m✔[0m test50_enHome ([31m10.116[0m seconds)
+    [32m✔[0m test51_enSearch ([31m29.367[0m seconds)
+    [32m✔[0m test52_enProduct ([31m9.647[0m seconds)
+    [32m✔[0m test53_enMarket ([31m9.521[0m seconds)
+    [32m✔[0m test54_enWallet ([31m9.621[0m seconds)
+    [32m✔[0m test55_enAssistant ([31m9.403[0m seconds)
+    [32m✔[0m test56_enPro ([31m9.684[0m seconds)
+    [32m✔[0m test60_guestCanSearchLive ([31m9.877[0m seconds)
+    [32m✔[0m test61_productUsedAndLens ([31m11.987[0m seconds)
+    [32m✔[0m test63_usedVsNew ([31m20.457[0m seconds)
+    [32m✔[0m test64_tradeIn ([31m26.381[0m seconds)
+    [32m✔[0m test65_phoneStepUp ([31m18.879[0m seconds)
+    [32m✔[0m test66_carRunning ([31m13.096[0m seconds)
+    [32m✔[0m test67_usedCarVsNew ([31m31.633[0m seconds)
+    [32m✔[0m test68_noApproximatePriceOnProduct ([31m11.675[0m seconds)
+    [32m✔[0m test70_tabletAdvisorPricesFromStoresOnly ([31m12.844[0m seconds)
+    [32m✔[0m test71_budgetAndNewVsUsed ([31m13.578[0m seconds)
+Executed 46 tests, with 0 failures (0 unexpected) in 759.058 (759.089) seconds
+Test Suite 'WAFIUITests.xctest' passed at 2026-11-18 16:38:17.613.
+Executed 46 tests, with 0 failures (0 unexpected) in 759.058 (759.091) seconds
+Test Suite 'All tests' passed at 2026-11-18 16:38:17.613.
+Executed 46 tests, with 0 failures (0 unexpected) in 759.058 (759.096) seconds
+[1mTest session results:[0m /Users/runner/work/wafi-ios/wafi-ios/ci/out/Tests.xcresult
+[32;1mTest Execute Succeeded[0m
+[36;1mTesting started[0m

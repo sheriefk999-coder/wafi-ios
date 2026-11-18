@@ -1,0 +1,1116 @@
+Command line invocation:
+    /Applications/Xcode_26.3.app/Contents/Developer/usr/bin/xcodebuild test-without-building -project WAFI.xcodeproj -scheme WAFI -destination "platform=iOS Simulator,name=iPhone 16 Pro Max" -derivedDataPath build -resultBundlePath ci/out/Tests.xcresult
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  GoogleAdsOnDeviceConversion: https://github.com/googleads/google-ads-on-device-conversion-ios-sdk @ 2.3.0
+  gRPC: https://github.com/google/grpc-binary.git @ 1.69.1
+  SwiftProtobuf: https://github.com/apple/swift-protobuf.git @ 1.41.0
+  leveldb: https://github.com/firebase/leveldb.git @ 1.22.5
+  GoogleUserMessagingPlatform: https://github.com/googleads/swift-package-manager-google-user-messaging-platform @ 2.7.0
+  AppCheck: https://github.com/google/app-check.git @ 11.3.2
+  abseil: https://github.com/google/abseil-cpp-binary.git @ 1.2024072200.0
+  nanopb: https://github.com/firebase/nanopb.git @ 2.30910.1
+  GTMSessionFetcher: https://github.com/google/gtm-session-fetcher.git @ 4.5.0
+  GoogleUtilities: https://github.com/google/GoogleUtilities.git @ 8.1.5
+  Firebase: https://github.com/firebase/firebase-ios-sdk @ 11.15.0
+  GoogleMobileAds: https://github.com/googleads/swift-package-manager-google-mobile-ads @ 11.13.0
+  InteropForGoogle: https://github.com/google/interop-ios-for-google-sdks.git @ 101.0.0
+  GoogleDataTransport: https://github.com/google/GoogleDataTransport.git @ 10.1.1
+  Promises: https://github.com/google/promises.git @ 2.4.1
+  GoogleAppMeasurement: https://github.com/google/GoogleAppMeasurement.git @ 11.15.0
+
+Writing result bundle at path:
+	/Users/runner/work/wafi-ios/wafi-ios/ci/out/Tests.xcresult
+
+--- xcodebuild: WARNING: Using the first of multiple matching destinations:
+{ platform:iOS Simulator, arch:arm64, id:FA1105A3-CFB2-45AC-B4DB-EBAC55DD946D, OS:26.2, name:iPhone 16 Pro Max }
+{ platform:iOS Simulator, arch:x86_64, id:FA1105A3-CFB2-45AC-B4DB-EBAC55DD946D, OS:26.2, name:iPhone 16 Pro Max }
+IOSurfaceClientSetSurfaceNotify failed e00002c7
+2026-11-18 16:24:47.754942+0000 WAFI[8995:30719] fopen failed for data file: errno = 2 (No such file or directory)
+2026-11-18 16:24:47.755235+0000 WAFI[8995:30719] Errors found! Invalidating cache...
+2026-11-18 16:24:49.564468+0000 WAFI[8995:30719] fopen failed for data file: errno = 2 (No such file or directory)
+2026-11-18 16:24:49.565106+0000 WAFI[8995:30719] Errors found! Invalidating cache...
+2026-11-18 16:24:50.115813+0000 WAFI[8995:30719] [error] building pipeline primitive_color-feb2a4ca8feba4 took 2.377959 seconds
+2026-11-18 16:24:50.951427+0000 WAFI[8995:32526] [General] Failed to send CA Event for app launch measurements for ca_event_type: 0 event_name: com.apple.app_launch_measurement.FirstFramePresentationMetric
+2026-11-18 16:24:51.540972+0000 WAFI[8995:32523] [Client] Updating selectors failed with: Error Domain=NSCocoaErrorDomain Code=4099 "The connection to service named com.apple.commcenter.coretelephony.xpc was invalidated: Connection init failed at lookup with error 3 - No such process." UserInfo={NSDebugDescription=The connection to service named com.apple.commcenter.coretelephony.xpc was invalidated: Connection init failed at lookup with error 3 - No such process.}
+2026-11-18 16:24:51.541530+0000 WAFI[8995:32520] [Client] Synchronous remote object proxy returned error: Error Domain=NSCocoaErrorDomain Code=4099 "The connection to service named com.apple.commcenter.coretelephony.xpc was invalidated: Connection init failed at lookup with error 3 - No such process." UserInfo={NSDebugDescription=The connection to service named com.apple.commcenter.coretelephony.xpc was invalidated: Connection init failed at lookup with error 3 - No such process.}
+2026-11-18 16:24:54.290771+0000 WAFI[8995:32520] [Client] Synchronous remote object proxy returned error: Error Domain=NSCocoaErrorDomain Code=4099 "The connection to service named com.apple.commcenter.coretelephony.xpc was invalidated: Connection init failed at lookup with error 3 - No such process." UserInfo={NSDebugDescription=The connection to service named com.apple.commcenter.coretelephony.xpc was invalidated: Connection init failed at lookup with error 3 - No such process.}
+2026-11-18 16:24:54.292942+0000 WAFI[8995:32511] [Client] Updating selectors failed with: Error Domain=NSCocoaErrorDomain Code=4099 "The connection to service named com.apple.commcenter.coretelephony.xpc was invalidated: Connection init failed at lookup with error 3 - No such process." UserInfo={NSDebugDescription=The connection to service named com.apple.commcenter.coretelephony.xpc was invalidated: Connection init failed at lookup with error 3 - No such process.}
+2026-11-18 16:24:54.392517+0000 WAFI[8995:32511] [Client] Updating selectors failed with: Error Domain=NSCocoaErrorDomain Code=4099 "The connection to service named com.apple.commcenter.coretelephony.xpc was invalidated: Connection init failed at lookup with error 3 - No such process." UserInfo={NSDebugDescription=The connection to service named com.apple.commcenter.coretelephony.xpc was invalidated: Connection init failed at lookup with error 3 - No such process.}
+2026-11-18 16:24:54.392626+0000 WAFI[8995:32511] [Client] Updating selectors after delegate addition failed with: Error Domain=NSCocoaErrorDomain Code=4099 "The connection to service named com.apple.commcenter.coretelephony.xpc was invalidated: Connection init failed at lookup with error 3 - No such process." UserInfo={NSDebugDescription=The connection to service named com.apple.commcenter.coretelephony.xpc was invalidated: Connection init failed at lookup with error 3 - No such process.}
+2026-11-18 16:24:55.186772+0000 WAFI[8995:32575] [General] Failed to send CA Event for app launch measurements for ca_event_type: 1 event_name: com.apple.app_launch_measurement.ExtendedLaunchMetrics
+2026-11-18 16:24:57.801639+0000 WAFI[8995:32523] [connection] nw_socket_set_connection_idle [C1.1.1.1:3] setsockopt SO_CONNECTION_IDLE failed [42: Protocol not available]
+2026-11-18 16:24:57.922565+0000 WAFI[8995:32523] [connection] nw_socket_set_connection_idle [C1.1.1.1:3] setsockopt SO_CONNECTION_IDLE failed [42: Protocol not available]
+2026-11-18 16:24:58.254528+0000 WAFI[8995:32620] [connection] nw_socket_set_connection_idle [C1.1.1.1:3] setsockopt SO_CONNECTION_IDLE failed [42: Protocol not available]
+2026-11-18 16:25:03.772767+0000 WAFI[8995:32575] [connection] nw_socket_set_connection_idle [C1.1.1.1:3] setsockopt SO_CONNECTION_IDLE failed [42: Protocol not available]
+Test Suite 'All tests' started at 2026-11-18 16:25:15.272.
+Test Suite 'WAFITests.xctest' started at 2026-11-18 16:25:15.276.
+Test Suite 'DecodingTests' started at 2026-11-18 16:25:15.277.
+Test Case '-[WAFITests.DecodingTests testCountryFlag]' started.
+Test Case '-[WAFITests.DecodingTests testCountryFlag]' passed (0.006 seconds).
+Test Case '-[WAFITests.DecodingTests testMoneyFromStringsAndNumbersIsExact]' started.
+Test Case '-[WAFITests.DecodingTests testMoneyFromStringsAndNumbersIsExact]' passed (0.030 seconds).
+Test Case '-[WAFITests.DecodingTests testQuotasInConfig]' started.
+Test Case '-[WAFITests.DecodingTests testQuotasInConfig]' passed (0.003 seconds).
+Test Suite 'DecodingTests' passed at 2026-11-18 16:25:15.320.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.039 (0.043) seconds
+Test Suite 'FormatTests' started at 2026-11-18 16:25:15.320.
+Test Case '-[WAFITests.FormatTests testCompactAndPct]' started.
+Test Case '-[WAFITests.FormatTests testCompactAndPct]' passed (0.004 seconds).
+Test Case '-[WAFITests.FormatTests testMoneyKeepsWholeUnitsAndFractions]' started.
+Test Case '-[WAFITests.FormatTests testMoneyKeepsWholeUnitsAndFractions]' passed (0.014 seconds).
+Test Case '-[WAFITests.FormatTests testSeenTodayYesterday]' started.
+Test Case '-[WAFITests.FormatTests testSeenTodayYesterday]' passed (0.019 seconds).
+Test Suite 'FormatTests' passed at 2026-11-18 16:25:15.367.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.038 (0.047) seconds
+Test Suite 'LiveEngineTests' started at 2026-11-18 16:25:15.368.
+Test Case '-[WAFITests.LiveEngineTests testEmptyResponsesDecode]' started.
+Test Case '-[WAFITests.LiveEngineTests testEmptyResponsesDecode]' passed (0.032 seconds).
+Test Case '-[WAFITests.LiveEngineTests testLiveSearchDecodes]' started.
+Test Case '-[WAFITests.LiveEngineTests testLiveSearchDecodes]' passed (0.045 seconds).
+Test Case '-[WAFITests.LiveEngineTests testUnknownStockIsNotAClaim]' started.
+Test Case '-[WAFITests.LiveEngineTests testUnknownStockIsNotAClaim]' passed (3.452 seconds).
+Test Suite 'LiveEngineTests' passed at 2026-11-18 16:25:18.900.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 3.529 (3.532) seconds
+Test Suite 'QuotaTextTests' started at 2026-11-18 16:25:18.900.
+Test Case '-[WAFITests.QuotaTextTests testWaitAndWindowText]' started.
+Test Case '-[WAFITests.QuotaTextTests testWaitAndWindowText]' passed (0.003 seconds).
+Test Suite 'QuotaTextTests' passed at 2026-11-18 16:25:18.904.
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.003 (0.004) seconds
+Test Suite 'WalletTests' started at 2026-11-18 16:25:18.904.
+Test Case '-[WAFITests.WalletTests testGoldAndCurrencySidesValueSeparately]' started.
+Test Case '-[WAFITests.WalletTests testGoldAndCurrencySidesValueSeparately]' passed (0.036 seconds).
+Test Suite 'WalletTests' passed at 2026-11-18 16:25:18.941.
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.036 (0.036) seconds
+Test Suite 'WAFITests.xctest' passed at 2026-11-18 16:25:18.941.
+	 Executed 11 tests, with 0 failures (0 unexpected) in 3.644 (3.665) seconds
+Test Suite 'All tests' passed at 2026-11-18 16:25:18.941.
+	 Executed 11 tests, with 0 failures (0 unexpected) in 3.644 (3.670) seconds
+2026-11-18 16:25:28.554417+0000 WAFIUITests-Runner[10447:35271] [Default] Running tests...
+2026-11-18 16:25:30.671166+0000 WAFIUITests-Runner[10447:35360] [General] Failed to send CA Event for app launch measurements for ca_event_type: 0 event_name: com.apple.app_launch_measurement.FirstFramePresentationMetric
+2026-11-18 16:25:32.809053+0000 WAFIUITests-Runner[10447:35362] [General] Failed to send CA Event for app launch measurements for ca_event_type: 1 event_name: com.apple.app_launch_measurement.ExtendedLaunchMetrics
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'All tests' started at 2026-11-18 16:25:38.517.
+Test Suite 'WAFIUITests.xctest' started at 2026-11-18 16:25:38.522.
+Test Suite 'ScreenshotTests' started at 2026-11-18 16:25:38.522.
+Test Case '-[WAFIUITests.ScreenshotTests test01_onboarding]' started.
+    t =     0.00s Start Test at 2026-11-18 16:25:38.528
+    t =     0.89s Set Up
+    t =     0.91s Open com.wafi.app
+    t =     0.91s     Launch com.wafi.app
+    t =    10.32s         Setting up automation session
+    t =    13.35s         Wait for com.wafi.app to idle
+    t =    15.88s Waiting 20.0s for Any (First Match) to exist
+    t =    16.93s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    16.94s         Checking existence of `Any (First Match)`
+    t =    19.24s Find the Target Application 'com.wafi.app'
+    t =    19.62s Added attachment named '01_onboarding'
+    t =    19.62s Tear Down
+Test Case '-[WAFIUITests.ScreenshotTests test01_onboarding]' passed (20.088 seconds).
+Test Case '-[WAFIUITests.ScreenshotTests test02_country]' started.
+    t =     0.00s Start Test at 2026-11-18 16:25:58.616
+    t =     0.04s Set Up
+    t =     0.05s Open com.wafi.app
+    t =     0.05s     Launch com.wafi.app
+    t =     0.05s         Terminate com.wafi.app:10890
+    t =     2.91s         Setting up automation session
+    t =     5.08s         Wait for com.wafi.app to idle
+    t =     6.95s Waiting 20.0s for Any (First Match) to exist
+    t =     8.01s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =     8.01s         Checking existence of `Any (First Match)`
+    t =    10.09s Find the Target Application 'com.wafi.app'
+    t =    10.38s Added attachment named '02_country'
+    t =    10.38s Tear Down
+Test Case '-[WAFIUITests.ScreenshotTests test02_country]' passed (11.943 seconds).
+Test Case '-[WAFIUITests.ScreenshotTests test03_home]' started.
+    t =     0.00s Start Test at 2026-11-18 16:26:10.559
+    t =     0.04s Set Up
+    t =     0.04s Open com.wafi.app
+    t =     0.04s     Launch com.wafi.app
+    t =     0.04s         Terminate com.wafi.app:11229
+    t =     2.31s         Setting up automation session
+    t =     4.11s         Wait for com.wafi.app to idle
+    t =     7.29s Waiting 20.0s for Any (First Match) to exist
+    t =     8.35s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =     8.36s         Checking existence of `Any (First Match)`
+    t =    10.85s Find the Target Application 'com.wafi.app'
+    t =    11.24s Added attachment named '03_home'
+    t =    11.25s Swipe up Target Application 'com.wafi.app'
+    t =    11.25s     Wait for com.wafi.app to idle
+    t =    11.25s     Find the Target Application 'com.wafi.app'
+    t =    11.33s     Check for interrupting elements affecting "WAFI" Application
+    t =    11.50s     Synthesize event
+    t =    12.09s     Wait for com.wafi.app to idle
+    t =    16.18s Find the Target Application 'com.wafi.app'
+    t =    16.59s Added attachment named '04_home_more'
+    t =    16.60s Tear Down
+Test Case '-[WAFIUITests.ScreenshotTests test03_home]' passed (17.156 seconds).
+Test Case '-[WAFIUITests.ScreenshotTests test05_liveSearch]' started.
+    t =     0.00s Start Test at 2026-11-18 16:26:27.716
+    t =     0.03s Set Up
+    t =     0.03s Open com.wafi.app
+    t =     0.03s     Launch com.wafi.app
+    t =     0.03s         Terminate com.wafi.app:11347
+    t =     1.86s         Setting up automation session
+    t =     4.13s         Wait for com.wafi.app to idle
+    t =     6.63s Waiting 20.0s for Any (First Match) to exist
+    t =     7.69s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =     7.70s         Checking existence of `Any (First Match)`
+    t =     9.96s Find the Target Application 'com.wafi.app'
+    t =    10.25s Added attachment named '05_live_search'
+    t =    10.25s Tear Down
+Test Case '-[WAFIUITests.ScreenshotTests test05_liveSearch]' passed (10.596 seconds).
+Test Case '-[WAFIUITests.ScreenshotTests test05b_liveProduct]' started.
+    t =     0.00s Start Test at 2026-11-18 16:26:38.312
+    t =     0.03s Set Up
+    t =     0.03s Open com.wafi.app
+    t =     0.03s     Launch com.wafi.app
+    t =     0.03s         Terminate com.wafi.app:11992
+    t =     2.33s         Setting up automation session
+    t =     4.58s         Wait for com.wafi.app to idle
+    t =     6.86s Waiting 20.0s for Any (First Match) to exist
+    t =     7.91s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =     7.91s         Checking existence of `Any (First Match)`
+    t =     8.81s Tap "Apple iPhone 17 256GB" StaticText
+    t =     8.81s     Wait for com.wafi.app to idle
+    t =     8.82s     Find the "Apple iPhone 17 256GB" StaticText
+    t =    10.28s     Check for interrupting elements affecting "Apple iPhone 17 256GB" StaticText
+    t =    10.53s     Synthesize event
+    t =    10.96s     Wait for com.wafi.app to idle
+    t =    11.03s Waiting 20.0s for Any (First Match) to exist
+    t =    12.12s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    12.12s         Checking existence of `Any (First Match)`
+    t =    15.75s Find the Target Application 'com.wafi.app'
+    t =    15.99s Added attachment named '05b_live_product'
+    t =    15.99s Tear Down
+Test Case '-[WAFIUITests.ScreenshotTests test05b_liveProduct]' passed (16.904 seconds).
+Test Case '-[WAFIUITests.ScreenshotTests test06_category]' started.
+    t =     0.00s Start Test at 2026-11-18 16:26:55.216
+    t =     0.04s Set Up
+    t =     0.05s Open com.wafi.app
+    t =     0.05s     Launch com.wafi.app
+    t =     0.05s         Terminate com.wafi.app:12072
+    t =     2.54s         Setting up automation session
+    t =     3.74s         Wait for com.wafi.app to idle
+    t =     6.32s Waiting 20.0s for Any (First Match) to exist
+    t =     7.33s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =     7.33s         Checking existence of `Any (First Match)`
+    t =     8.19s         Capturing element debug description
+    t =     8.38s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =     8.38s         Checking existence of `Any (First Match)`
+    t =    10.69s Find the Target Application 'com.wafi.app'
+    t =    10.94s Added attachment named '06_phones'
+    t =    10.95s Tear Down
+Test Case '-[WAFIUITests.ScreenshotTests test06_category]' passed (11.670 seconds).
+Test Case '-[WAFIUITests.ScreenshotTests test07_music]' started.
+    t =     0.00s Start Test at 2026-11-18 16:27:06.886
+    t =     0.04s Set Up
+    t =     0.05s Open com.wafi.app
+    t =     0.05s     Launch com.wafi.app
+    t =     0.05s         Terminate com.wafi.app:12717
+    t =     1.64s         Setting up automation session
+    t =     3.41s         Wait for com.wafi.app to idle
+    t =     5.87s Waiting 20.0s for Any (First Match) to exist
+    t =     6.91s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =     6.91s         Checking existence of `Any (First Match)`
+    t =     9.11s Find the Target Application 'com.wafi.app'
+    t =     9.39s Added attachment named '07_music'
+    t =     9.39s Tear Down
+Test Case '-[WAFIUITests.ScreenshotTests test07_music]' passed (9.845 seconds).
+Test Case '-[WAFIUITests.ScreenshotTests test08_product]' started.
+    t =     0.00s Start Test at 2026-11-18 16:27:16.732
+    t =     0.03s Set Up
+    t =     0.04s Open com.wafi.app
+    t =     0.04s     Launch com.wafi.app
+    t =     0.04s         Terminate com.wafi.app:13158
+    t =     1.55s         Setting up automation session
+    t =     3.66s         Wait for com.wafi.app to idle
+    t =     5.82s Waiting 20.0s for Any (First Match) to exist
+    t =     6.86s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =     6.86s         Checking existence of `Any (First Match)`
+    t =     9.04s Find the Target Application 'com.wafi.app'
+    t =     9.37s Added attachment named '08_product'
+    t =     9.37s Swipe up Target Application 'com.wafi.app'
+    t =     9.37s     Wait for com.wafi.app to idle
+    t =     9.38s     Find the Target Application 'com.wafi.app'
+    t =     9.46s     Check for interrupting elements affecting "WAFI" Application
+    t =     9.55s     Synthesize event
+    t =     9.99s     Wait for com.wafi.app to idle
+    t =    14.09s Find the Target Application 'com.wafi.app'
+    t =    14.41s Added attachment named '09_product_offers'
+    t =    14.41s Tear Down
+Test Case '-[WAFIUITests.ScreenshotTests test08_product]' passed (14.881 seconds).
+Test Case '-[WAFIUITests.ScreenshotTests test10_market]' started.
+    t =     0.00s Start Test at 2026-11-18 16:27:31.613
+    t =     0.04s Set Up
+    t =     0.05s Open com.wafi.app
+    t =     0.05s     Launch com.wafi.app
+    t =     0.05s         Terminate com.wafi.app:13650
+    t =    29.26s         Setting up automation session
+    t =    33.54s         Wait for com.wafi.app to idle
+    t =    37.00s Waiting 20.0s for Any (First Match) to exist
+    t =    38.05s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    38.06s         Checking existence of `Any (First Match)`
+    t =    40.25s Find the Target Application 'com.wafi.app'
+    t =    40.75s Added attachment named '10_market'
+    t =    40.76s Swipe up Target Application 'com.wafi.app'
+    t =    40.76s     Wait for com.wafi.app to idle
+    t =    40.78s     Find the Target Application 'com.wafi.app'
+    t =    40.98s     Check for interrupting elements affecting "WAFI" Application
+    t =    41.12s     Synthesize event
+    t =    41.55s     Wait for com.wafi.app to idle
+    t =    45.69s Find the Target Application 'com.wafi.app'
+    t =    46.01s Added attachment named '11_market_tools'
+    t =    46.01s Tear Down
+Test Case '-[WAFIUITests.ScreenshotTests test10_market]' passed (46.329 seconds).
+Test Case '-[WAFIUITests.ScreenshotTests test12_wallet]' started.
+    t =     0.00s Start Test at 2026-11-18 16:28:17.943
+    t =     0.07s Set Up
+    t =     0.08s Open com.wafi.app
+    t =     0.08s     Launch com.wafi.app
+    t =     0.08s         Terminate com.wafi.app:14207
+    t =    33.37s         Setting up automation session
+    t =    49.83s         Wait for com.wafi.app to idle
+    t =    53.01s Waiting 20.0s for Any (First Match) to exist
+    t =    54.05s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    54.05s         Checking existence of `Any (First Match)`
+    t =    56.29s Find the Target Application 'com.wafi.app'
+    t =    56.64s Added attachment named '12_wallet'
+    t =    56.65s Tear Down
+Test Case '-[WAFIUITests.ScreenshotTests test12_wallet]' passed (56.877 seconds).
+Test Case '-[WAFIUITests.ScreenshotTests test13_goldAdvisor]' started.
+    t =     0.00s Start Test at 2026-11-18 16:29:14.822
+    t =     0.03s Set Up
+    t =     0.03s Open com.wafi.app
+    t =     0.03s     Launch com.wafi.app
+    t =     0.04s         Terminate com.wafi.app:18622
+    t =    14.09s         Setting up automation session
+    t =    15.53s         Wait for com.wafi.app to idle
+    t =    17.74s Waiting 20.0s for Any (First Match) to exist
+    t =    18.77s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    18.77s         Checking existence of `Any (First Match)`
+    t =    20.90s Find the Target Application 'com.wafi.app'
+    t =    21.19s Added attachment named '13_gold_analysis'
+    t =    21.20s Tear Down
+Test Case '-[WAFIUITests.ScreenshotTests test13_goldAdvisor]' passed (21.437 seconds).
+Test Case '-[WAFIUITests.ScreenshotTests test14_assistant]' started.
+    t =     0.00s Start Test at 2026-11-18 16:29:36.259
+    t =     0.03s Set Up
+    t =     0.03s Open com.wafi.app
+    t =     0.03s     Launch com.wafi.app
+    t =     0.03s         Terminate com.wafi.app:20518
+    t =    20.37s         Setting up automation session
+    t =    22.10s         Wait for com.wafi.app to idle
+    t =    24.87s Waiting 25.0s for Any (First Match) to exist
+    t =    25.92s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    25.92s         Checking existence of `Any (First Match)`
+    t =    28.26s Find the Target Application 'com.wafi.app'
+    t =    28.59s Added attachment named '14_assistant'
+    t =    28.59s Tear Down
+Test Case '-[WAFIUITests.ScreenshotTests test14_assistant]' passed (28.829 seconds).
+Test Case '-[WAFIUITests.ScreenshotTests test15_advisorHub]' started.
+    t =     0.00s Start Test at 2026-11-18 16:30:05.089
+    t =     0.04s Set Up
+    t =     0.04s Open com.wafi.app
+    t =     0.04s     Launch com.wafi.app
+    t =     0.04s         Terminate com.wafi.app:22615
+    t =     2.06s         Setting up automation session
+    t =     3.67s         Wait for com.wafi.app to idle
+    t =     7.34s Waiting 20.0s for Any (First Match) to exist
+    t =     8.37s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =     8.37s         Checking existence of `Any (First Match)`
+    t =    10.56s Find the Target Application 'com.wafi.app'
+    t =    10.80s Added attachment named '15_advisor'
+    t =    10.80s Tear Down
+Test Case '-[WAFIUITests.ScreenshotTests test15_advisorHub]' passed (11.027 seconds).
+Test Case '-[WAFIUITests.ScreenshotTests test16_phoneAdvisor]' started.
+    t =     0.00s Start Test at 2026-11-18 16:30:16.116
+    t =     0.04s Set Up
+    t =     0.04s Open com.wafi.app
+    t =     0.04s     Launch com.wafi.app
+    t =     0.04s         Terminate com.wafi.app:23014
+    t =     1.56s         Setting up automation session
+    t =     3.61s         Wait for com.wafi.app to idle
+    t =     5.92s Waiting 20.0s for Any (First Match) to exist
+    t =     6.94s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =     6.94s         Checking existence of `Any (First Match)`
+    t =     7.22s Tap Button (First Match)
+    t =     7.22s     Wait for com.wafi.app to idle
+    t =     7.24s     Find the Button (First Match)
+    t =     7.43s     Check for interrupting elements affecting "رشّحلي" Button
+    t =     7.59s     Synthesize event
+    t =     7.96s     Wait for com.wafi.app to idle
+    t =     8.00s Waiting 20.0s for Any (First Match) to exist
+    t =     9.01s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =     9.01s         Checking existence of `Any (First Match)`
+    t =    11.13s Find the Target Application 'com.wafi.app'
+    t =    11.37s Added attachment named '16_phone_picks'
+    t =    11.37s Tear Down
+Test Case '-[WAFIUITests.ScreenshotTests test16_phoneAdvisor]' passed (11.604 seconds).
+Test Case '-[WAFIUITests.ScreenshotTests test17_pcAdvisor]' started.
+    t =     0.00s Start Test at 2026-11-18 16:30:27.721
+    t =     0.02s Set Up
+    t =     0.02s Open com.wafi.app
+    t =     0.02s     Launch com.wafi.app
+    t =     0.02s         Terminate com.wafi.app:23127
+    t =     1.77s         Setting up automation session
+    t =     3.72s         Wait for com.wafi.app to idle
+    t =     6.07s Waiting 20.0s for Any (First Match) to exist
+    t =     7.11s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =     7.11s         Checking existence of `Any (First Match)`
+    t =     7.30s Tap Button (First Match)
+    t =     7.30s     Wait for com.wafi.app to idle
+    t =     7.31s     Find the Button (First Match)
+    t =     7.49s     Check for interrupting elements affecting "حلّل ورشّحلي" Button
+    t =     7.56s     Synthesize event
+    t =     7.87s     Wait for com.wafi.app to idle
+    t =     7.92s Waiting 20.0s for Any (First Match) to exist
+    t =     8.99s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =     8.99s         Checking existence of `Any (First Match)`
+    t =    11.11s Find the Target Application 'com.wafi.app'
+    t =    11.43s Added attachment named '17_pc_advice'
+    t =    11.44s Tear Down
+Test Case '-[WAFIUITests.ScreenshotTests test17_pcAdvisor]' passed (11.677 seconds).
+Test Case '-[WAFIUITests.ScreenshotTests test18_deals]' started.
+    t =     0.00s Start Test at 2026-11-18 16:30:39.399
+    t =     0.04s Set Up
+    t =     0.04s Open com.wafi.app
+    t =     0.04s     Launch com.wafi.app
+    t =     0.04s         Terminate com.wafi.app:23819
+    t =     2.08s         Setting up automation session
+    t =     3.86s         Wait for com.wafi.app to idle
+    t =     6.02s Waiting 20.0s for Any (First Match) to exist
+    t =     7.04s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =     7.04s         Checking existence of `Any (First Match)`
+    t =     9.17s Find the Target Application 'com.wafi.app'
+    t =     9.37s Added attachment named '18_deals'
+    t =     9.37s Tear Down
+Test Case '-[WAFIUITests.ScreenshotTests test18_deals]' passed (9.593 seconds).
+Test Case '-[WAFIUITests.ScreenshotTests test19_compare]' started.
+    t =     0.00s Start Test at 2026-11-18 16:30:48.992
+    t =     0.02s Set Up
+    t =     0.03s Open com.wafi.app
+    t =     0.03s     Launch com.wafi.app
+    t =     0.03s         Terminate com.wafi.app:24080
+    t =     1.63s         Setting up automation session
+    t =     2.92s         Wait for com.wafi.app to idle
+    t =     4.84s Waiting 20.0s for Any (First Match) to exist
+    t =     5.87s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =     5.87s         Checking existence of `Any (First Match)`
+    t =     8.09s Find the Target Application 'com.wafi.app'
+    t =     8.35s Added attachment named '19_compare'
+    t =     8.35s Tear Down
+Test Case '-[WAFIUITests.ScreenshotTests test19_compare]' passed (8.571 seconds).
+Test Case '-[WAFIUITests.ScreenshotTests test20_basket]' started.
+    t =     0.00s Start Test at 2026-11-18 16:30:57.563
+    t =     0.04s Set Up
+    t =     0.04s Open com.wafi.app
+    t =     0.04s     Launch com.wafi.app
+    t =     0.04s         Terminate com.wafi.app:24543
+    t =    29.97s         Setting up automation session
+    t =    32.64s         Wait for com.wafi.app to idle
+    t =    35.27s Waiting 20.0s for Any (First Match) to exist
+    t =    36.35s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    36.35s         Checking existence of `Any (First Match)`
+    t =    36.73s Tap Button (First Match)
+    t =    36.73s     Wait for com.wafi.app to idle
+    t =    37.08s     Find the Button (First Match)
+    t =    37.32s     Check for interrupting elements affecting "احسب أرخص خطة" Button
+    t =    37.47s     Synthesize event
+    t =    37.80s     Wait for com.wafi.app to idle
+    t =    37.80s Waiting 20.0s for Any (First Match) to exist
+    t =    38.83s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    38.83s         Checking existence of `Any (First Match)`
+    t =    41.11s Find the Target Application 'com.wafi.app'
+    t =    41.48s Added attachment named '20_basket_plan'
+    t =    41.48s Tear Down
+Test Case '-[WAFIUITests.ScreenshotTests test20_basket]' passed (41.735 seconds).
+Test Case '-[WAFIUITests.ScreenshotTests test21_pro]' started.
+    t =     0.00s Start Test at 2026-11-18 16:31:39.299
+    t =     0.04s Set Up
+    t =     0.04s Open com.wafi.app
+    t =     0.04s     Launch com.wafi.app
+    t =     0.04s         Terminate com.wafi.app:24736
+    t =     2.06s         Setting up automation session
+    t =     4.32s         Wait for com.wafi.app to idle
+    t =     6.85s Waiting 20.0s for Any (First Match) to exist
+    t =     7.89s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =     7.90s         Checking existence of `Any (First Match)`
+    t =    10.11s Find the Target Application 'com.wafi.app'
+    t =    10.35s Added attachment named '21_pro'
+    t =    10.36s Tear Down
+Test Case '-[WAFIUITests.ScreenshotTests test21_pro]' passed (10.590 seconds).
+Test Case '-[WAFIUITests.ScreenshotTests test22_account]' started.
+    t =     0.00s Start Test at 2026-11-18 16:31:49.890
+    t =     0.04s Set Up
+    t =     0.04s Open com.wafi.app
+    t =     0.04s     Launch com.wafi.app
+    t =     0.04s         Terminate com.wafi.app:27188
+    t =     1.72s         Setting up automation session
+    t =     4.01s         Wait for com.wafi.app to idle
+    t =     6.99s Waiting 20.0s for Any (First Match) to exist
+    t =     8.04s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =     8.04s         Checking existence of `Any (First Match)`
+    t =    10.13s Find the Target Application 'com.wafi.app'
+    t =    10.65s Added attachment named '22_account'
+    t =    10.65s Tear Down
+Test Case '-[WAFIUITests.ScreenshotTests test22_account]' passed (10.874 seconds).
+Test Case '-[WAFIUITests.ScreenshotTests test23_accountGuest]' started.
+    t =     0.00s Start Test at 2026-11-18 16:32:00.764
+    t =     0.04s Set Up
+    t =     0.04s Open com.wafi.app
+    t =     0.04s     Launch com.wafi.app
+    t =     0.04s         Terminate com.wafi.app:27485
+    t =     1.51s         Setting up automation session
+    t =     3.49s         Wait for com.wafi.app to idle
+    t =     6.60s Waiting 20.0s for Any (First Match) to exist
+    t =     7.64s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =     7.64s         Checking existence of `Any (First Match)`
+    t =    10.01s Find the Target Application 'com.wafi.app'
+    t =    10.41s Added attachment named '23_account_guest'
+    t =    10.42s Tear Down
+Test Case '-[WAFIUITests.ScreenshotTests test23_accountGuest]' passed (10.696 seconds).
+Test Case '-[WAFIUITests.ScreenshotTests test24_signIn]' started.
+    t =     0.00s Start Test at 2026-11-18 16:32:11.460
+    t =     0.04s Set Up
+    t =     0.05s Open com.wafi.app
+    t =     0.05s     Launch com.wafi.app
+    t =     0.05s         Terminate com.wafi.app:28143
+    t =     1.90s         Setting up automation session
+    t =     3.84s         Wait for com.wafi.app to idle
+    t =     6.36s Waiting 20.0s for Any (First Match) to exist
+    t =     7.38s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =     7.38s         Checking existence of `Any (First Match)`
+    t =     9.57s Find the Target Application 'com.wafi.app'
+    t =     9.81s Added attachment named '24_sign_in'
+    t =     9.81s Tear Down
+Test Case '-[WAFIUITests.ScreenshotTests test24_signIn]' passed (10.071 seconds).
+Test Case '-[WAFIUITests.ScreenshotTests test25_marketAlerts]' started.
+    t =     0.00s Start Test at 2026-11-18 16:32:21.532
+    t =     0.03s Set Up
+    t =     0.03s Open com.wafi.app
+    t =     0.04s     Launch com.wafi.app
+    t =     0.04s         Terminate com.wafi.app:28209
+    t =    18.10s         Setting up automation session
+    t =    19.60s         Wait for com.wafi.app to idle
+    t =    21.98s Waiting 20.0s for Any (First Match) to exist
+    t =    22.99s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    22.99s         Checking existence of `Any (First Match)`
+    t =    25.16s Find the Target Application 'com.wafi.app'
+    t =    25.41s Added attachment named '25_market_alerts'
+    t =    25.41s Tear Down
+Test Case '-[WAFIUITests.ScreenshotTests test25_marketAlerts]' passed (25.629 seconds).
+Test Case '-[WAFIUITests.ScreenshotTests test26_cars]' started.
+    t =     0.00s Start Test at 2026-11-18 16:32:47.161
+    t =     0.04s Set Up
+    t =     0.04s Open com.wafi.app
+    t =     0.04s     Launch com.wafi.app
+    t =     0.04s         Terminate com.wafi.app:28893
+    t =     2.04s         Setting up automation session
+    t =     3.70s         Wait for com.wafi.app to idle
+    t =     6.00s Waiting 20.0s for Any (First Match) to exist
+    t =     7.03s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =     7.03s         Checking existence of `Any (First Match)`
+    t =     9.25s Find the Target Application 'com.wafi.app'
+    t =     9.56s Added attachment named '26_cars'
+    t =     9.58s Tear Down
+Test Case '-[WAFIUITests.ScreenshotTests test26_cars]' passed (9.816 seconds).
+Test Case '-[WAFIUITests.ScreenshotTests test27_pcBuilder]' started.
+    t =     0.00s Start Test at 2026-11-18 16:32:56.978
+    t =     0.04s Set Up
+    t =     0.04s Open com.wafi.app
+    t =     0.04s     Launch com.wafi.app
+    t =     0.04s         Terminate com.wafi.app:30821
+    t =     2.16s         Setting up automation session
+    t =     4.59s         Wait for com.wafi.app to idle
+    t =     6.99s Waiting 20.0s for Any (First Match) to exist
+    t =     8.03s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =     8.03s         Checking existence of `Any (First Match)`
+    t =     8.24s Tap Button (First Match)
+    t =     8.24s     Wait for com.wafi.app to idle
+    t =     8.26s     Find the Button (First Match)
+    t =     8.47s     Check for interrupting elements affecting "اقترح تجميعة" Button
+    t =     8.68s     Synthesize event
+    t =     9.02s     Wait for com.wafi.app to idle
+    t =     9.12s Waiting 20.0s for Any (First Match) to exist
+    t =    10.15s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    10.15s         Checking existence of `Any (First Match)`
+    t =    12.37s Find the Target Application 'com.wafi.app'
+    t =    13.64s Added attachment named '27_pc_build'
+    t =    13.64s Tear Down
+Test Case '-[WAFIUITests.ScreenshotTests test27_pcBuilder]' passed (13.965 seconds).
+Test Case '-[WAFIUITests.ScreenshotTests test28_settings]' started.
+    t =     0.00s Start Test at 2026-11-18 16:33:10.943
+    t =     0.04s Set Up
+    t =     0.04s Open com.wafi.app
+    t =     0.04s     Launch com.wafi.app
+    t =     0.05s         Terminate com.wafi.app:31130
+    t =     5.51s         Setting up automation session
+    t =     6.84s         Wait for com.wafi.app to idle
+    t =     9.07s Waiting 20.0s for Any (First Match) to exist
+    t =    10.12s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    10.12s         Checking existence of `Any (First Match)`
+    t =    12.29s Find the Target Application 'com.wafi.app'
+    t =    12.67s Added attachment named '28_settings'
+    t =    12.67s Tear Down
+Test Case '-[WAFIUITests.ScreenshotTests test28_settings]' passed (12.916 seconds).
+Test Case '-[WAFIUITests.ScreenshotTests test40_darkHome]' started.
+    t =     0.00s Start Test at 2026-11-18 16:33:23.860
+    t =     0.04s Set Up
+    t =     0.05s Open com.wafi.app
+    t =     0.05s     Launch com.wafi.app
+    t =     0.05s         Terminate com.wafi.app:31474
+    t =     1.81s         Setting up automation session
+    t =     4.75s         Wait for com.wafi.app to idle
+    t =     7.34s Waiting 20.0s for Any (First Match) to exist
+    t =     8.35s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =     8.36s         Checking existence of `Any (First Match)`
+    t =    10.76s Find the Target Application 'com.wafi.app'
+    t =    11.23s Added attachment named '40_dark_home'
+    t =    11.23s Tear Down
+Test Case '-[WAFIUITests.ScreenshotTests test40_darkHome]' passed (11.465 seconds).
+Test Case '-[WAFIUITests.ScreenshotTests test41_darkProduct]' started.
+    t =     0.00s Start Test at 2026-11-18 16:33:35.327
+    t =     0.04s Set Up
+    t =     0.05s Open com.wafi.app
+    t =     0.05s     Launch com.wafi.app
+    t =     0.05s         Terminate com.wafi.app:31846
+    t =     5.81s         Setting up automation session
+    t =     7.61s         Wait for com.wafi.app to idle
+    t =    10.19s Waiting 20.0s for Any (First Match) to exist
+    t =    11.20s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    11.20s         Checking existence of `Any (First Match)`
+    t =    13.50s Find the Target Application 'com.wafi.app'
+    t =    13.86s Added attachment named '41_dark_product'
+    t =    13.86s Tear Down
+Test Case '-[WAFIUITests.ScreenshotTests test41_darkProduct]' passed (14.099 seconds).
+Test Case '-[WAFIUITests.ScreenshotTests test42_darkMarket]' started.
+    t =     0.00s Start Test at 2026-11-18 16:33:49.425
+    t =     0.04s Set Up
+    t =     0.04s Open com.wafi.app
+    t =     0.04s     Launch com.wafi.app
+    t =     0.04s         Terminate com.wafi.app:32289
+    t =     2.16s         Setting up automation session
+    t =     3.89s         Wait for com.wafi.app to idle
+    t =     6.02s Waiting 20.0s for Any (First Match) to exist
+    t =     7.08s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =     7.08s         Checking existence of `Any (First Match)`
+    t =     9.69s Find the Target Application 'com.wafi.app'
+    t =    10.12s Added attachment named '42_dark_market'
+    t =    10.12s Tear Down
+Test Case '-[WAFIUITests.ScreenshotTests test42_darkMarket]' passed (10.412 seconds).
+Test Case '-[WAFIUITests.ScreenshotTests test50_enHome]' started.
+    t =     0.00s Start Test at 2026-11-18 16:33:59.837
+    t =     0.04s Set Up
+    t =     0.04s Open com.wafi.app
+    t =     0.04s     Launch com.wafi.app
+    t =     0.04s         Terminate com.wafi.app:32874
+    t =     1.97s         Setting up automation session
+    t =     3.72s         Wait for com.wafi.app to idle
+    t =     6.02s Waiting 20.0s for Any (First Match) to exist
+    t =     7.07s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =     7.07s         Checking existence of `Any (First Match)`
+    t =     9.55s Find the Target Application 'com.wafi.app'
+    t =     9.87s Added attachment named '50_en_home'
+    t =     9.87s Tear Down
+Test Case '-[WAFIUITests.ScreenshotTests test50_enHome]' passed (10.116 seconds).
+Test Case '-[WAFIUITests.ScreenshotTests test51_enSearch]' started.
+    t =     0.00s Start Test at 2026-11-18 16:34:09.954
+    t =     0.03s Set Up
+    t =     0.03s Open com.wafi.app
+    t =     0.03s     Launch com.wafi.app
+    t =     0.03s         Terminate com.wafi.app:33468
+    t =     1.89s         Setting up automation session
+    t =     3.49s         Wait for com.wafi.app to idle
+    t =     6.19s Waiting 20.0s for Any (First Match) to exist
+    t =     7.19s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =     7.19s         Checking existence of `Any (First Match)`
+    t =     7.55s         Capturing element debug description
+    t =     8.25s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =     8.26s         Checking existence of `Any (First Match)`
+    t =     8.51s         Capturing element debug description
+    t =     9.19s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =     9.19s         Checking existence of `Any (First Match)`
+    t =     9.61s         Capturing element debug description
+    t =    10.24s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    10.24s         Checking existence of `Any (First Match)`
+    t =    10.56s         Capturing element debug description
+    t =    11.20s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    11.20s         Checking existence of `Any (First Match)`
+    t =    11.53s         Capturing element debug description
+    t =    12.24s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    12.24s         Checking existence of `Any (First Match)`
+    t =    12.91s         Capturing element debug description
+    t =    13.19s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    13.20s         Checking existence of `Any (First Match)`
+    t =    13.51s         Capturing element debug description
+    t =    14.24s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    14.24s         Checking existence of `Any (First Match)`
+    t =    14.51s         Capturing element debug description
+    t =    15.24s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    15.24s         Checking existence of `Any (First Match)`
+    t =    15.46s         Capturing element debug description
+    t =    16.19s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    16.20s         Checking existence of `Any (First Match)`
+    t =    16.40s         Capturing element debug description
+    t =    17.25s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    17.25s         Checking existence of `Any (First Match)`
+    t =    17.48s         Capturing element debug description
+    t =    18.21s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    18.21s         Checking existence of `Any (First Match)`
+    t =    18.56s         Capturing element debug description
+    t =    19.24s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    19.24s         Checking existence of `Any (First Match)`
+    t =    19.44s         Capturing element debug description
+    t =    20.24s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    20.24s         Checking existence of `Any (First Match)`
+    t =    20.55s         Capturing element debug description
+    t =    21.27s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    21.27s         Checking existence of `Any (First Match)`
+    t =    21.49s         Capturing element debug description
+    t =    22.25s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    22.26s         Checking existence of `Any (First Match)`
+    t =    22.50s         Capturing element debug description
+    t =    23.24s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    23.24s         Checking existence of `Any (First Match)`
+    t =    23.51s         Capturing element debug description
+    t =    24.22s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    24.22s         Checking existence of `Any (First Match)`
+    t =    24.49s         Capturing element debug description
+    t =    25.19s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    25.19s         Checking existence of `Any (First Match)`
+    t =    25.47s         Capturing element debug description
+    t =    26.20s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    26.20s         Checking existence of `Any (First Match)`
+    t =    26.50s         Capturing element debug description
+    t =    26.51s     Checking existence of `Any (First Match)`
+    t =    26.76s Collecting debug information to assist test failure triage
+    t =    26.76s     Requesting snapshot of accessibility hierarchy for app with pid 33810
+    t =    28.90s Find the Target Application 'com.wafi.app'
+    t =    29.14s Added attachment named '51_en_search'
+    t =    29.14s Tear Down
+Test Case '-[WAFIUITests.ScreenshotTests test51_enSearch]' passed (29.367 seconds).
+Test Case '-[WAFIUITests.ScreenshotTests test52_enProduct]' started.
+    t =     0.00s Start Test at 2026-11-18 16:34:39.322
+    t =     0.03s Set Up
+    t =     0.04s Open com.wafi.app
+    t =     0.04s     Launch com.wafi.app
+    t =     0.04s         Terminate com.wafi.app:33810
+    t =     1.96s         Setting up automation session
+    t =     3.64s         Wait for com.wafi.app to idle
+    t =     5.75s Waiting 20.0s for Any (First Match) to exist
+    t =     6.82s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =     6.82s         Checking existence of `Any (First Match)`
+    t =     9.08s Find the Target Application 'com.wafi.app'
+    t =     9.38s Added attachment named '52_en_product'
+    t =     9.40s Tear Down
+Test Case '-[WAFIUITests.ScreenshotTests test52_enProduct]' passed (9.647 seconds).
+Test Case '-[WAFIUITests.ScreenshotTests test53_enMarket]' started.
+    t =     0.00s Start Test at 2026-11-18 16:34:48.969
+    t =     0.03s Set Up
+    t =     0.04s Open com.wafi.app
+    t =     0.04s     Launch com.wafi.app
+    t =     0.04s         Terminate com.wafi.app:35286
+    t =     1.63s         Setting up automation session
+    t =     3.56s         Wait for com.wafi.app to idle
+    t =     5.69s Waiting 20.0s for Any (First Match) to exist
+    t =     6.69s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =     6.69s         Checking existence of `Any (First Match)`
+    t =     8.94s Find the Target Application 'com.wafi.app'
+    t =     9.30s Added attachment named '53_en_market'
+    t =     9.30s Tear Down
+Test Case '-[WAFIUITests.ScreenshotTests test53_enMarket]' passed (9.521 seconds).
+Test Case '-[WAFIUITests.ScreenshotTests test54_enWallet]' started.
+    t =     0.00s Start Test at 2026-11-18 16:34:58.490
+    t =     0.04s Set Up
+    t =     0.04s Open com.wafi.app
+    t =     0.04s     Launch com.wafi.app
+    t =     0.04s         Terminate com.wafi.app:35589
+    t =     1.63s         Setting up automation session
+    t =     3.45s         Wait for com.wafi.app to idle
+    t =     5.75s Waiting 20.0s for Any (First Match) to exist
+    t =     6.79s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =     6.79s         Checking existence of `Any (First Match)`
+    t =     9.08s Find the Target Application 'com.wafi.app'
+    t =     9.39s Added attachment named '54_en_wallet'
+    t =     9.40s Tear Down
+Test Case '-[WAFIUITests.ScreenshotTests test54_enWallet]' passed (9.621 seconds).
+Test Case '-[WAFIUITests.ScreenshotTests test55_enAssistant]' started.
+    t =     0.00s Start Test at 2026-11-18 16:35:08.111
+    t =     0.04s Set Up
+    t =     0.04s Open com.wafi.app
+    t =     0.04s     Launch com.wafi.app
+    t =     0.04s         Terminate com.wafi.app:35888
+    t =     1.63s         Setting up automation session
+    t =     3.42s         Wait for com.wafi.app to idle
+    t =     5.68s Waiting 25.0s for Any (First Match) to exist
+    t =     6.68s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =     6.68s         Checking existence of `Any (First Match)`
+    t =     8.88s Find the Target Application 'com.wafi.app'
+    t =     9.18s Added attachment named '55_en_assistant'
+    t =     9.18s Tear Down
+Test Case '-[WAFIUITests.ScreenshotTests test55_enAssistant]' passed (9.403 seconds).
+Test Case '-[WAFIUITests.ScreenshotTests test56_enPro]' started.
+    t =     0.00s Start Test at 2026-11-18 16:35:17.514
+    t =     0.03s Set Up
+    t =     0.03s Open com.wafi.app
+    t =     0.03s     Launch com.wafi.app
+    t =     0.03s         Terminate com.wafi.app:36308
+    t =     1.54s         Setting up automation session
+    t =     3.50s         Wait for com.wafi.app to idle
+    t =     5.77s Waiting 20.0s for Any (First Match) to exist
+    t =     6.81s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =     6.81s         Checking existence of `Any (First Match)`
+    t =     9.14s Find the Target Application 'com.wafi.app'
+    t =     9.45s Added attachment named '56_en_pro'
+    t =     9.45s Tear Down
+Test Case '-[WAFIUITests.ScreenshotTests test56_enPro]' passed (9.684 seconds).
+Test Case '-[WAFIUITests.ScreenshotTests test60_guestCanSearchLive]' started.
+    t =     0.00s Start Test at 2026-11-18 16:35:27.199
+    t =     0.04s Set Up
+    t =     0.04s Open com.wafi.app
+    t =     0.04s     Launch com.wafi.app
+    t =     0.04s         Terminate com.wafi.app:36567
+    t =     1.57s         Setting up automation session
+    t =     3.72s         Wait for com.wafi.app to idle
+    t =     6.20s Waiting 20.0s for Any (First Match) to exist
+    t =     7.21s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =     7.21s         Checking existence of `Any (First Match)`
+    t =     9.36s Find the Target Application 'com.wafi.app'
+    t =     9.63s Added attachment named '60_guest_live_search'
+    t =     9.63s Tear Down
+Test Case '-[WAFIUITests.ScreenshotTests test60_guestCanSearchLive]' passed (9.877 seconds).
+Test Case '-[WAFIUITests.ScreenshotTests test61_productUsedAndLens]' started.
+    t =     0.00s Start Test at 2026-11-18 16:35:37.076
+    t =     0.02s Set Up
+    t =     0.03s Open com.wafi.app
+    t =     0.03s     Launch com.wafi.app
+    t =     0.03s         Terminate com.wafi.app:37147
+    t =     1.74s         Setting up automation session
+    t =     3.35s         Wait for com.wafi.app to idle
+    t =     5.35s Waiting 20.0s for Any (First Match) to exist
+    t =     6.38s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =     6.38s         Checking existence of `Any (First Match)`
+    t =     6.63s Checking existence of `Any (First Match)`
+    t =     6.80s Find the Any (First Match)
+    t =     8.95s Find the Target Application 'com.wafi.app'
+    t =     9.21s Added attachment named '61_product_used_option'
+    t =     9.21s Checking existence of `Any (First Match)`
+    t =     9.29s Find the Any (First Match)
+    t =    11.41s Find the Target Application 'com.wafi.app'
+    t =    11.69s Added attachment named '62_product_dollar_gold_lens'
+    t =    11.69s Tear Down
+Test Case '-[WAFIUITests.ScreenshotTests test61_productUsedAndLens]' passed (11.987 seconds).
+Test Case '-[WAFIUITests.ScreenshotTests test63_usedVsNew]' started.
+    t =     0.00s Start Test at 2026-11-18 16:35:49.063
+    t =     0.02s Set Up
+    t =     0.03s Open com.wafi.app
+    t =     0.03s     Launch com.wafi.app
+    t =     0.03s         Terminate com.wafi.app:37684
+    t =    11.65s         Setting up automation session
+    t =    13.69s         Wait for com.wafi.app to idle
+    t =    16.25s Waiting 20.0s for Any (First Match) to exist
+    t =    17.30s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    17.30s         Checking existence of `Any (First Match)`
+    t =    17.49s Checking existence of `Any (First Match)`
+    t =    17.68s Find the Any (First Match)
+    t =    19.89s Find the Target Application 'com.wafi.app'
+    t =    20.23s Added attachment named '63_used_vs_new'
+    t =    20.23s Tear Down
+Test Case '-[WAFIUITests.ScreenshotTests test63_usedVsNew]' passed (20.457 seconds).
+Test Case '-[WAFIUITests.ScreenshotTests test64_tradeIn]' started.
+    t =     0.00s Start Test at 2026-11-18 16:36:09.521
+    t =     0.02s Set Up
+    t =     0.03s Open com.wafi.app
+    t =     0.03s     Launch com.wafi.app
+    t =     0.03s         Terminate com.wafi.app:38527
+    t =     1.84s         Setting up automation session
+    t =     3.46s         Wait for com.wafi.app to idle
+    t =     5.68s Waiting 20.0s for Any (First Match) to exist
+    t =     6.74s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =     6.74s         Checking existence of `Any (First Match)`
+    t =     6.88s Checking existence of `Any (First Match)`
+    t =     7.00s Find the Any (First Match)
+    t =     7.13s Press Target Application 'com.wafi.app'[0.50, 0.70] for 0.1 seconds, then drag to Target Application 'com.wafi.app'[0.50, 0.45] with velocity of 500.00 pixels per second, and then hold for 0.0 seconds 
+    t =     7.13s     Wait for com.wafi.app to idle
+    t =     7.14s     Find the Target Application 'com.wafi.app'
+    t =     7.22s     Check for interrupting elements affecting "WAFI" Application
+    t =     7.30s     Synthesize event
+    t =     7.31s         Find the Target Application 'com.wafi.app'
+    t =     7.35s         Find the Target Application 'com.wafi.app'
+    t =     7.39s         Find the Target Application 'com.wafi.app'
+    t =     7.43s         Find the Target Application 'com.wafi.app'
+    t =     7.50s         Find the Target Application 'com.wafi.app'
+    t =     8.33s     Wait for com.wafi.app to idle
+    t =     9.92s Tap "tradeInCard" Any
+    t =     9.93s     Wait for com.wafi.app to idle
+    t =    10.25s     Find the "tradeInCard" Any
+    t =    10.60s     Check for interrupting elements affecting "tradeInCard" Button
+    t =    10.87s     Synthesize event
+    t =    11.23s     Wait for com.wafi.app to idle
+    t =    11.24s Waiting 8.0s for "tradeInSearch" Any to exist
+    t =    12.27s     Checking `Expect predicate `existsNoRetry == 1` for object "tradeInSearch" Any`
+    t =    12.27s         Checking existence of `"tradeInSearch" Any`
+    t =    12.63s Checking existence of `"tradeInSearch" Any`
+    t =    12.91s Find the "tradeInSearch" Any
+    t =    13.20s Tap "tradeInSearch" TextField
+    t =    13.20s     Wait for com.wafi.app to idle
+    t =    13.21s     Find the "tradeInSearch" TextField
+    t =    13.39s     Check for interrupting elements affecting "tradeInSearch" TextField
+    t =    13.49s     Synthesize event
+    t =    13.79s     Wait for com.wafi.app to idle
+    t =    16.33s Type 'iPhone 13
+' into "tradeInSearch" TextField
+    t =    16.34s     Wait for com.wafi.app to idle
+    t =    16.77s     Find the "tradeInSearch" TextField
+    t =    18.09s     Check for interrupting elements affecting "tradeInSearch" TextField
+    t =    18.41s     Synthesize event
+    t =    18.83s     Wait for com.wafi.app to idle
+    t =    19.27s Waiting 20.0s for Any (First Match) to exist
+    t =    20.29s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    20.29s         Checking existence of `Any (First Match)`
+    t =    20.54s Find the Button (First Match)
+    t =    21.14s Tap "آيفون 13 ‏128 جيجا (مستعمل)" Button
+    t =    21.14s     Wait for com.wafi.app to idle
+    t =    21.15s     Find the "آيفون 13 ‏128 جيجا (مستعمل)" Button
+    t =    21.33s     Check for interrupting elements affecting "آيفون 13 ‏128 جيجا (مستعمل)" Button
+    t =    21.42s     Synthesize event
+    t =    21.74s     Wait for com.wafi.app to idle
+    t =    21.75s Waiting 20.0s for Any (First Match) to exist
+    t =    22.79s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    22.79s         Checking existence of `Any (First Match)`
+    t =    22.96s Checking existence of `Any (First Match)`
+    t =    23.12s Find the Any (First Match)
+    t =    25.60s Find the Target Application 'com.wafi.app'
+    t =    26.05s Added attachment named '64_trade_in'
+    t =    26.06s Tear Down
+Test Case '-[WAFIUITests.ScreenshotTests test64_tradeIn]' passed (26.381 seconds).
+Test Case '-[WAFIUITests.ScreenshotTests test65_phoneStepUp]' started.
+    t =     0.00s Start Test at 2026-11-18 16:36:35.902
+    t =     0.13s Set Up
+    t =     0.14s Open com.wafi.app
+    t =     0.14s     Launch com.wafi.app
+    t =     0.14s         Terminate com.wafi.app:39763
+    t =     6.42s         Setting up automation session
+    t =     8.87s         Wait for com.wafi.app to idle
+    t =    11.63s Waiting 20.0s for Any (First Match) to exist
+    t =    12.64s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    12.64s         Checking existence of `Any (First Match)`
+    t =    12.91s Tap Any (First Match)
+    t =    12.91s     Wait for com.wafi.app to idle
+    t =    12.92s     Find the Any (First Match)
+    t =    13.30s     Check for interrupting elements affecting "الكاميرا‏، صور وفيديو" Button
+    t =    13.58s     Synthesize event
+    t =    13.91s     Wait for com.wafi.app to idle
+    t =    13.91s Tap Button (First Match)
+    t =    13.92s     Wait for com.wafi.app to idle
+    t =    13.95s     Find the Button (First Match)
+    t =    14.40s     Check for interrupting elements affecting "رشّحلي" Button
+    t =    14.46s     Synthesize event
+    t =    14.77s     Wait for com.wafi.app to idle
+    t =    14.97s Waiting 20.0s for Any (First Match) to exist
+    t =    16.01s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    16.01s         Checking existence of `Any (First Match)`
+    t =    18.26s Find the Target Application 'com.wafi.app'
+    t =    18.64s Added attachment named '65_phone_used_step_up'
+    t =    18.64s Tear Down
+Test Case '-[WAFIUITests.ScreenshotTests test65_phoneStepUp]' passed (18.879 seconds).
+Test Case '-[WAFIUITests.ScreenshotTests test66_carRunning]' started.
+    t =     0.00s Start Test at 2026-11-18 16:36:54.782
+    t =     0.05s Set Up
+    t =     0.05s Open com.wafi.app
+    t =     0.05s     Launch com.wafi.app
+    t =     0.05s         Terminate com.wafi.app:40695
+    t =     1.83s         Setting up automation session
+    t =     4.01s         Wait for com.wafi.app to idle
+    t =     6.83s Waiting 20.0s for Any (First Match) to exist
+    t =     7.88s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =     7.88s         Checking existence of `Any (First Match)`
+    t =     8.04s Tap Button (First Match)
+    t =     8.04s     Wait for com.wafi.app to idle
+    t =     8.06s     Find the Button (First Match)
+    t =     8.19s     Check for interrupting elements affecting "رشّحلي" Button
+    t =     8.26s     Synthesize event
+    t =     8.31s         Scroll element to visible
+    t =     8.32s         Find the "رشّحلي" Button
+    t =     8.47s         Computed hit point {220, 826} after scrolling to visible
+    t =     8.78s     Wait for com.wafi.app to idle
+    t =     9.32s Waiting 20.0s for Any (First Match) to exist
+    t =    10.34s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    10.34s         Checking existence of `Any (First Match)`
+    t =    12.51s Find the Target Application 'com.wafi.app'
+    t =    12.84s Added attachment named '66_car_running_cost'
+    t =    12.85s Tear Down
+Test Case '-[WAFIUITests.ScreenshotTests test66_carRunning]' passed (13.096 seconds).
+Test Case '-[WAFIUITests.ScreenshotTests test67_usedCarVsNew]' started.
+    t =     0.00s Start Test at 2026-11-18 16:37:07.878
+    t =     0.04s Set Up
+    t =     0.04s Open com.wafi.app
+    t =     0.04s     Launch com.wafi.app
+    t =     0.04s         Terminate com.wafi.app:41627
+    t =     2.13s         Setting up automation session
+    t =     4.18s         Wait for com.wafi.app to idle
+    t =     6.83s Waiting 20.0s for Any (First Match) to exist
+    t =     7.86s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =     7.87s         Checking existence of `Any (First Match)`
+    t =     8.45s Checking existence of `Any (First Match)`
+    t =     9.13s Find the Any (First Match)
+    t =    10.08s Tap Any (First Match)
+    t =    10.08s     Wait for com.wafi.app to idle
+    t =    10.09s     Find the Any (First Match)
+    t =    10.46s     Check for interrupting elements affecting "زيرو ولا مستعملة؟" StaticText
+    t =    10.63s     Synthesize event
+    t =    10.93s     Wait for com.wafi.app to idle
+    t =    10.94s Tap Button (First Match)
+    t =    10.94s     Wait for com.wafi.app to idle
+    t =    10.96s     Find the Button (First Match)
+    t =    11.22s     Check for interrupting elements affecting "رشّحلي" Button
+    t =    11.32s     Synthesize event
+    t =    11.35s         Scroll element to visible
+    t =    11.35s         Find the "رشّحلي" Button
+    t =    12.23s         Computed hit point {220, 826} after scrolling to visible
+    t =    12.54s     Wait for com.wafi.app to idle
+    t =    12.66s Waiting 20.0s for Any (First Match) to exist
+    t =    13.72s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =    13.72s         Checking existence of `Any (First Match)`
+    t =    13.92s Checking existence of `Any (First Match)`
+    t =    14.42s Swipe up Target Application 'com.wafi.app'
+    t =    14.42s     Wait for com.wafi.app to idle
+    t =    14.42s     Find the Target Application 'com.wafi.app'
+    t =    14.52s     Check for interrupting elements affecting "WAFI" Application
+    t =    14.57s     Synthesize event
+    t =    15.08s     Wait for com.wafi.app to idle
+    t =    17.02s Checking existence of `Any (First Match)`
+    t =    17.51s Swipe up Target Application 'com.wafi.app'
+    t =    17.51s     Wait for com.wafi.app to idle
+    t =    17.51s     Find the Target Application 'com.wafi.app'
+    t =    17.61s     Check for interrupting elements affecting "WAFI" Application
+    t =    17.67s     Synthesize event
+    t =    18.17s     Wait for com.wafi.app to idle
+    t =    20.10s Checking existence of `Any (First Match)`
+    t =    20.64s Swipe up Target Application 'com.wafi.app'
+    t =    20.64s     Wait for com.wafi.app to idle
+    t =    20.65s     Find the Target Application 'com.wafi.app'
+    t =    20.74s     Check for interrupting elements affecting "WAFI" Application
+    t =    20.81s     Synthesize event
+    t =    21.30s     Wait for com.wafi.app to idle
+    t =    22.84s Checking existence of `Any (First Match)`
+    t =    24.03s Swipe up Target Application 'com.wafi.app'
+    t =    24.03s     Wait for com.wafi.app to idle
+    t =    24.27s     Find the Target Application 'com.wafi.app'
+    t =    24.36s     Check for interrupting elements affecting "WAFI" Application
+    t =    24.43s     Synthesize event
+    t =    24.92s     Wait for com.wafi.app to idle
+    t =    25.40s Checking existence of `Any (First Match)`
+    t =    26.06s Swipe up Target Application 'com.wafi.app'
+    t =    26.06s     Wait for com.wafi.app to idle
+    t =    26.07s     Find the Target Application 'com.wafi.app'
+    t =    26.12s     Check for interrupting elements affecting "WAFI" Application
+    t =    26.21s     Synthesize event
+    t =    26.72s     Wait for com.wafi.app to idle
+    t =    27.17s Checking existence of `Any (First Match)`
+    t =    27.53s Swipe up Target Application 'com.wafi.app'
+    t =    27.54s     Wait for com.wafi.app to idle
+    t =    27.54s     Find the Target Application 'com.wafi.app'
+    t =    27.62s     Check for interrupting elements affecting "WAFI" Application
+    t =    27.70s     Synthesize event
+    t =    28.22s     Wait for com.wafi.app to idle
+    t =    28.67s Checking existence of `Any (First Match)`
+    t =    31.02s Find the Target Application 'com.wafi.app'
+    t =    31.31s Added attachment named '67_car_used_vs_new'
+    t =    31.31s Tear Down
+Test Case '-[WAFIUITests.ScreenshotTests test67_usedCarVsNew]' passed (31.633 seconds).
+Test Case '-[WAFIUITests.ScreenshotTests test68_noApproximatePriceOnProduct]' started.
+    t =     0.00s Start Test at 2026-11-18 16:37:39.511
+    t =     0.04s Set Up
+    t =     0.04s Open com.wafi.app
+    t =     0.04s     Launch com.wafi.app
+    t =     0.04s         Terminate com.wafi.app:42220
+    t =     1.92s         Setting up automation session
+    t =     5.32s         Wait for com.wafi.app to idle
+    t =     7.52s Waiting 20.0s for Any (First Match) to exist
+    t =     8.59s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =     8.59s         Checking existence of `Any (First Match)`
+    t =     8.75s Checking existence of `StaticText (First Match)`
+    t =    11.00s Find the Target Application 'com.wafi.app'
+    t =    11.23s Added attachment named '68_product_without_a_store_price'
+    t =    11.23s Tear Down
+Test Case '-[WAFIUITests.ScreenshotTests test68_noApproximatePriceOnProduct]' passed (11.675 seconds).
+Test Case '-[WAFIUITests.ScreenshotTests test70_tabletAdvisorPricesFromStoresOnly]' started.
+    t =     0.00s Start Test at 2026-11-18 16:37:51.187
+    t =     0.03s Set Up
+    t =     0.03s Open com.wafi.app
+    t =     0.03s     Launch com.wafi.app
+    t =     0.03s         Terminate com.wafi.app:43552
+    t =     2.35s         Setting up automation session
+    t =     3.72s         Wait for com.wafi.app to idle
+    t =     5.84s Waiting 20.0s for Any (First Match) to exist
+    t =     6.87s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =     6.87s         Checking existence of `Any (First Match)`
+    t =     7.06s Tap Any (First Match)
+    t =     7.06s     Wait for com.wafi.app to idle
+    t =     7.07s     Find the Any (First Match)
+    t =     7.56s     Check for interrupting elements affecting "تابلت" Button
+    t =     7.77s     Synthesize event
+    t =     8.11s     Wait for com.wafi.app to idle
+    t =     8.12s Tap Button (First Match)
+    t =     8.12s     Wait for com.wafi.app to idle
+    t =     8.14s     Find the Button (First Match)
+    t =     8.36s     Check for interrupting elements affecting "رشّحلي" Button
+    t =     8.40s     Synthesize event
+    t =     8.70s     Wait for com.wafi.app to idle
+    t =     8.70s Waiting 20.0s for Any (First Match) to exist
+    t =     9.70s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =     9.71s         Checking existence of `Any (First Match)`
+    t =     9.98s Checking existence of `StaticText (First Match)`
+    t =    12.35s Find the Target Application 'com.wafi.app'
+    t =    12.61s Added attachment named '70_tablet_advisor_store_prices'
+    t =    12.62s Tear Down
+Test Case '-[WAFIUITests.ScreenshotTests test70_tabletAdvisorPricesFromStoresOnly]' passed (12.844 seconds).
+Test Case '-[WAFIUITests.ScreenshotTests test71_budgetAndNewVsUsed]' started.
+    t =     0.00s Start Test at 2026-11-18 16:38:04.031
+    t =     0.03s Set Up
+    t =     0.04s Open com.wafi.app
+    t =     0.04s     Launch com.wafi.app
+    t =     0.04s         Terminate com.wafi.app:43654
+    t =     2.11s         Setting up automation session
+    t =     3.60s         Wait for com.wafi.app to idle
+    t =     5.89s Waiting 20.0s for Any (First Match) to exist
+    t =     6.94s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =     6.94s         Checking existence of `Any (First Match)`
+    t =     7.06s Tap Button (First Match)
+    t =     7.06s     Wait for com.wafi.app to idle
+    t =     7.07s     Find the Button (First Match)
+    t =     7.17s     Check for interrupting elements affecting "رشّحلي" Button
+    t =     7.21s     Synthesize event
+    t =     7.52s     Wait for com.wafi.app to idle
+    t =     7.53s Waiting 20.0s for Any (First Match) to exist
+    t =     8.59s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =     8.59s         Checking existence of `Any (First Match)`
+    t =    10.67s Find the Target Application 'com.wafi.app'
+    t =    10.90s Added attachment named '71_budget_range'
+    t =    10.90s Checking existence of `Any (First Match)`
+    t =    10.99s Find the Any (First Match)
+    t =    13.10s Find the Target Application 'com.wafi.app'
+    t =    13.35s Added attachment named '72_new_vs_used_verdict'
+    t =    13.36s Tear Down
+Test Case '-[WAFIUITests.ScreenshotTests test71_budgetAndNewVsUsed]' passed (13.578 seconds).
+Test Suite 'ScreenshotTests' passed at 2026-11-18 16:38:17.612.
+	 Executed 46 tests, with 0 failures (0 unexpected) in 759.058 (759.089) seconds
+Test Suite 'WAFIUITests.xctest' passed at 2026-11-18 16:38:17.613.
+	 Executed 46 tests, with 0 failures (0 unexpected) in 759.058 (759.091) seconds
+Test Suite 'All tests' passed at 2026-11-18 16:38:17.613.
+	 Executed 46 tests, with 0 failures (0 unexpected) in 759.058 (759.096) seconds
+2026-11-18 16:38:19.370 xcodebuild[5580:19616] [MT] IDETestOperationsObserverDebug: 1076.058 elapsed -- Testing started completed.
+2026-11-18 16:38:19.370 xcodebuild[5580:19616] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-18 16:38:19.370 xcodebuild[5580:19616] [MT] IDETestOperationsObserverDebug: 1076.058 sec, +1076.058 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/runner/work/wafi-ios/wafi-ios/ci/out/Tests.xcresult
+
+** TEST EXECUTE SUCCEEDED **
+
+Testing started
